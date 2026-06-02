@@ -168,15 +168,36 @@ const quotes = [
   "Hari terakhir dalam siklus keberuntungan bulan ini 🌙<br><br>Energi theater kamu terkumpul penuh 🎭<br><br>Siap-siap untuk kejutan kecil berikutnya!"
 ];
 
-function getDailyIndex(list, offset){
-    const today = new Date();
-    const seed = today.getFullYear() * 10000 + (today.getMonth()+1) * 100 + today.getDate() + offset;
-    return seed % list.length;
+function getVisitorId(){
+  let id = localStorage.getItem("theater48_user_id");
+  if(!id){
+    id = "user_" + Math.random().toString(36).substring(2, 15);
+    localStorage.setItem("theater48_user_id", id);
+  }
+  return id;
 }
 
-document.getElementById("oshiName").innerHTML = members[getDailyIndex(members, 1)];
-document.getElementById("oshiRank").innerHTML = ranks[getDailyIndex(ranks, 2)];
-document.getElementById("oshiQuote").innerHTML = quotes[getDailyIndex(quotes, 3)];
+function hash(str){
+  let h = 0;
+  for(let i = 0; i < str.length; i++){
+    h = ((h << 5) - h) + str.charCodeAt(i);
+    h |= 0;
+  }
+  return Math.abs(h);
+}
+
+const today = new Date();
+const dateKey = today.getFullYear() + "-" + (today.getMonth()+1) + "-" + today.getDate();
+const userKey = getVisitorId();
+
+function pickDaily(list, offset){
+  const seed = hash(userKey + dateKey + offset);
+  return list[seed % list.length];
+}
+
+document.getElementById("oshiName").innerHTML = pickDaily(members, "member");
+document.getElementById("oshiRank").innerHTML = pickDaily(ranks, "rank");
+document.getElementById("oshiQuote").innerHTML = pickDaily(quotes, "quote");
 </script>
 
 </body>
