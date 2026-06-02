@@ -1,0 +1,1 @@
+# theater48-dailyoshifortune
