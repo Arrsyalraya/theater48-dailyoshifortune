@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+body{
+    margin:0;
+    padding:20px;
+    background:transparent;
+}
+
+.oshi-card{
+    max-width:700px;
+    margin:auto;
+    background:#ffffff;
+    border-radius:25px;
+    padding:45px;
+    text-align:center;
+    box-shadow:0 5px 18px rgba(0,0,0,0.1);
+    font-family:Arial,sans-serif;
+}
+
+.oshi-title{
+    font-size:46px;
+    font-weight:bold;
+    color:#13294B;
+}
+
+.oshi-member{
+    margin-top:30px;
+    font-size:64px;
+    font-weight:bold;
+    color:#8B1D2C;
+}
+
+.oshi-rank{
+    margin-top:15px;
+    font-size:24px;
+    color:#f39c12;
+    font-weight:bold;
+}
+
+.oshi-quote{
+    margin-top:30px;
+    font-size:22px;
+    color:#444;
+    line-height:1.8;
+}
+
+.oshi-footer{
+    margin-top:35px;
+    font-size:18px;
+    color:#888;
+}
+
+@media(max-width:600px){
+    .oshi-card{
+        padding:30px 20px;
+    }
+    .oshi-title{
+        font-size:34px;
+    }
+    .oshi-member{
+        font-size:46px;
+    }
+    .oshi-quote{
+        font-size:18px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="oshi-card">
+    <div class="oshi-title">Oshi Hari Ini</div>
+    <div class="oshi-member" id="oshiName">Loading...</div>
+    <div class="oshi-rank" id="oshiRank">Loading...</div>
+    <div class="oshi-quote" id="oshiQuote">Loading...</div>
+    <div class="oshi-footer">Daily Oshimen Fortune • Theater48Fight</div>
+</div>
+
+<script>
+const members = [
+    "FREYA", "CHRISTY", "GRACIE", "FENI", "GITA", "ELI",
+  "OLLA", "MUTHE", "LULU", "FIONY", "MARSHA", "KATHRINA",
+  "JESSI", "LYN", "OGURI YUI", "GREESEL", "ELLA", "ALYA",
+  "ANIN", "CATHY", "LANA", "ONIEL", "ELIN", "GENDIS",
+  "INDAH", "LIA", "NALA", "NAYLA", "RAISHA", "RIBKA",
+  "TRISHA", "KIMMY", "MICHIE", "DANELLA", "DAISY",
+  "OLINE", "DELYNN", "LILY", "ARALIE", "NACHIA", "LEVI",
+  "CYNTHIA", "FRITZY", "ERINE", "JEMIMA", "EKIN", "INTAN",
+  "MIKAELA", "RILLY", "VIRGI", "AUWIA", "GIA", "MAIRA",
+  "FERA", "CARISSA", "BELLA", "FAHIRA", "RARA",
+  "HEIDI", "MAXINE", "JAZZY", "RALYNE", "SONA"
+];
+
+const ranks = [
+    "SSR MEMBER ✨",
+  "SR MEMBER 💫",
+  "RARE MEMBER 🌟",
+  "LUCKY MEMBER 🍀",
+  "KAMI-OSHI MODE 🔥",
+  "THEATER QUEEN 👑",
+  "CENTER AURA 💖",
+  "HIGH TOUCH ENERGY 🙌",
+  "FRONTLINER BLESSING 🎭"
+];
+
+const quotes = [
+    "Hari ini keberuntungan theater kamu meningkat drastis 💖<br><br>Ada kemungkinan oshimu notice kamu minggu ini 👀<br><br>Jangan lupa istirahat setelah over-wota 😭",
+
+  "Hari ini vibes kamu cocok buat war tiket theater 🎫<br><br>Semoga seat kamu strategis dan view-nya aman 👀<br><br>Jangan lupa makan sebelum ngevent 🍜",
+
+  "Oshimu mungkin tidak notice, tapi semesta mendukungmu hari ini ✨<br><br>Replay theater akan terasa lebih seru dari biasanya 🎬<br><br>Tetap semangat wota produktif!",
+
+  "Hari ini cocok untuk nostalgia setlist lama 🎶<br><br>Energi kamu sedang naik, tapi dompet harus tetap dijaga 😭<br><br>Semoga dapat kabar baik dari oshimu!",
+
+  "Mode hoki aktif hari ini 🍀<br><br>Kalau ada event, peluang kamu dapat momen bagus meningkat 👀<br><br>Jangan lupa dukung dengan sehat dan santai.",
+
+  "Hari ini kamu punya aura penonton baris depan 😎<br><br>Walau nonton replay, feel theater tetap berasa 🎭<br><br>Oshi kamu bangga melihat perjuanganmu.",
+
+  "Dompet boleh tipis, tapi semangat wota harus tetap tebal 🔥<br><br>Hari ini cocok buat maraton replay theater 🎬<br><br>Jangan lupa minum air putih.",
+
+  "Ada sinyal keberuntungan dari stage hari ini ✨<br><br>Kalau lagi capek, buka replay favoritmu dulu 🎶<br><br>Semoga harimu secerah lightstick.",
+
+  "Hari ini kamu dapat blessing dari dunia per-oshi-an 💫<br><br>Jangan overthinking, oshimu tetap bersinar untukmu 🌟<br><br>Waktunya enjoy konten theater!",
+
+  "Energi kamu cocok buat chanting hari ini 🔊<br><br>Semoga minggu ini ada momen kecil yang bikin senyum sendiri 😭<br><br>Tetap dukung dengan positif.",
+
+  "Hari ini peluang kamu ketemu momen lucu oshimu meningkat 🫶<br><br>Jangan lupa senyum kalau lihat replay favorit 🎬<br><br>Semoga harimu aman dari drama timeline.",
+
+  "Kamu sedang masuk mode wota kalem tapi berbahaya 😎<br><br>Playlist replay hari ini akan terasa lebih nagih dari biasanya 🎧<br><br>Jangan lupa tetap produktif.",
+
+  "Hari ini cocok buat ngajak teman join nonton replay bareng 👀<br><br>Semoga vibes theater menemani harimu 🎭<br><br>Oshi pilihanmu membawa hoki kecil hari ini.",
+
+  "Radar oshimen kamu sedang aktif 📡<br><br>Ada kemungkinan kamu menemukan fancam atau momen langka hari ini ✨<br><br>Simpan energimu untuk event berikutnya.",
+
+  "Hari ini kamu diberkati oleh cahaya lightstick 🌈<br><br>Kalau mood turun, buka satu replay favoritmu dulu 🎬<br><br>Semangatmu akan balik perlahan.",
+
+  "Kamu dapat buff keberuntungan tiket hari ini 🎫<br><br>Belum tentu menang war, tapi mentalmu lebih siap dari biasanya 😭<br><br>Jangan lupa cek jadwal theater.",
+
+  "Hari ini adalah hari baik untuk update koleksi arsip replay 📺<br><br>Oshimu mungkin jauh, tapi dukunganmu tetap sampai ✨<br><br>Jadilah wota yang sehat.",
+
+  "Aura kamu hari ini: penonton setia yang sabar menunggu encore 🙌<br><br>Semoga ada kabar baik dari dunia theater 🎭<br><br>Jangan lupa makan sebelum begadang.",
+
+  "Hari ini cocok buat rewatch lagu favorit di setlist lama 🎶<br><br>Perasaan nostalgia akan terasa lebih kuat dari biasanya 🥲<br><br>Siapkan headset terbaikmu.",
+
+  "Kamu sedang berada di jalur hoki fandom 🍀<br><br>Mungkin bukan hari ini notice datang, tapi energi positifmu naik terus 👀<br><br>Tetap santai dan nikmati prosesnya.",
+
+  "Hari ini semesta berkata: jangan terlalu boros merch dulu 😭<br><br>Tapi kalau untuk membership replay, masih bisa dipertimbangkan 👀<br><br>Gunakan dompet dengan bijak.",
+
+  "Mode theater spirit kamu aktif 🔥<br><br>Setiap replay terasa seperti duduk di kursi penonton langsung 🎭<br><br>Jangan lupa ajak teman biar makin rame.",
+
+  "Hari ini kamu cocok jadi admin update jadwal dadakan 😎<br><br>Insting fandommu sedang tajam 📅<br><br>Semoga tidak ada perubahan jadwal mendadak.",
+
+  "Oshimu mungkin belum tahu namamu, tapi dukunganmu tetap berharga 💖<br><br>Hari ini cocok buat kirim energi positif dari jauh ✨<br><br>Jangan lupa istirahat mata.",
+
+  "Kamu mendapat kartu keberuntungan: Replay Marathon 🎬<br><br>Efeknya: mood naik, waktu tidur berkurang 😭<br><br>Gunakan dengan tanggung jawab.",
+
+  "Hari ini jangan terlalu serius, nikmati fandom dengan santai 🌸<br><br>Kadang momen kecil dari oshimu bisa jadi mood booster seharian 👀<br><br>Semoga harimu ringan.",
+
+  "Semangat kamu hari ini setara chant encore 🔊<br><br>Kalau ada rasa capek, ambil jeda sebentar 🍵<br><br>Oshi juga pasti ingin kamu sehat.",
+
+  "Hari ini cocok buat cek ulang jadwal show dan event 📅<br><br>Ada peluang kamu menemukan info penting yang terlewat 👀<br><br>Jangan lupa bookmark halaman favorit.",
+
+  "Kamu sedang berada di fase: sayang oshi, sayang dompet juga 😭<br><br>Balance adalah kunci wota bahagia ⚖️<br><br>Semoga hari ini tetap aman.",
+
+  "Hari terakhir dalam siklus keberuntungan bulan ini 🌙<br><br>Energi theater kamu terkumpul penuh 🎭<br><br>Siap-siap untuk kejutan kecil berikutnya!"
+];
+
+function getDailyIndex(list, offset){
+    const today = new Date();
+    const seed = today.getFullYear() * 10000 + (today.getMonth()+1) * 100 + today.getDate() + offset;
+    return seed % list.length;
+}
+
+document.getElementById("oshiName").innerHTML = members[getDailyIndex(members, 1)];
+document.getElementById("oshiRank").innerHTML = ranks[getDailyIndex(ranks, 2)];
+document.getElementById("oshiQuote").innerHTML = quotes[getDailyIndex(quotes, 3)];
+</script>
+
+</body>
+</html>
