@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Theater48Fight Oshi Sorter</title>
+
+<style>
+body{
+  margin:0;
+  padding:20px;
+  background:#0f0f0f;
+  color:white;
+  font-family:Arial,sans-serif;
+  text-align:center;
+}
+
+.box{
+  max-width:900px;
+  margin:auto;
+  background:#171717;
+  border-radius:24px;
+  padding:30px;
+}
+
+h1{color:#fff;}
+.sub{color:#aaa;}
+
+.battle{
+  display:flex;
+  gap:20px;
+  justify-content:center;
+  align-items:center;
+  margin-top:30px;
+  flex-wrap:wrap;
+}
+
+.member{
+  background:#fff;
+  color:#8B1D2C;
+  border-radius:22px;
+  padding:35px 20px;
+  width:280px;
+  font-size:36px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.member:hover{
+  transform:scale(1.05);
+  background:#ffecef;
+}
+
+.vs{
+  font-size:28px;
+  color:#f39c12;
+  font-weight:bold;
+}
+
+button{
+  margin-top:20px;
+  padding:12px 20px;
+  border:none;
+  border-radius:14px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.result{
+  text-align:left;
+  max-width:500px;
+  margin:30px auto;
+  background:#fff;
+  color:#111;
+  padding:25px;
+  border-radius:20px;
+}
+
+.result h2{text-align:center;}
+
+.rank{
+  padding:10px;
+  border-bottom:1px solid #ddd;
+  font-size:18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h1>🎭 Oshi Sorter</h1>
+  <p class="sub">Pilih member yang lebih kamu suka sampai ranking oshimu terbentuk.</p>
+
+  <div id="game">
+    <p id="progress"></p>
+
+    <div class="battle">
+      <div class="member" id="left" onclick="choose('left')"></div>
+      <div class="vs">VS</div>
+      <div class="member" id="right" onclick="choose('right')"></div>
+    </div>
+
+    <button onclick="skip()">Skip</button>
+  </div>
+
+  <div id="result" style="display:none;"></div>
+</div>
+
+<script>
+const members = [
+  "FREYA", "CHRISTY", "GRACIE", "FENI", "GITA", "ELI",
+  "OLLA", "MUTHE", "LULU", "FIONY", "MARSHA", "KATHRINA",
+  "JESSI", "LYN", "OGURI YUI", "GREESEL", "ELLA", "ALYA",
+  "ANIN", "CATHY", "LANA", "ONIEL", "ELIN", "GENDIS",
+  "INDAH", "LIA", "NALA", "NAYLA", "RAISHA", "RIBKA",
+  "TRISHA", "KIMMY", "MICHIE", "DANELLA", "DAISY",
+  "OLINE", "DELYNN", "LILY", "ARALIE", "NACHIA", "LEVI",
+  "CYNTHIA", "FRITZY", "ERINE", "JEMIMA", "EKIN", "INTAN",
+  "MIKAELA", "RILLY", "VIRGI", "AUWIA", "GIA", "MAIRA",
+  "FERA", "CARISSA", "BELLA", "FAHIRA", "RARA",
+  "HEIDI", "MAXINE", "JAZZY", "RALYNE", "SONA"
+];
+
+let scores = {};
+let pairs = [];
+let current = 0;
+
+members.forEach(m => scores[m] = 0);
+
+for(let i=0; i<members.length; i++){
+  for(let j=i+1; j<members.length; j++){
+    pairs.push([members[i], members[j]]);
+  }
+}
+
+pairs = pairs.sort(() => Math.random() - 0.5).slice(0, 60);
+
+function showPair(){
+  if(current >= pairs.length){
+    showResult();
+    return;
+  }
+
+  document.getElementById("left").innerText = pairs[current][0];
+  document.getElementById("right").innerText = pairs[current][1];
+  document.getElementById("progress").innerText =
+    "Progress: " + (current + 1) + " / " + pairs.length;
+}
+
+function choose(side){
+  const pair = pairs[current];
+
+  if(side === "left"){
+    scores[pair[0]] += 1;
+  }else{
+    scores[pair[1]] += 1;
+  }
+
+  current++;
+  showPair();
+}
+
+function skip(){
+  current++;
+  showPair();
+}
+
+function showResult(){
+  document.getElementById("game").style.display = "none";
+
+  const sorted = Object.entries(scores)
+    .sort((a,b) => b[1] - a[1])
+    .slice(0, 20);
+
+  let html = `
+    <div class="result">
+    <h2>🏆 Ranking Oshi Kamu</h2>
+  `;
+
+  sorted.forEach((item,index)=>{
+    html += `<div class="rank">${index+1}. ${item[0]}</div>`;
+  });
+
+  html += `
+    <button onclick="location.reload()">Ulangi Sorter</button>
+    </div>
+  `;
+
+  document.getElementById("result").innerHTML = html;
+  document.getElementById("result").style.display = "block";
+}
+
+showPair();
+</script>
+
+</body>
+</html>
