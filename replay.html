@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Replay Theater48Fight</title>
+
+<style>
+
+body{
+    background:#111;
+    color:white;
+    font-family:Arial,sans-serif;
+    margin:0;
+    padding:20px;
+}
+
+.player{
+    width:100%;
+    max-width:1200px;
+    margin:auto;
+}
+
+.player iframe{
+    width:100%;
+    height:650px;
+    border:none;
+    border-radius:15px;
+}
+
+.replay-list{
+    margin-top:25px;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+    gap:15px;
+}
+
+.card{
+    background:#1b1b1b;
+    border-radius:12px;
+    overflow:hidden;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.card:hover{
+    transform:scale(1.03);
+}
+
+.card img{
+    width:100%;
+    display:block;
+}
+
+.card-title{
+    padding:10px;
+    font-size:15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="player">
+
+<iframe
+id="mainPlayer"
+src="https://www.youtube.com/embed/8PQIt0DT5ls"
+allowfullscreen>
+</iframe>
+
+<div class="replay-list">
+
+<div class="card"
+onclick="changeVideo('8PQIt0DT5ls')">
+<img src="https://img.youtube.com/vi/8PQIt0DT5ls/maxresdefault.jpg">
+<div class="card-title">
+ITADAKI♥LOVE - Team Love (06/06/2026) 
+</div>
+</div>
+
+<div class="card"
+onclick="changeVideo('F4vvxxJ0RbU')">
+<img src="https://img.youtube.com/vi/F4vvxxJ0RbU/maxresdefault.jpg">
+<div class="card-title">
+Sambil Menggandeng Erat Tanganku - Team Passion (06/06/2026) 
+</div>
+</div>
+
+<div class="card"
+onclick="changeVideo('4oTnrSgaAtI')">
+<img src="https://img.youtube.com/vi/4oTnrSgaAtI/maxresdefault.jpg">
+<div class="card-title">
+DREAM BAKUDAN - Team Dream (05/06/2026) 
+</div>
+</div>
+
+<div class="card"
+onclick="changeVideo('PpYzXO7RJ0s')">
+<img src="https://img.youtube.com/vi/PpYzXO7RJ0s/maxresdefault.jpg">
+<div class="card-title">
+Pajama Drive (04/06/12) 
+</div>
+</div>
+  
+</div>
+
+</div>
+
+<script>
+
+function changeVideo(videoId){
+
+document.getElementById("mainPlayer").src =
+"https://www.youtube.com/embed/" + videoId;
+
+}
+
+</script>
+
+</body>
+</html>
