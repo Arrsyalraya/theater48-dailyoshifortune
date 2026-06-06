@@ -359,12 +359,38 @@ function updateUI(){
     dupeCount.innerText = `${getDupe()} / 20`;
   }
 
-  updateCollection();
 }
 
 function setFilter(tier){
   currentFilter = tier;
   updateCollection();
+}
+
+function updateHeaderOnly(){
+  const state = getPackState();
+
+  const packLeft = document.getElementById("packLeft");
+  const resetText = document.getElementById("resetText");
+  const collectionCount = document.getElementById("collectionCount");
+  const dupeCount = document.getElementById("dupeCount");
+
+  if(packLeft){
+    packLeft.innerText = `${PACK_LIMIT - state.used} / ${PACK_LIMIT}`;
+  }
+
+  if(resetText){
+    resetText.innerText = state.resetAt
+      ? formatCountdown(state.resetAt - Date.now())
+      : "Belum mulai";
+  }
+
+  if(collectionCount){
+    collectionCount.innerText = `${getCollection().length} / ${getTotalCards()}`;
+  }
+
+  if(dupeCount){
+    dupeCount.innerText = `${getDupe()} / 20`;
+  }
 }
 
 function updateCollection(){
@@ -413,5 +439,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateUI();
 
-  setInterval(updateUI, 1000);
+  if(document.body.dataset.page === "collection"){
+    updateCollection();
+  }
+
+  setInterval(() => {
+    updateHeaderOnly();
+  }, 1000);
 });
