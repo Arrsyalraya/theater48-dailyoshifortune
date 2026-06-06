@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Theater48Fight Card Gacha</title>
+
+<style>
+body{
+  margin:0;
+  padding:20px;
+  background:radial-gradient(circle at top,#30105c,#05000c 70%);
+  color:white;
+  font-family:Arial,sans-serif;
+  text-align:center;
+}
+
+.wrap{max-width:1200px;margin:auto;}
+
+h1{font-size:42px;margin-bottom:5px;}
+.sub{color:#ccc;margin-bottom:25px;}
+
+.panel{
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:24px;
+  padding:25px;
+  margin-bottom:25px;
+  box-shadow:0 0 25px rgba(170,0,255,.25);
+}
+
+.stats{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+  margin:15px 0;
+}
+
+.stat{
+  background:rgba(0,0,0,.35);
+  padding:14px 22px;
+  border-radius:16px;
+  min-width:160px;
+}
+
+.stat b{
+  color:#ffd54f;
+  font-size:24px;
+}
+
+button{
+  padding:14px 24px;
+  margin:8px;
+  border:none;
+  border-radius:16px;
+  font-weight:bold;
+  cursor:pointer;
+  color:white;
+  background:linear-gradient(135deg,#ff1744,#7b1fa2);
+  box-shadow:0 0 15px rgba(255,0,150,.45);
+}
+
+button:hover{transform:scale(1.04);}
+
+.card-area{
+  min-height:430px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:18px;
+}
+
+.card{
+  width:220px;
+  height:385px;
+  border-radius:22px;
+  padding:12px;
+  position:relative;
+  animation:reveal .75s ease;
+  box-shadow:0 0 25px rgba(255,255,255,.35);
+}
+
+@keyframes reveal{
+  0%{transform:rotateY(180deg) scale(.75);opacity:0;}
+  100%{transform:rotateY(0) scale(1);opacity:1;}
+}
+
+.card img{
+  width:100%;
+  height:215px;
+  object-fit:cover;
+  border-radius:16px;
+  background:#222;
+}
+
+.tier{
+  position:absolute;
+  top:14px;
+  left:14px;
+  padding:6px 10px;
+  border-radius:10px;
+  font-weight:bold;
+  font-size:18px;
+}
+
+.name{
+  font-size:27px;
+  font-weight:bold;
+  margin-top:12px;
+}
+
+.jiko{
+  font-size:13px;
+  color:#eee;
+  margin-top:8px;
+  line-height:1.35;
+}
+
+.N{background:linear-gradient(135deg,#555,#999);}
+.R{background:linear-gradient(135deg,#005bea,#00c6fb);}
+.SR{background:linear-gradient(135deg,#7b2ff7,#f107a3);}
+.SSR{background:linear-gradient(135deg,#ffb300,#ff6f00);}
+.UR{background:linear-gradient(135deg,#ff0080,#7928ca,#2afadf);}
+.LR{background:linear-gradient(135deg,#ffe259,#ffa751,#ff3cac);}
+.SECRET{background:linear-gradient(135deg,#000,#6a00ff,#fff);}
+
+.N .tier{background:#777;}
+.R .tier{background:#007bff;}
+.SR .tier{background:#9c27b0;}
+.SSR .tier{background:#ff9800;}
+.UR .tier{background:#e91e63;}
+.LR .tier{background:#ffc107;color:#111;}
+.SECRET .tier{background:#fff;color:#111;}
+
+.collection{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(125px,1fr));
+  gap:12px;
+  margin-top:18px;
+}
+
+.mini{
+  background:#151515;
+  border-radius:14px;
+  padding:10px;
+  font-size:13px;
+  border:1px solid rgba(255,255,255,.15);
+}
+
+.mini img{
+  width:100%;
+  height:110px;
+  object-fit:cover;
+  border-radius:10px;
+  margin:8px 0;
+  background:#222;
+}
+
+.mini.locked{
+  opacity:.28;
+  filter:grayscale(1);
+}
+
+.filters button{
+  background:#1b1b1b;
+  box-shadow:none;
+  border:1px solid #555;
+  padding:10px 14px;
+}
+
+@media(max-width:600px){
+  body{padding:10px;}
+  h1{font-size:30px;}
+  .card{width:185px;height:345px;}
+  .card img{height:175px;}
+  .name{font-size:23px;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+  <h1>🎴 Theater48Fight Card Gacha</h1>
+  <p class="sub">Kumpulkan kartu member dari berbagai tier. Versi uji coba: 5 member × 7 tier.</p>
+
+  <div class="panel">
+    <div class="stats">
+      <div class="stat">Mode<br><b id="modeText">FREE</b></div>
+      <div class="stat">Sisa Pack<br><b id="packLeft">0 / 10</b></div>
+      <div class="stat">Koleksi<br><b id="collectionCount">0 / 35</b></div>
+    </div>
+
+    <button onclick="openPack(1)">Buka 1 Pack 🎁</button>
+    <button onclick="openPack(10)">Buka 10 Pack 🔥</button>
+
+    <p style="color:#bbb;font-size:14px;">
+      1 pack berisi 5 kartu random. Free: 10 pack/hari. Membership: 20 pack/hari.
+    </p>
+  </div>
+
+  <div class="panel">
+    <div class="card-area" id="cardArea">
+      <p>Tekan tombol buka pack untuk mulai brewek kartu.</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>📚 Koleksi Saya</h2>
+
+    <div class="filters">
+      <button onclick="setFilter('ALL')">Semua</button>
+      <button onclick="setFilter('N')">N</button>
+      <button onclick="setFilter('R')">R</button>
+      <button onclick="setFilter('SR')">SR</button>
+      <button onclick="setFilter('SSR')">SSR</button>
+      <button onclick="setFilter('UR')">UR</button>
+      <button onclick="setFilter('LR')">LR</button>
+      <button onclick="setFilter('SECRET')">SECRET</button>
+    </div>
+
+    <div class="collection" id="collection"></div>
+  </div>
+</div>
+
+<script>
+const urlMode = new URLSearchParams(window.location.search).get("mode") || "free";
+const isPremium = urlMode === "premium";
+const DAILY_LIMIT = isPremium ? 20 : 10;
+const CARDS_PER_PACK = 5;
+
+const tiers = [
+  {name:"N", rate:45},
+  {name:"R", rate:30},
+  {name:"SR", rate:15},
+  {name:"SSR", rate:6},
+  {name:"UR", rate:3},
+  {name:"LR", rate:0.8},
+  {name:"SECRET", rate:0.2}
+];
+
+const members = [
+  {
+    name:"FREYA",
+    img:"images/freya.jpg",
+    jiko:"Gadis koleris yang suka berimajinasi, terangi harimu dengan senyum karamelku."
+  },
+  {
+    name:"CHRISTY",
+    img:"images/christy.jpg",
+    jiko:"Peduli dan berbaik hati, siap menemani harimu dengan semangat positif."
+  },
+  {
+    name:"GRACIA",
+    img:"images/gracia.jpg",
+    jiko:"Senyum semangatku akan selalu menemani hari-harimu."
+  },
+  {
+    name:"MUTHE",
+    img:"images/muthe.jpg",
+    jiko:"Dengan senyum manis, aku siap membuat harimu lebih cerah."
+  },
+  {
+    name:"FLORA",
+    img:"images/flora.jpg",
+    jiko:"Bersinar dengan caraku sendiri dan membawa warna baru."
+  }
+];
+
+let currentFilter = "ALL";
+
+function todayKey(){
+  const d = new Date();
+  return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+}
+
+function getUsed(){
+  const data = JSON.parse(localStorage.getItem("t48_pack_used_v3") || "{}");
+  if(data.date !== todayKey() || data.mode !== urlMode) return 0;
+  return data.used || 0;
+}
+
+function setUsed(num){
+  localStorage.setItem("t48_pack_used_v3", JSON.stringify({
+    date: todayKey(),
+    mode: urlMode,
+    used: num
+  }));
+}
+
+function getCollection(){
+  return JSON.parse(localStorage.getItem("t48_collection_v3") || "[]");
+}
+
+function saveCollection(col){
+  localStorage.setItem("t48_collection_v3", JSON.stringify(col));
+}
+
+function pickTier(){
+  let roll = Math.random() * 100;
+  let sum = 0;
+
+  for(const t of tiers){
+    sum += t.rate;
+    if(roll <= sum) return t.name;
+  }
+
+  return "N";
+}
+
+function getRandomMember(){
+  return members[Math.floor(Math.random() * members.length)];
+}
+
+function openPack(packAmount){
+  let used = getUsed();
+
+  if(used >= DAILY_LIMIT){
+    alert("Pack harian sudah habis. Coba lagi besok!");
+    return;
+  }
+
+  let allowedPack = Math.min(packAmount, DAILY_LIMIT - used);
+  let totalCards = allowedPack * CARDS_PER_PACK;
+  let results = [];
+
+  for(let i=0; i<totalCards; i++){
+    const member = getRandomMember();
+    const tier = pickTier();
+    const cardId = member.name + "_" + tier;
+
+    results.push({
+      member: member.name,
+      tier,
+      cardId,
+      img: member.img,
+      jiko: member.jiko
+    });
+  }
+
+  setUsed(used + allowedPack);
+  addToCollection(results);
+  showCards(results);
+  updateUI();
+}
+
+function addToCollection(cards){
+  let col = getCollection();
+
+  cards.forEach(c=>{
+    if(!col.includes(c.cardId)){
+      col.push(c.cardId);
+    }
+  });
+
+  saveCollection(col);
+}
+
+function showCards(cards){
+  const area = document.getElementById("cardArea");
+  area.innerHTML = "";
+
+  cards.forEach((c, index)=>{
+    setTimeout(()=>{
+      area.innerHTML += `
+        <div class="card ${c.tier}">
+          <div class="tier">${c.tier}</div>
+          <img src="${c.img}" onerror="this.src='https://via.placeholder.com/300x400/111111/ffffff?text=${c.member}'">
+          <div class="name">${c.member}</div>
+          <div class="jiko">${c.jiko}</div>
+        </div>
+      `;
+    }, index * 120);
+  });
+}
+
+function setFilter(tier){
+  currentFilter = tier;
+  updateCollection();
+}
+
+function updateUI(){
+  document.getElementById("modeText").innerText = isPremium ? "PREMIUM" : "FREE";
+
+  const used = getUsed();
+  document.getElementById("packLeft").innerText =
+    (DAILY_LIMIT - used) + " / " + DAILY_LIMIT;
+
+  const col = getCollection();
+  const total = members.length * tiers.length;
+
+  document.getElementById("collectionCount").innerText =
+    col.length + " / " + total;
+
+  updateCollection();
+}
+
+function updateCollection(){
+  const col = getCollection();
+  const grid = document.getElementById("collection");
+  grid.innerHTML = "";
+
+  members.forEach(member=>{
+    tiers.forEach(t=>{
+      if(currentFilter !== "ALL" && currentFilter !== t.name) return;
+
+      const id = member.name + "_" + t.name;
+      const owned = col.includes(id);
+
+      grid.innerHTML += `
+        <div class="mini ${owned ? "" : "locked"}">
+          <b>${t.name}</b><br>
+          <img src="${member.img}" onerror="this.src='https://via.placeholder.com/300x400/111111/ffffff?text=${member.name}'">
+          ${member.name}
+        </div>
+      `;
+    });
+  });
+}
+
+updateUI();
+</script>
+
+</body>
+</html>
