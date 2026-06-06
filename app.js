@@ -211,7 +211,6 @@ function openPack(packAmount, countDaily){
     savePackState(state);
   }
 
-  addToCollection(results);
   showCards(results);
   triggerRareEffects(results);
   updateUI();
@@ -246,7 +245,7 @@ function showCards(cards){
         : "";
 
       area.innerHTML += `
-        <div class="card-shell ${rareClass}" onclick="this.classList.add('open')">
+        <div class="card-shell ${rareClass}" data-card='${JSON.stringify(c)}' onclick="openSingleCard(this)">
           <div class="card-inner">
             <div class="card-back"><span>T48F</span></div>
 
@@ -261,6 +260,18 @@ function showCards(cards){
       `;
     }, index * 120);
   });
+}
+
+function openSingleCard(cardElement){
+  if(cardElement.classList.contains("opened")) return;
+
+  cardElement.classList.add("open");
+  cardElement.classList.add("opened");
+
+  const card = JSON.parse(cardElement.dataset.card);
+
+  addToCollection([card]);
+  updateUI();
 }
 
 function triggerRareEffects(cards){
