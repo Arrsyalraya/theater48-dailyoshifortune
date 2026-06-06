@@ -30,16 +30,23 @@
         <div class="stat">Duplicate<br><b id="dupeCount">0 / 20</b></div>
       </div>
 
-      <div class="filters">
-        <button onclick="setFilter('Normal')">Normal</button>
-<button onclick="setFilter('Rare')">Rare</button>
-<button onclick="setFilter('Super Rare')">Super Rare</button>
-<button onclick="setFilter('Super Star Rare')">Super Star Rare</button>
-<button onclick="setFilter('Ultra Rare')">Ultra Rare</button>
-<button onclick="setFilter('Legendary Rare')">Legendary Rare</button>
-<button onclick="setFilter('Secret')">Secret</button>
-<button onclick="setFilter('Infinity')">Infinity</button>
-      </div>
+ <div class="filters">
+  <button onclick="setFilter('ALL')">Semua</button>
+  <button onclick="setFilter('Normal')">Normal</button>
+  <button onclick="setFilter('Rare')">Rare</button>
+  <button onclick="setFilter('Super Rare')">Super Rare</button>
+  <button onclick="setFilter('Super Star Rare')">Super Star Rare</button>
+  <button onclick="setFilter('Ultra Rare')">Ultra Rare</button>
+  <button onclick="setFilter('Legendary Rare')">Legendary Rare</button>
+  <button onclick="setFilter('Secret')">Secret</button>
+  <button onclick="setFilter('Infinity')">Infinity</button>
+</div>
+
+<div style="margin-top:20px">
+  <select id="memberFilter" onchange="setMemberFilter(this.value)">
+    <option value="ALL">Semua Member</option>
+  </select>
+</div>
     </section>
 
     <section class="panel">
@@ -47,6 +54,6 @@
     </section>
   </main>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=30"></script>
 </body>
 </html>
