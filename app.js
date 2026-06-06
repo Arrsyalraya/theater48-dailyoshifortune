@@ -312,7 +312,7 @@ function updateCollection(){
       const imgPath = getMemberImage(member, t.name);
 
       grid.innerHTML += `
-        <div class="mini ${owned ? "" : "locked"}">
+        <div class="mini ${getTierClass(t.name)} ${owned ? "" : "locked"}">
           <b>${t.name}</b><br>
           <img src="${imgPath}" onerror="this.src='https://via.placeholder.com/300x400/111111/ffffff?text=${encodeURIComponent(member.name)}'">
           ${owned ? member.name : "???"}
@@ -327,7 +327,7 @@ function updateCollection(){
     const owned = col.includes(infinityCard.cardId);
 
     grid.innerHTML += `
-      <div class="mini ${owned ? "" : "locked"}">
+      <div class="mini infinity ${owned ? "" : "locked"}">
         <b>Infinity</b><br>
         <img src="${infinityCard.img}" onerror="this.src='https://via.placeholder.com/300x400/111111/ffffff?text=OGURI+YUI'">
         ${owned ? infinityCard.member : "???"}
