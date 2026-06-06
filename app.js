@@ -157,6 +157,7 @@ function openPack(packAmount, countDaily){
   }
 
   showCards(results);
+  dropCardEffect();
   updateHeaderOnly();
 }
 
@@ -205,9 +206,45 @@ function openSingleCard(cardElement){
   if(["Ultra Rare","Legendary Rare","Secret","Infinity"].includes(card.tier)){
     setTimeout(() => {
       triggerRareEffects([card]);
+      showBigRareCard(card);
       cardElement.classList.add("rare-reveal-boom");
     }, 450);
   }
+}
+
+function showBigRareCard(card){
+  const overlay = document.getElementById("bigCardOverlay");
+  const box = document.getElementById("bigCardBox");
+
+  if(!overlay || !box) return;
+
+  const tierClass = getTierClass(card.tier);
+
+  box.innerHTML = `
+    <div class="big-card-content ${tierClass}">
+      <button class="big-close" onclick="closeBigRareCard()">×</button>
+      <div class="tier">${card.tier}</div>
+      <img src="${card.img}">
+      <div class="name">${card.member}</div>
+      <div class="jiko">${card.jiko}</div>
+    </div>
+  `;
+
+  overlay.style.display = "flex";
+}
+
+function closeBigRareCard(){
+  const overlay = document.getElementById("bigCardOverlay");
+  if(overlay) overlay.style.display = "none";
+}
+
+function dropCardEffect(){
+  const area = document.getElementById("cardArea");
+  if(!area) return;
+
+  area.classList.remove("drop-start");
+  void area.offsetWidth;
+  area.classList.add("drop-start");
 }
 
 function addToCollection(cards){
