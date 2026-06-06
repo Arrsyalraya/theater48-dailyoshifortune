@@ -42,7 +42,7 @@ const infinityCard = {
   tier:"Infinity",
   cardId:"OGURI_YUI_AKB_INFINITY",
   img:"images/oguri-yui-akb/infinity.jpg",
-  jiko:"Mi~nna no HAATO wo (Tocchau, tocchau) Nippon kara kimashita "Yuiyui" koto Oguri Yui desu."
+  jiko:'Mi~nna no HAATO wo (Tocchau, tocchau) Nippon kara kimashita "Yuiyui" koto Oguri Yui desu.'
 };
 
 function getTotalCards(){
