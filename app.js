@@ -251,7 +251,7 @@ function showCards(cards){
           <div class="card-inner">
             <div class="card-back"><span>T48F</span></div>
 
-            <div class="card-front ${c.tier}">
+           <div class="card-front ${getTierClass(c.tier)}">
               <div class="tier">${c.tier}</div>
               <img src="${c.img}" onerror="this.src='https://via.placeholder.com/300x400/111111/ffffff?text=${encodeURIComponent(c.member)}'">
               <div class="name">${c.member}</div>
@@ -404,6 +404,39 @@ function updateHeaderOnly(){
   if(dupeCount){
     dupeCount.innerText = `${getDupe()} / 20`;
   }
+}
+
+function getTierClass(tier){
+
+ switch(tier){
+
+  case "Normal":
+   return "normal";
+
+  case "Rare":
+   return "rare";
+
+  case "Super Rare":
+   return "super-rare";
+
+  case "Super Star Rare":
+   return "super-star-rare";
+
+  case "Ultra Rare":
+   return "ultra-rare";
+
+  case "Legendary Rare":
+   return "legendary-rare";
+
+  case "Secret":
+   return "secret";
+
+  case "Infinity":
+   return "infinity";
+
+  default:
+   return "normal";
+ }
 }
 
 function updateCollection(){
