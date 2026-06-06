@@ -19,10 +19,8 @@ body{
     background:#0b0b0b;
 }
 
+/* Video utama sekarang tidak sticky, jadi ikut ke-scroll */
 .player-box{
-    position:sticky;
-    top:0;
-    z-index:10;
     background:#000;
 }
 
@@ -31,24 +29,6 @@ body{
     aspect-ratio:16/9;
     border:none;
     display:block;
-}
-
-.action-row{
-    display:flex;
-    gap:10px;
-    justify-content:center;
-    flex-wrap:wrap;
-    background:#111;
-    padding:12px;
-}
-
-.action-row a{
-    background:#ff2b2b;
-    color:white;
-    text-decoration:none;
-    padding:10px 18px;
-    border-radius:10px;
-    font-weight:bold;
 }
 
 .lineup-box{
@@ -79,27 +59,28 @@ body{
     display:none;
     margin-top:18px;
     justify-content:center;
-    gap:12px;
+    gap:14px;
     flex-wrap:wrap;
 }
 
 .member{
-    width:82px;
+    width:86px;
     text-align:center;
 }
 
 .member img{
-    width:64px;
-    height:64px;
+    width:66px;
+    height:66px;
     border-radius:50%;
     object-fit:cover;
     background:#222;
-    border:2px solid #ff2b2b;
+    border:2px solid #ff5bbd;
 }
 
 .member div{
-    margin-top:5px;
+    margin-top:6px;
     font-size:12px;
+    color:#eee;
 }
 
 .replay-list{
@@ -114,7 +95,7 @@ body{
     gap:16px;
     align-items:center;
     background:#1b1b1b;
-    border:1.5px solid #ff2b2b;
+    border:1px solid transparent;
     border-radius:14px;
     padding:12px;
     cursor:pointer;
@@ -123,13 +104,11 @@ body{
 
 .replay-card:hover{
     background:#252525;
-    transform:scale(1.01);
 }
 
 .replay-card.active{
-    border:2px solid #ff2b2b;
+    border:1px solid #ff2b2b;
     background:#251515;
-    box-shadow:0 0 12px rgba(255,43,43,.5);
 }
 
 .replay-card img{
@@ -157,7 +136,6 @@ body{
     font-size:15px;
 }
 
-/* MOBILE */
 @media(max-width:650px){
     .replay-wrap{
         max-width:100%;
@@ -173,7 +151,6 @@ body{
     .replay-card{
         gap:12px;
         padding:10px;
-        border:1.5px solid #ff2b2b;
     }
 
     .replay-card img{
@@ -191,6 +168,19 @@ body{
 
     .lineup-box h2{
         font-size:24px;
+    }
+
+    .member{
+        width:72px;
+    }
+
+    .member img{
+        width:58px;
+        height:58px;
+    }
+
+    .member div{
+        font-size:11px;
     }
 }
 </style>
@@ -211,12 +201,6 @@ body{
                 mozallowfullscreen>
             </iframe>
         </div>
-
-        <div class="action-row">
-            <a id="openYoutube" href="https://youtu.be/8PQIt0DT5ls" target="_blank">
-                Buka di YouTube
-            </a>
-        </div>
     </div>
 
     <div class="lineup-box">
@@ -233,8 +217,44 @@ body{
                 <div>Christy</div>
             </div>
             <div class="member">
+                <img src="images/gracia.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=GRACIA'">
+                <div>Gracia</div>
+            </div>
+            <div class="member">
+                <img src="images/feni.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=FENI'">
+                <div>Feni</div>
+            </div>
+            <div class="member">
+                <img src="images/gita.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=GITA'">
+                <div>Gita</div>
+            </div>
+            <div class="member">
+                <img src="images/eli.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=ELI'">
+                <div>Eli</div>
+            </div>
+            <div class="member">
+                <img src="images/olla.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=OLLA'">
+                <div>Olla</div>
+            </div>
+            <div class="member">
+                <img src="images/muthe.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=MUTHE'">
+                <div>Muthe</div>
+            </div>
+            <div class="member">
+                <img src="images/lulu.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=LULU'">
+                <div>Lulu</div>
+            </div>
+            <div class="member">
                 <img src="images/flora.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=FLORA'">
                 <div>Flora</div>
+            </div>
+            <div class="member">
+                <img src="images/marsha.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=MARSHA'">
+                <div>Marsha</div>
+            </div>
+            <div class="member">
+                <img src="images/kathrina.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=KATHRINA'">
+                <div>Kathrina</div>
             </div>
         </div>
     </div>
@@ -282,14 +302,16 @@ function changeVideo(card, videoId){
     document.getElementById("mainPlayer").src =
     "https://www.youtube.com/embed/" + videoId + "?rel=0&playsinline=0&fs=1&autoplay=1";
 
-    document.getElementById("openYoutube").href =
-    "https://youtu.be/" + videoId;
-
     document.querySelectorAll(".replay-card").forEach(el=>{
         el.classList.remove("active");
     });
 
     card.classList.add("active");
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
 }
 
 function toggleLineup(){
