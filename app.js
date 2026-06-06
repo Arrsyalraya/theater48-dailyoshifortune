@@ -157,7 +157,6 @@ function openPack(packAmount, countDaily){
   }
 
   showCards(results);
-  triggerRareEffects(results);
   updateHeaderOnly();
 }
 
@@ -202,6 +201,13 @@ function openSingleCard(cardElement){
 
   addToCollection([card]);
   updateHeaderOnly();
+
+  if(["Ultra Rare","Legendary Rare","Secret","Infinity"].includes(card.tier)){
+    setTimeout(() => {
+      triggerRareEffects([card]);
+      cardElement.classList.add("rare-reveal-boom");
+    }, 450);
+  }
 }
 
 function addToCollection(cards){
