@@ -22,10 +22,28 @@ const tiers = [
 
 const normalTiers = tiers.filter(t => t.name !== "INFINITY");
 
+function getTierClass(tier){
+  switch(tier){
+    case "Normal": return "normal";
+    case "Rare": return "rare";
+    case "Super Rare": return "super-rare";
+    case "Super Star Rare": return "super-star-rare";
+    case "Ultra Rare": return "ultra-rare";
+    case "Legendary Rare": return "legendary-rare";
+    case "Secret": return "secret";
+    case "Infinity": return "infinity";
+    default: return "normal";
+  }
+}
+
+function getMemberImage(member, tier){
+  return `images/${member.slug}/${getTierClass(tier)}.jpg`;
+}
+
 const members = [
-{name:"FREYA",img:"images/freya.jpg",jiko:"Template jiko Freya. Silakan edit sendiri."},
-{name:"CHRISTY",img:"images/christy.jpg",jiko:"Template jiko Christy. Silakan edit sendiri."},
-{name:"GRACIA",img:"images/gracia.jpg",jiko:"Template jiko Gracia. Silakan edit sendiri."},
+{name:"FREYA",slug:"freya",jiko:"Gadis koleris yang suka berimajinasi, terangi harimu dengan senyum karamelku. Halo semua, aku Freya!."},
+{name:"CHRISTY",slug:"christy",jiko:"Peduli dan berbaik hati, siapa dia? Chriiiis-ty!."},
+{name:"MARSHA",slug:"marsha",jiko:"Seperti piza yang dinanti-nantikan semua orang, selalu nantikan aku, ya! Halo, aku Marsha!."}
 {name:"FENI",img:"images/feni.jpg",jiko:"Template jiko Feni. Silakan edit sendiri."},
 {name:"GITA",img:"images/gita.jpg",jiko:"Template jiko Gita. Silakan edit sendiri."},
 {name:"ELI",img:"images/eli.jpg",jiko:"Template jiko Eli. Silakan edit sendiri."},
@@ -89,10 +107,10 @@ const members = [
 
 const infinityCard = {
   member:"OGURI YUI AKB",
-  tier:"INFINITY",
+  tier:"Infinity",
   cardId:"OGURI_YUI_AKB_INFINITY",
-  img:"images/oguriyui.jpg",
-  jiko:"Kartu eksklusif paling langka. Hanya tersedia di tier INFINITY."
+  img:"images/oguri-yui-akb/infinity.jpg",
+  jiko:"Mi~nna no HAATO wo (Tocchau, tocchau) Nippon kara kimashita "Yuiyui" koto Oguri Yui desu."
 };
 
 function getTotalCards(){
@@ -157,12 +175,12 @@ function generateCard(){
   const member = members[Math.floor(Math.random() * members.length)];
 
   return {
-    member:member.name,
-    tier:tier,
-    cardId:member.name + "_" + tier,
-    img:member.img,
-    jiko:member.jiko
-  };
+  member:member.name,
+  tier:tier,
+  cardId:member.name + "_" + tier,
+  img:getMemberImage(member, tier),
+  jiko:member.jiko
+ };
 }
 
 function preparePack(amount){
