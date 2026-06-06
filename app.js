@@ -213,7 +213,7 @@ function openPack(packAmount, countDaily){
 
   showCards(results);
   triggerRareEffects(results);
-  updateUI();
+  updateHeaderOnly();
 }
 
 function addToCollection(cards){
@@ -244,8 +244,10 @@ function showCards(cards){
         ? "rare-" + c.tier
         : "";
 
+      const safeCard = encodeURIComponent(JSON.stringify(c));
+
       area.innerHTML += `
-        <div class="card-shell ${rareClass}" data-card='${JSON.stringify(c)}' onclick="openSingleCard(this)">
+        <div class="card-shell ${rareClass}" data-card="${safeCard}" onclick="openSingleCard(this)">
           <div class="card-inner">
             <div class="card-back"><span>T48F</span></div>
 
@@ -268,10 +270,10 @@ function openSingleCard(cardElement){
   cardElement.classList.add("open");
   cardElement.classList.add("opened");
 
-  const card = JSON.parse(cardElement.dataset.card);
+  const card = JSON.parse(decodeURIComponent(cardElement.dataset.card));
 
   addToCollection([card]);
-  updateUI();
+  updateHeaderOnly();
 }
 
 function triggerRareEffects(cards){
