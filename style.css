@@ -1257,3 +1257,76 @@ body{
     text-align:center;
   }
 }
+/* Layout hasil 1 pack: 3 kartu atas, 2 kartu bawah */
+.card-area.pack-five-layout{
+  display:grid;
+  grid-template-columns:repeat(6, 110px);
+  justify-content:center;
+  align-items:start;
+  gap:24px;
+}
+
+.card-area.pack-five-layout .card-shell{
+  grid-column:span 2;
+}
+
+.card-area.pack-five-layout .card-shell:nth-child(4){
+  grid-column:2 / span 2;
+}
+
+.card-area.pack-five-layout .card-shell:nth-child(5){
+  grid-column:4 / span 2;
+}
+.pack-overlay.slash-open::before{
+  content:"";
+  position:absolute;
+  width:520px;
+  height:8px;
+  background:linear-gradient(90deg,transparent,#fff,#ff4fd8,#ffd54f,transparent);
+  box-shadow:
+    0 0 25px white,
+    0 0 55px #ff4fd8,
+    0 0 85px #ffd54f;
+  transform:rotate(-18deg);
+  animation:slashLine .65s ease-out forwards;
+  z-index:10001;
+}
+
+@keyframes slashLine{
+  0%{
+    opacity:0;
+    transform:translateX(-320px) rotate(-18deg) scaleX(.2);
+  }
+  35%{
+    opacity:1;
+  }
+  100%{
+    opacity:0;
+    transform:translateX(320px) rotate(-18deg) scaleX(1.2);
+  }
+}
+
+.pack-box.opening{
+  animation:packCutOpen .95s forwards;
+}
+
+@keyframes packCutOpen{
+  0%{
+    clip-path:polygon(0 0,100% 0,100% 100%,0 100%);
+    transform:scale(1) rotate(0);
+    filter:brightness(1);
+  }
+  35%{
+    transform:scale(1.15) rotate(-6deg);
+    filter:brightness(2);
+  }
+  65%{
+    clip-path:polygon(0 0,100% 14%,100% 100%,0 86%);
+    transform:scale(1.18) rotate(5deg);
+  }
+  100%{
+    clip-path:polygon(0 48%,100% 52%,100% 52%,0 48%);
+    transform:scale(.2) rotate(22deg);
+    opacity:0;
+  }
+}
