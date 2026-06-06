@@ -562,3 +562,53 @@ button:hover{
   .name{font-size:22px;}
   .rare-text{font-size:36px;}
 }
+
+/* Paksa tampilan desktop walau dibuka di HP */
+html,
+body{
+  min-width:1200px;
+  overflow-x:auto;
+}
+
+.wrap{
+  width:1200px;
+  max-width:1200px;
+}
+
+.stats{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+.collection{
+  grid-template-columns:repeat(auto-fill,minmax(135px,1fr));
+}
+
+@media(max-width:600px){
+  body{
+    padding:20px;
+  }
+
+  h1{
+    font-size:46px;
+  }
+
+  .card-shell{
+    width:220px;
+    height:390px;
+  }
+
+  .card-front img{
+    height:215px;
+  }
+
+  .name{
+    font-size:25px;
+  }
+
+  .jiko{
+    font-size:12.5px;
+  }
+}
