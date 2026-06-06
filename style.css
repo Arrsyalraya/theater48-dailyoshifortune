@@ -593,3 +593,68 @@ body{
     font-size:12.5px;
   }
 }
+/* FIX TAMPILAN KOLEKSI */
+.collection .mini{
+  position:relative;
+  overflow:hidden;
+  min-height:250px;
+  padding:14px;
+  background:rgba(0,0,0,.48);
+}
+
+.collection .mini::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  opacity:.45;
+  z-index:0;
+}
+
+.collection .mini > *{
+  position:relative;
+  z-index:1;
+}
+
+.collection .mini img{
+  width:100%;
+  height:165px;
+  object-fit:cover;
+  object-position:center top;
+  border-radius:14px;
+  margin:10px 0;
+}
+
+/* background berdasarkan tier */
+.collection .mini.normal::before{
+  background-image:url("assets/card-bg/normal.jpg");
+}
+
+.collection .mini.rare::before{
+  background-image:url("assets/card-bg/rare.jpg");
+}
+
+.collection .mini.super-rare::before{
+  background-image:url("assets/card-bg/super-rare.jpg");
+}
+
+.collection .mini.super-star-rare::before{
+  background-image:url("assets/card-bg/super-star-rare.jpg");
+}
+
+.collection .mini.ultra-rare::before{
+  background-image:url("assets/card-bg/ultra-rare.jpg");
+}
+
+.collection .mini.legendary-rare::before{
+  background-image:url("assets/card-bg/legendary-rare.jpg");
+}
+
+.collection .mini.secret::before{
+  background-image:url("assets/card-bg/secret.jpg");
+}
+
+.collection .mini.infinity::before{
+  background-image:url("assets/card-bg/infinity.jpg");
+}
