@@ -910,3 +910,350 @@ body{
     opacity:0;
   }
 }
+/* ===============================
+   PREMIUM RARE EFFECT SYSTEM
+================================ */
+
+/* kartu jatuh setelah pack dibuka */
+.card-area.drop-start .card-shell{
+  animation:cardDropIn .8s cubic-bezier(.2,1.4,.4,1) both;
+}
+
+.card-area.drop-start .card-shell:nth-child(2){animation-delay:.08s;}
+.card-area.drop-start .card-shell:nth-child(3){animation-delay:.16s;}
+.card-area.drop-start .card-shell:nth-child(4){animation-delay:.24s;}
+.card-area.drop-start .card-shell:nth-child(5){animation-delay:.32s;}
+
+@keyframes cardDropIn{
+  0%{
+    opacity:0;
+    transform:translateY(-180px) rotate(-14deg) scale(.7);
+    filter:blur(8px) brightness(2);
+  }
+  70%{
+    opacity:1;
+    transform:translateY(18px) rotate(3deg) scale(1.06);
+    filter:blur(0) brightness(1.4);
+  }
+  100%{
+    transform:translateY(0) rotate(0) scale(1);
+    filter:brightness(1);
+  }
+}
+
+/* pack efek gunting / potong */
+.pack-box.opening{
+  animation:packCutOpen .9s forwards;
+}
+
+@keyframes packCutOpen{
+  0%{
+    clip-path:polygon(0 0,100% 0,100% 100%,0 100%);
+    transform:scale(1) rotate(0);
+    filter:brightness(1);
+  }
+  35%{
+    transform:scale(1.18) rotate(-7deg);
+    filter:brightness(2);
+  }
+  65%{
+    clip-path:polygon(0 0,100% 10%,100% 100%,0 90%);
+    transform:scale(1.12) rotate(6deg);
+  }
+  100%{
+    clip-path:polygon(0 46%,100% 54%,100% 54%,0 46%);
+    transform:scale(.25) rotate(25deg);
+    opacity:0;
+  }
+}
+
+/* rare border di kartu gacha + koleksi */
+.card-front.ultra-rare,
+.card-front.legendary-rare,
+.card-front.secret,
+.card-front.infinity,
+.collection .mini.ultra-rare,
+.collection .mini.legendary-rare,
+.collection .mini.secret,
+.collection .mini.infinity{
+  border:2px solid rgba(255,255,255,.85);
+  box-shadow:
+    0 0 18px rgba(255,255,255,.6),
+    0 0 35px rgba(255,0,200,.55),
+    inset 0 0 28px rgba(255,255,255,.18);
+  animation:rareBorderPulse 2s infinite alternate;
+}
+
+@keyframes rareBorderPulse{
+  from{
+    filter:brightness(1);
+  }
+  to{
+    filter:brightness(1.25) drop-shadow(0 0 20px rgba(255,0,200,.8));
+  }
+}
+
+/* shine berjalan dalam kartu */
+.card-front.ultra-rare::after,
+.card-front.legendary-rare::after,
+.card-front.secret::after,
+.card-front.infinity::after,
+.collection .mini.ultra-rare::after,
+.collection .mini.legendary-rare::after,
+.collection .mini.secret::after,
+.collection .mini.infinity::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(120deg,transparent 25%,rgba(255,255,255,.55),transparent 65%),
+    radial-gradient(circle at top,rgba(255,255,255,.35),transparent 45%);
+  mix-blend-mode:screen;
+  animation:rareShineMove 2.3s infinite;
+  z-index:4;
+  pointer-events:none;
+}
+
+@keyframes rareShineMove{
+  0%{transform:translateX(-150%) skewX(-12deg);}
+  55%{transform:translateX(150%) skewX(-12deg);}
+  100%{transform:translateX(150%) skewX(-12deg);}
+}
+
+/* warna aura per tier */
+.card-front.ultra-rare,
+.collection .mini.ultra-rare{
+  box-shadow:0 0 22px #ff365f,0 0 45px #ff2b8a,inset 0 0 25px rgba(255,255,255,.18);
+}
+
+.card-front.legendary-rare,
+.collection .mini.legendary-rare{
+  box-shadow:0 0 22px #ffd54f,0 0 50px #ff9800,inset 0 0 25px rgba(255,255,255,.2);
+}
+
+.card-front.secret,
+.collection .mini.secret{
+  box-shadow:0 0 25px #ffffff,0 0 55px #9c27ff,inset 0 0 25px rgba(255,255,255,.22);
+}
+
+.card-front.infinity,
+.collection .mini.infinity{
+  box-shadow:0 0 25px #fff8b8,0 0 60px #ff4fd8,0 0 90px #2afadf;
+  animation:infinityRainbow 2.4s linear infinite;
+}
+
+@keyframes infinityRainbow{
+  0%{filter:hue-rotate(0deg) brightness(1.15);}
+  100%{filter:hue-rotate(360deg) brightness(1.25);}
+}
+
+/* efek saat kartu rare dibuka */
+.rare-reveal-boom{
+  animation:rareRevealBoom 1.8s ease-in-out;
+}
+
+@keyframes rareRevealBoom{
+  0%{transform:scale(1);filter:brightness(1);}
+  30%{transform:scale(1.15);filter:brightness(2) drop-shadow(0 0 40px white);}
+  65%{transform:scale(1.06);filter:brightness(1.5) drop-shadow(0 0 55px #ff4fd8);}
+  100%{transform:scale(1);filter:brightness(1);}
+}
+
+/* popup kartu besar rare */
+.rare-card-modal{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.82);
+  backdrop-filter:blur(10px);
+  z-index:20000;
+  overflow:hidden;
+}
+
+.rare-card-modal.show{
+  display:flex;
+}
+
+.rare-modal-bg{
+  position:absolute;
+  inset:-20%;
+  background:
+    radial-gradient(circle at center,rgba(255,0,200,.35),transparent 35%),
+    radial-gradient(circle at bottom,rgba(42,250,223,.25),transparent 30%),
+    linear-gradient(135deg,#100018,#320055,#05000c);
+  animation:modalBgMove 6s linear infinite;
+}
+
+@keyframes modalBgMove{
+  0%{filter:hue-rotate(0deg);}
+  100%{filter:hue-rotate(360deg);}
+}
+
+.rare-modal-content{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:45px;
+  z-index:2;
+}
+
+.rare-modal-card{
+  width:340px;
+  min-height:540px;
+  border-radius:30px;
+  padding:18px;
+  position:relative;
+  text-align:center;
+  overflow:hidden;
+  border:3px solid rgba(255,255,255,.8);
+  animation:rareCardFloat 2.7s ease-in-out infinite alternate;
+  box-shadow:
+    0 0 45px rgba(255,255,255,.65),
+    0 0 95px rgba(255,0,200,.8);
+}
+
+.rare-modal-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  filter:brightness(.62) saturate(1.3);
+  z-index:-2;
+}
+
+.rare-modal-card::after{
+  content:"";
+  position:absolute;
+  inset:-35%;
+  background:
+    conic-gradient(from 0deg,transparent,#ff4fd8,transparent,#2afadf,transparent,#ffd54f,transparent);
+  opacity:.35;
+  animation:spin 5s linear infinite;
+  z-index:-1;
+}
+
+.rare-modal-card.ultra-rare::before{background-image:url("assets/card-bg/ultra-rare.jpg");}
+.rare-modal-card.legendary-rare::before{background-image:url("assets/card-bg/legendary-rare.jpg");}
+.rare-modal-card.secret::before{background-image:url("assets/card-bg/secret.jpg");}
+.rare-modal-card.infinity::before{background-image:url("assets/card-bg/infinity.jpg");}
+
+.rare-modal-card img{
+  width:100%;
+  height:310px;
+  object-fit:cover;
+  object-position:center top;
+  border-radius:22px;
+  border:2px solid rgba(255,255,255,.8);
+  margin-top:42px;
+  box-shadow:0 0 25px rgba(255,255,255,.45);
+}
+
+.rare-tier-badge{
+  position:absolute;
+  left:18px;
+  top:18px;
+  padding:9px 13px;
+  border-radius:12px;
+  font-weight:900;
+  color:white;
+  background:linear-gradient(135deg,#ff1744,#9c27b0);
+  box-shadow:0 0 18px rgba(255,0,180,.8);
+  z-index:5;
+}
+
+.rare-modal-card h2{
+  font-size:34px;
+  margin:18px 0 6px;
+  text-shadow:0 0 15px black;
+}
+
+.rare-modal-card p{
+  font-size:14px;
+  line-height:1.4;
+  color:#fff;
+  text-shadow:0 0 10px black;
+}
+
+.rare-modal-info{
+  min-width:260px;
+  text-align:left;
+  animation:rareTextSlide 1s ease both;
+}
+
+.rare-title{
+  font-size:56px;
+  font-weight:900;
+  color:#fff;
+  text-transform:uppercase;
+  text-shadow:
+    0 0 15px white,
+    0 0 35px #ff2b8a,
+    0 0 70px #ff2b8a;
+}
+
+.rare-member{
+  font-size:28px;
+  color:#ffd54f;
+  margin-top:10px;
+}
+
+.rare-sub{
+  margin-top:18px;
+  color:#ddd;
+  font-size:15px;
+}
+
+.rare-modal-close{
+  position:absolute;
+  right:26px;
+  top:22px;
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  font-size:30px;
+  line-height:40px;
+  padding:0;
+  z-index:5;
+  background:rgba(0,0,0,.55);
+  border:1px solid rgba(255,255,255,.45);
+}
+
+@keyframes rareCardFloat{
+  from{transform:translateY(0) scale(1) rotate(-1deg);}
+  to{transform:translateY(-18px) scale(1.035) rotate(1deg);}
+}
+
+@keyframes rareTextSlide{
+  from{opacity:0;transform:translateX(40px);}
+  to{opacity:1;transform:translateX(0);}
+}
+
+@media(max-width:700px){
+  .rare-modal-content{
+    flex-direction:column;
+    gap:20px;
+  }
+
+  .rare-modal-card{
+    width:280px;
+    min-height:470px;
+  }
+
+  .rare-modal-card img{
+    height:250px;
+  }
+
+  .rare-title{
+    font-size:36px;
+    text-align:center;
+  }
+
+  .rare-member,
+  .rare-sub{
+    text-align:center;
+  }
+}
