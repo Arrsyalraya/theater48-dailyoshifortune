@@ -8,6 +8,7 @@ const STORAGE_DUPE = "t48_dupe_v7";
 
 let pendingPackAmount = 0;
 let currentFilter = "ALL";
+let currentMemberFilter = "ALL";
 
 const tiers = [
  {name:"Normal", rate:45},
@@ -232,6 +233,24 @@ function openPack(packAmount, countDaily){
   showCards(results);
   triggerRareEffects(results);
   updateHeaderOnly();
+}
+
+function setMemberFilter(memberName){
+  currentMemberFilter = memberName;
+  updateCollection();
+}
+
+function renderMemberFilter(){
+  const select = document.getElementById("memberFilter");
+  if(!select) return;
+
+  select.innerHTML = `<option value="ALL">Semua Member</option>`;
+
+  members.forEach(member => {
+    select.innerHTML += `<option value="${member.name}">${member.name}</option>`;
+  });
+
+  select.innerHTML += `<option value="OGURI YUI AKB">OGURI YUI AKB</option>`;
 }
 
 function addToCollection(cards){
@@ -465,21 +484,39 @@ function updateCollection(){
   grid.innerHTML = "";
 
   members.forEach(member => {
+    if(currentMemberFilter !== "ALL" && currentMemberFilter !== member.name) return;
+
     normalTiers.forEach(t => {
       if(currentFilter !== "ALL" && currentFilter !== t.name) return;
 
       const id = member.name + "_" + t.name;
       const owned = col.includes(id);
+      const imgPath = getMemberImage(member, t.name);
 
       grid.innerHTML += `
         <div class="mini ${owned ? "" : "locked"}">
           <b>${t.name}</b><br>
-          <img src="${member.img}" onerror="this.src='https://via.placeholder.com/300x400/111111/ffffff?text=${encodeURIComponent(member.name)}'">
+          <img src="${imgPath}" onerror="this.src='https://via.placeholder.com/300x400/111111/ffffff?text=${encodeURIComponent(member.name)}'">
           ${owned ? member.name : "???"}
         </div>
       `;
     });
   });
+
+  if((currentFilter === "ALL" || currentFilter === "Infinity") &&
+     (currentMemberFilter === "ALL" || currentMemberFilter === "OGURI YUI AKB")){
+
+    const owned = col.includes(infinityCard.cardId);
+
+    grid.innerHTML += `
+      <div class="mini ${owned ? "" : "locked"}">
+        <b>Infinity</b><br>
+        <img src="${infinityCard.img}" onerror="this.src='https://via.placeholder.com/300x400/111111/ffffff?text=OGURI+YUI'">
+        ${owned ? infinityCard.member : "???"}
+      </div>
+    `;
+  }
+}
 
   if(currentFilter === "ALL" || currentFilter === "INFINITY"){
     const owned = col.includes(infinityCard.cardId);
@@ -501,6 +538,7 @@ document.addEventListener("DOMContentLoaded", () => {
     packOverlay.addEventListener("click", tearPack);
   }
 
+ renderMemberFilter();
   updateUI();
 
   if(document.body.dataset.page === "collection"){
