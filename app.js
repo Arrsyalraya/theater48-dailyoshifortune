@@ -32,9 +32,9 @@ function getMemberImage(member, tier){
 }
 
 const members = [
-  {name:"FREYA", slug:"freya", jiko:"Gadis koleris yang suka berimajinasi, terangi harimu dengan senyum karamelku. Halo semua, aku Freya!."},
-  {name:"CHRISTY", slug:"christy", jiko:"Peduli dan berbaik hati, siapa dia? Chriiiis-ty!."},
-  {name:"MARSHA", slug:"marsha", jiko:"Seperti piza yang dinanti-nantikan semua orang, selalu nantikan aku, ya! Halo, aku Marsha!."}
+  {name:"FREYA", slug:"freya", jiko:"Gadis koleris yang suka berimajinasi, terangi harimu dengan senyum karamelku. Halo semua, aku Freya."},
+  {name:"CHRISTY", slug:"christy", jiko:"Peduli dan berbaik hati, siapa dia? Chriiiis-ty."},
+  {name:"MARSHA", slug:"marsha", jiko:"Seperti piza yang dinanti-nantikan semua orang, selalu nantikan aku, ya! Halo, aku Marsha."}
 ];
 
 const infinityCard = {
