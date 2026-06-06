@@ -1,145 +1,393 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Theater48Fight Gacha</title>
+<title>Theater48Fight Card Gacha</title>
 
 <style>
-*{box-sizing:border-box}
 body{
   margin:0;
+  padding:20px;
+  background:radial-gradient(circle at top,#38106b,#05000c 70%);
+  color:white;
   font-family:Arial,sans-serif;
-  color:white;
-  background:
-    radial-gradient(circle at top,#3b1b00,#050505 65%),
-    repeating-linear-gradient(45deg,rgba(255,215,0,.05) 0 2px,transparent 2px 16px);
+  text-align:center;
 }
-.wrap{max-width:1100px;margin:auto;padding:20px;text-align:center}
-h1{color:#ffd36b;font-size:38px}
+
+.wrap{max-width:1200px;margin:auto;}
+
+h1{font-size:42px;margin-bottom:5px;}
+.sub{color:#ccc;margin-bottom:25px;}
+
 .panel{
-  background:rgba(0,0,0,.72);
-  border:1px solid #b88732;
-  border-radius:22px;
-  padding:22px;
-  margin:20px 0;
-  box-shadow:0 0 20px rgba(255,190,70,.2);
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:24px;
+  padding:25px;
+  margin-bottom:25px;
+  box-shadow:0 0 25px rgba(170,0,255,.25);
 }
-.stats{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+.stats{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+  margin:15px 0;
+}
+
 .stat{
-  background:#111;
-  border:1px solid #b88732;
-  border-radius:14px;
-  padding:12px 18px;
-  min-width:140px;
+  background:rgba(0,0,0,.35);
+  padding:14px 22px;
+  border-radius:16px;
+  min-width:150px;
 }
-.stat b{color:#ffd36b;font-size:23px}
-button,a.btn{
-  display:inline-block;
+
+.stat b{
+  color:#ffd54f;
+  font-size:24px;
+}
+
+button{
+  padding:14px 24px;
   margin:8px;
-  padding:13px 22px;
-  border:0;
-  border-radius:14px;
-  background:linear-gradient(135deg,#7b1bff,#ff244f);
-  color:white;
+  border:none;
+  border-radius:16px;
   font-weight:bold;
-  text-decoration:none;
+  cursor:pointer;
+  color:white;
+  background:linear-gradient(135deg,#ff1744,#7b1fa2);
+  box-shadow:0 0 15px rgba(255,0,150,.45);
+}
+
+button:hover{transform:scale(1.04);}
+
+.card-area{
+  min-height:430px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:18px;
+}
+
+.card-shell{
+  width:220px;
+  height:390px;
+  perspective:1000px;
   cursor:pointer;
 }
-.gold{background:linear-gradient(135deg,#ffe27a,#a66700)!important;color:#1a1000!important}
 
-.pack{
-  width:230px;height:320px;margin:25px auto;
+.card-inner{
+  width:100%;
+  height:100%;
+  position:relative;
+  transform-style:preserve-3d;
+  transition:transform .7s;
+}
+
+.card-shell.open .card-inner{
+  transform:rotateY(180deg);
+}
+
+.card-back,.card-front{
+  position:absolute;
+  width:100%;
+  height:100%;
   border-radius:22px;
-  border:3px solid #ffd36b;
-  background:
-    radial-gradient(circle at 50% 25%,#663cff,#16001f 45%,#070707 75%);
-  box-shadow:0 0 28px rgba(255,210,90,.6);
-  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  backface-visibility:hidden;
+  overflow:hidden;
 }
-.pack h2{color:#ffd36b;margin:0}
-.pack .num{font-size:76px;font-weight:bold;color:#ffd36b}
-.cards{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:25px}
 
-.card{
-  width:205px;height:365px;border-radius:18px;padding:10px;
-  position:relative;overflow:hidden;border:2px solid #ffd36b;
-  box-shadow:0 0 18px rgba(255,255,255,.25);
-}
-.card::before{
-  content:"";
-  position:absolute;inset:0;
+.card-back{
   background:
-    radial-gradient(circle at 20% 15%,rgba(255,255,255,.45),transparent 12%),
-    radial-gradient(circle at 80% 25%,rgba(255,255,255,.2),transparent 18%),
-    repeating-linear-gradient(135deg,rgba(255,255,255,.12) 0 2px,transparent 2px 12px),
-    url("https://www.transparenttextures.com/patterns/stardust.png");
-  opacity:.55;
+    radial-gradient(circle at top,#ff2b8a,#2b0057 55%,#05000c);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:2px solid rgba(255,255,255,.35);
+  box-shadow:0 0 25px rgba(255,0,160,.6);
 }
-.card img{
-  width:100%;height:195px;object-fit:cover;border-radius:12px;
-  position:relative;z-index:2;background:#111;
+
+.card-back span{
+  font-size:46px;
+  font-weight:bold;
+  color:white;
+  text-shadow:0 0 15px #fff;
 }
+
+.card-front{
+  transform:rotateY(180deg);
+  padding:12px;
+  box-sizing:border-box;
+  box-shadow:0 0 30px rgba(255,255,255,.4);
+}
+
+.card-front::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg,transparent 20%,rgba(255,255,255,.35),transparent 60%);
+  transform:translateX(-120%);
+  animation:shine 2.5s infinite;
+}
+
+@keyframes shine{
+  0%{transform:translateX(-120%);}
+  60%{transform:translateX(120%);}
+  100%{transform:translateX(120%);}
+}
+
+.card-front img{
+  width:100%;
+  height:215px;
+  object-fit:cover;
+  border-radius:16px;
+  background:#222;
+  position:relative;
+  z-index:1;
+}
+
 .tier{
-  position:absolute;top:12px;left:12px;z-index:3;
-  padding:5px 9px;border-radius:8px;font-weight:bold;
+  position:absolute;
+  top:14px;
+  left:14px;
+  padding:6px 10px;
+  border-radius:10px;
+  font-weight:bold;
+  font-size:18px;
+  z-index:2;
 }
-.name{font-size:24px;font-weight:bold;margin-top:10px;position:relative;z-index:2}
-.jiko{font-size:12px;line-height:1.35;margin-top:7px;position:relative;z-index:2}
-.N{background:linear-gradient(135deg,#3b3b3b,#b8b8b8,#222)}
-.R{background:linear-gradient(135deg,#003c8f,#00c8ff,#001b44)}
-.SR{background:linear-gradient(135deg,#41106f,#b51dff,#ff55c8)}
-.SSR{background:linear-gradient(135deg,#7b3f00,#ffbd2e,#ff4a00)}
-.UR{background:linear-gradient(135deg,#ff0077,#6a20ff,#00eaff)}
-.LR{background:linear-gradient(135deg,#fff078,#ff9d00,#ff2bc2,#4422ff)}
-.SECRET{background:linear-gradient(135deg,#000,#30005f,#fff,#ff00d4)}
-.INFINITY{background:linear-gradient(135deg,#000,#6a00ff,#ffd700,#fff)}
-.N .tier{background:#777}.R .tier{background:#007bff}.SR .tier{background:#9c27b0}
-.SSR .tier{background:#ff9800}.UR .tier{background:#e91e63}.LR .tier{background:#ffd700;color:#111}
-.SECRET .tier,.INFINITY .tier{background:#fff;color:#111}
+
+.name{
+  font-size:26px;
+  font-weight:bold;
+  margin-top:12px;
+  position:relative;
+  z-index:1;
+}
+
+.jiko{
+  font-size:12.5px;
+  color:#eee;
+  margin-top:8px;
+  line-height:1.35;
+  position:relative;
+  z-index:1;
+}
+
+.N{background:linear-gradient(135deg,#4b4b4b,#9e9e9e);}
+.R{background:linear-gradient(135deg,#003cff,#00d4ff);}
+.SR{background:linear-gradient(135deg,#7b2ff7,#f107a3);}
+.SSR{background:linear-gradient(135deg,#ffb300,#ff6f00,#ff1744);}
+.UR{background:linear-gradient(135deg,#ff0080,#7928ca,#2afadf);}
+.LR{background:linear-gradient(135deg,#ffe259,#ffa751,#ff3cac,#784ba0);}
+.SECRET{background:linear-gradient(135deg,#000,#6a00ff,#fff,#ff00cc);}
+
+.N .tier{background:#777;}
+.R .tier{background:#007bff;}
+.SR .tier{background:#9c27b0;}
+.SSR .tier{background:#ff9800;}
+.UR .tier{background:#e91e63;}
+.LR .tier{background:#ffc107;color:#111;}
+.SECRET .tier{background:#fff;color:#111;}
+
+.collection{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(125px,1fr));
+  gap:12px;
+  margin-top:18px;
+}
+
+.mini{
+  background:#151515;
+  border-radius:14px;
+  padding:10px;
+  font-size:13px;
+  border:1px solid rgba(255,255,255,.15);
+}
+
+.mini img{
+  width:100%;
+  height:110px;
+  object-fit:cover;
+  border-radius:10px;
+  margin:8px 0;
+  background:#222;
+}
+
+.mini.locked{
+  opacity:.28;
+  filter:grayscale(1);
+}
+
+.filters button{
+  background:#1b1b1b;
+  box-shadow:none;
+  border:1px solid #555;
+  padding:10px 14px;
+}
+
+.pack-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.82);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+.pack-box{
+  width:260px;
+  height:380px;
+  border-radius:26px;
+  background:
+    radial-gradient(circle at top,#ffdf6b,#ff006e 38%,#37006b 72%,#05000c);
+  border:3px solid rgba(255,255,255,.55);
+  box-shadow:0 0 45px rgba(255,0,180,.9);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  animation:floatPack 1.5s infinite alternate ease-in-out;
+  position:relative;
+  overflow:hidden;
+}
+
+.pack-box::before{
+  content:"";
+  position:absolute;
+  inset:-50%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.4),transparent);
+  animation:packShine 2s infinite;
+}
+
+@keyframes packShine{
+  from{transform:translateX(-80%) rotate(20deg);}
+  to{transform:translateX(80%) rotate(20deg);}
+}
+
+@keyframes floatPack{
+  from{transform:translateY(0) scale(1);}
+  to{transform:translateY(-14px) scale(1.03);}
+}
+
+.pack-title{
+  font-size:34px;
+  font-weight:bold;
+  z-index:1;
+  text-shadow:0 0 12px black;
+}
+
+.pack-sub{
+  margin-top:12px;
+  font-size:15px;
+  z-index:1;
+}
+
+.swipe-text{
+  margin-top:28px;
+  color:#ffd54f;
+  z-index:1;
+  font-weight:bold;
+}
+
+.pack-box.opening{
+  animation:tear .7s forwards;
+}
+
+@keyframes tear{
+  0%{transform:scale(1) rotate(0);}
+  40%{transform:scale(1.15) rotate(-8deg);}
+  100%{transform:scale(.2) rotate(35deg);opacity:0;}
+}
+
+@media(max-width:600px){
+  body{padding:10px;}
+  h1{font-size:30px;}
+  .card-shell{width:185px;height:345px;}
+  .card-front img{height:175px;}
+  .name{font-size:23px;}
+}
 </style>
 </head>
 
 <body>
+
+<div class="pack-overlay" id="packOverlay" onclick="tearPack()">
+  <div class="pack-box" id="packBox">
+    <div class="pack-title">T48F PACK</div>
+    <div class="pack-sub">5 Random Cards</div>
+    <div class="swipe-text">Geser / Tap untuk buka ✨</div>
+  </div>
+</div>
+
 <div class="wrap">
-<h1>🎴 Theater48Fight Card Gacha</h1>
+  <h1>🎴 Theater48Fight Card Gacha</h1>
+  <p class="sub">Kumpulkan 434 kartu: 62 member × 7 tier.</p>
 
-<div class="panel">
-  <div class="stats">
-    <div class="stat">Sisa Pack<br><b id="packLeft">10/10</b></div>
-    <div class="stat">Koleksi<br><b id="collectionCount">0/435</b></div>
-    <div class="stat">Duplicate<br><b id="dupeCount">0/20</b></div>
-    <div class="stat">Reset<br><b id="countdown">--:--:--</b></div>
+  <div class="panel">
+    <div class="stats">
+      <div class="stat">Mode<br><b id="modeText">FREE</b></div>
+      <div class="stat">Sisa Pack<br><b id="packLeft">0 / 10</b></div>
+      <div class="stat">Koleksi<br><b id="collectionCount">0 / 434</b></div>
+      <div class="stat">Duplicate<br><b id="dupeCount">0 / 20</b></div>
+    </div>
+
+    <button onclick="preparePack(1)">Buka 1 Pack 🎁</button>
+    <button onclick="preparePack(5)">Buka 5 Pack 🔥</button>
+    <button onclick="claimBonusPack()">Tukar 20 Duplicate → 1 Pack</button>
+
+    <p style="color:#bbb;font-size:14px;">
+      1 pack berisi 5 kartu. Free: 10 pack/hari. Membership: 20 pack/hari.
+    </p>
   </div>
 
-  <div class="pack">
-    <h2>THEATER48</h2>
-    <div class="num">48</div>
-    <p>MEMBER PACK</p>
+  <div class="panel">
+    <div class="card-area" id="cardArea">
+      <p>Tekan tombol buka pack untuk mulai brewek kartu.</p>
+    </div>
   </div>
 
-  <button onclick="openPack(1)">Buka 1 Pack</button>
-  <button onclick="openPack(5)">Buka 5 Pack</button>
-  <button class="gold" onclick="claimBonusPack()">Tukar 20 Duplicate</button>
-  <a class="btn gold" href="collection.html">Lihat Koleksi</a>
-</div>
+  <div class="panel">
+    <h2>📚 Koleksi Saya</h2>
 
-<div class="panel">
-  <div class="cards" id="cards">
-    <p>Kartu akan muncul di sini.</p>
+    <div class="filters">
+      <button onclick="setFilter('ALL')">Semua</button>
+      <button onclick="setFilter('N')">N</button>
+      <button onclick="setFilter('R')">R</button>
+      <button onclick="setFilter('SR')">SR</button>
+      <button onclick="setFilter('SSR')">SSR</button>
+      <button onclick="setFilter('UR')">UR</button>
+      <button onclick="setFilter('LR')">LR</button>
+      <button onclick="setFilter('SECRET')">SECRET</button>
+    </div>
+
+    <div class="collection" id="collection"></div>
   </div>
-</div>
 </div>
 
 <script>
-const DAILY_LIMIT=10, CARDS_PER_PACK=5, RESET_HOURS=12;
+const urlMode = new URLSearchParams(window.location.search).get("mode") || "free";
+const isPremium = urlMode === "premium";
+const DAILY_LIMIT = isPremium ? 20 : 10;
+const CARDS_PER_PACK = 5;
 
-const tiers=[
-{name:"N",rate:45},{name:"R",rate:30},{name:"SR",rate:15},{name:"SSR",rate:6},
-{name:"UR",rate:3},{name:"LR",rate:.8},{name:"SECRET",rate:.19},{name:"INFINITY",rate:.01}
+let pendingPackAmount = 0;
+let currentFilter = "ALL";
+
+const tiers = [
+  {name:"N", rate:45},
+  {name:"R", rate:30},
+  {name:"SR", rate:15},
+  {name:"SSR", rate:6},
+  {name:"UR", rate:3},
+  {name:"LR", rate:0.8},
+  {name:"SECRET", rate:0.2}
 ];
 
-const members=[
+const members = [
 {name:"FREYA",img:"images/freya.jpg",jiko:"Template jiko Freya. Silakan edit sendiri."},
 {name:"CHRISTY",img:"images/christy.jpg",jiko:"Template jiko Christy. Silakan edit sendiri."},
 {name:"GRACIA",img:"images/gracia.jpg",jiko:"Template jiko Gracia. Silakan edit sendiri."},
@@ -204,77 +452,188 @@ const members=[
 {name:"MEMBER62",img:"images/member62.jpg",jiko:"Template jiko Member 62. Silakan edit sendiri."}
 ];
 
-const special={name:"OGURI YUI",img:"images/oguri-yui.jpg",jiko:"Special guest card. Infinity tier exclusive."};
+function todayKey(){
+  const d = new Date();
+  return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+}
 
-function cycle(){
- const d=new Date(); return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}-${Math.floor(d.getHours()/12)}`;
+function getUsed(){
+  const data = JSON.parse(localStorage.getItem("t48_pack_used_v4") || "{}");
+  if(data.date !== todayKey() || data.mode !== urlMode) return 0;
+  return data.used || 0;
 }
-function resetTime(){
- const d=new Date(),n=new Date(d);
- if(d.getHours()<12)n.setHours(12,0,0,0);else{n.setDate(n.getDate()+1);n.setHours(0,0,0,0)}
- return n.getTime();
+
+function setUsed(num){
+  localStorage.setItem("t48_pack_used_v4", JSON.stringify({date:todayKey(),mode:urlMode,used:num}));
 }
-function getUsed(){let x=JSON.parse(localStorage.t48_used_simple||"{}");return x.cycle===cycle()?x.used||0:0}
-function setUsed(v){localStorage.t48_used_simple=JSON.stringify({cycle:cycle(),used:v})}
-function col(){return JSON.parse(localStorage.t48_col_simple||"[]")}
-function saveCol(v){localStorage.t48_col_simple=JSON.stringify(v)}
-function dupe(){return Number(localStorage.t48_dupe_simple||0)}
-function setDupe(v){localStorage.t48_dupe_simple=v}
+
+function getCollection(){
+  return JSON.parse(localStorage.getItem("t48_collection_v4") || "[]");
+}
+
+function saveCollection(col){
+  localStorage.setItem("t48_collection_v4", JSON.stringify(col));
+}
+
+function getDupe(){
+  return parseInt(localStorage.getItem("t48_dupe_v4") || "0");
+}
+
+function setDupe(num){
+  localStorage.setItem("t48_dupe_v4", num);
+}
 
 function pickTier(){
- let r=Math.random()*100,s=0;
- for(const t of tiers){s+=t.rate;if(r<=s)return t}
- return tiers[0];
+  let roll = Math.random() * 100;
+  let sum = 0;
+  for(const t of tiers){
+    sum += t.rate;
+    if(roll <= sum) return t.name;
+  }
+  return "N";
 }
-function makeCard(){
- const tier=pickTier();
- const m=tier.name==="INFINITY"?special:members[Math.floor(Math.random()*members.length)];
- return {...m,tier:tier.name,id:`${m.name}_${tier.name}`};
+
+function preparePack(amount){
+  let used = getUsed();
+  if(used >= DAILY_LIMIT){
+    alert("Pack harian sudah habis. Coba lagi besok!");
+    return;
+  }
+
+  pendingPackAmount = Math.min(amount, DAILY_LIMIT - used);
+  document.getElementById("packOverlay").style.display = "flex";
+  document.getElementById("packBox").classList.remove("opening");
 }
-function openPack(n){
- let used=getUsed();
- if(used>=DAILY_LIMIT)return alert("Pack habis. Tunggu reset berikutnya.");
- let packs=Math.min(n,DAILY_LIMIT-used);
- setUsed(used+packs);
- let cards=[];
- for(let i=0;i<packs*CARDS_PER_PACK;i++)cards.push(makeCard());
- reveal(cards);
- update();
+
+function tearPack(){
+  const box = document.getElementById("packBox");
+  box.classList.add("opening");
+
+  setTimeout(()=>{
+    document.getElementById("packOverlay").style.display = "none";
+    openPack(pendingPackAmount, true);
+  },700);
 }
-function reveal(cards){
- let c=col(),d=dupe();
- document.getElementById("cards").innerHTML="";
- cards.forEach(x=>{
-   if(c.includes(x.id)) d++; else c.push(x.id);
-   document.getElementById("cards").innerHTML+=`
-   <div class="card ${x.tier}">
-     <div class="tier">${x.tier}</div>
-     <img src="${x.img}" onerror="this.src='https://via.placeholder.com/300x400/111111/ffffff?text=${x.name}'">
-     <div class="name">${x.name}</div>
-     <div class="jiko">${x.jiko}</div>
-   </div>`;
- });
- saveCol(c);setDupe(d);
+
+function openPack(packAmount, countDaily){
+  let used = getUsed();
+  let totalCards = packAmount * CARDS_PER_PACK;
+  let results = [];
+
+  for(let i=0; i<totalCards; i++){
+    const member = members[Math.floor(Math.random()*members.length)];
+    const tier = pickTier();
+    const cardId = member.name + "_" + tier;
+
+    results.push({
+      member:member.name,
+      tier,
+      cardId,
+      img:member.img,
+      jiko:member.jiko
+    });
+  }
+
+  if(countDaily) setUsed(used + packAmount);
+
+  addToCollection(results);
+  showCards(results);
+  updateUI();
 }
+
+function addToCollection(cards){
+  let col = getCollection();
+  let dupe = getDupe();
+
+  cards.forEach(c=>{
+    if(!col.includes(c.cardId)){
+      col.push(c.cardId);
+    }else{
+      dupe++;
+    }
+  });
+
+  saveCollection(col);
+  setDupe(dupe);
+}
+
+function showCards(cards){
+  const area = document.getElementById("cardArea");
+  area.innerHTML = "";
+
+  cards.forEach((c,index)=>{
+    setTimeout(()=>{
+      area.innerHTML += `
+        <div class="card-shell" onclick="this.classList.add('open')">
+          <div class="card-inner">
+            <div class="card-back"><span>T48F</span></div>
+            <div class="card-front ${c.tier}">
+              <div class="tier">${c.tier}</div>
+              <img src="${c.img}" onerror="this.src='https://via.placeholder.com/300x400/111111/ffffff?text=${c.member}'">
+              <div class="name">${c.member}</div>
+              <div class="jiko">${c.jiko}</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }, index * 120);
+  });
+}
+
 function claimBonusPack(){
- if(dupe()<20)return alert("Duplicate belum cukup.");
- setDupe(dupe()-20);
- reveal([makeCard(),makeCard(),makeCard(),makeCard(),makeCard()]);
- update();
+  let dupe = getDupe();
+  if(dupe < 20){
+    alert("Duplicate belum cukup. Butuh 20 duplicate untuk 1 pack tambahan.");
+    return;
+  }
+
+  setDupe(dupe - 20);
+  openPack(1, false);
+  updateUI();
 }
-function update(){
- document.getElementById("packLeft").innerText=`${DAILY_LIMIT-getUsed()}/${DAILY_LIMIT}`;
- document.getElementById("collectionCount").innerText=`${col().length}/435`;
- document.getElementById("dupeCount").innerText=`${dupe()}/20`;
+
+function setFilter(tier){
+  currentFilter = tier;
+  updateCollection();
 }
-function tick(){
- let l=resetTime()-Date.now();
- let h=String(Math.floor(l/3600000)).padStart(2,"0");
- let m=String(Math.floor((l%3600000)/60000)).padStart(2,"0");
- let s=String(Math.floor((l%60000)/1000)).padStart(2,"0");
- document.getElementById("countdown").innerText=`${h}:${m}:${s}`;
+
+function updateUI(){
+  document.getElementById("modeText").innerText = isPremium ? "PREMIUM" : "FREE";
+  document.getElementById("packLeft").innerText = (DAILY_LIMIT - getUsed()) + " / " + DAILY_LIMIT;
+  document.getElementById("dupeCount").innerText = getDupe() + " / 20";
+
+  const col = getCollection();
+  const total = members.length * tiers.length;
+  document.getElementById("collectionCount").innerText = col.length + " / " + total;
+
+  updateCollection();
 }
-setInterval(tick,1000);tick();update();
+
+function updateCollection(){
+  const col = getCollection();
+  const grid = document.getElementById("collection");
+  grid.innerHTML = "";
+
+  members.forEach(member=>{
+    tiers.forEach(t=>{
+      if(currentFilter !== "ALL" && currentFilter !== t.name) return;
+
+      const id = member.name + "_" + t.name;
+      const owned = col.includes(id);
+
+      grid.innerHTML += `
+        <div class="mini ${owned ? "" : "locked"}">
+          <b>${t.name}</b><br>
+          <img src="${member.img}" onerror="this.src='https://via.placeholder.com/300x400/111111/ffffff?text=${member.name}'">
+          ${member.name}
+        </div>
+      `;
+    });
+  });
+}
+
+updateUI();
 </script>
+
 </body>
 </html>
