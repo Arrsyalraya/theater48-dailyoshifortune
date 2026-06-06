@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Koleksi Kartu</title>
+<style>
+body{margin:0;background:#090909;color:white;font-family:Arial,sans-serif}
+.wrap{max-width:1200px;margin:auto;padding:20px}
+h1{color:#ffd36b;text-align:center}
+a{color:#ffd36b}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
+.card{background:#151515;border:1px solid #b88732;border-radius:14px;padding:10px;text-align:center}
+.card.locked{opacity:.25;filter:grayscale(1)}
+.card img{width:100%;height:120px;object-fit:cover;border-radius:10px;background:#111}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a href="gacha.html">← Kembali ke Gacha</a>
+<h1>📚 Koleksi Kartu Saya</h1>
+<div class="grid" id="grid"></div>
+</div>
+
+<script>
+const tiers=["N","R","SR","SSR","UR","LR","SECRET"];
+const members=[
+{name:"FREYA",img:"images/freya.jpg"},
+{name:"CHRISTY",img:"images/christy.jpg"},
+{name:"GRACIA",img:"images/gracia.jpg"},
+{name:"FENI",img:"images/feni.jpg"},
+{name:"GITA",img:"images/gita.jpg"},
+{name:"ELI",img:"images/eli.jpg"},
+{name:"OLLA",img:"images/olla.jpg"},
+{name:"MUTHE",img:"images/muthe.jpg"},
+{name:"LULU",img:"images/lulu.jpg"},
+{name:"FLORA",img:"images/flora.jpg"}
+];
+const special={name:"OGURI YUI",img:"images/oguri-yui.jpg"};
+const col=JSON.parse(localStorage.t48_col_simple||"[]");
+const grid=document.getElementById("grid");
+
+members.forEach(m=>{
+ tiers.forEach(t=>{
+  let id=`${m.name}_${t}`;
+  grid.innerHTML+=`
+  <div class="card ${col.includes(id)?"":"locked"}">
+    <b>${t}</b>
+    <img src="${m.img}" onerror="this.src='https://via.placeholder.com/300x400/111111/ffffff?text=${m.name}'">
+    <div>${m.name}</div>
+  </div>`;
+ });
+});
+
+let inf="OGURI YUI_INFINITY";
+grid.innerHTML+=`
+<div class="card ${col.includes(inf)?"":"locked"}">
+  <b>INFINITY</b>
+  <img src="${special.img}" onerror="this.src='https://via.placeholder.com/300x400/111111/ffffff?text=OGURI+YUI'">
+  <div>OGURI YUI</div>
+</div>`;
+</script>
+</body>
+</html>
