@@ -19,7 +19,6 @@ body{
     background:#0b0b0b;
 }
 
-/* Video utama sekarang tidak sticky, jadi ikut ke-scroll */
 .player-box{
     background:#000;
 }
@@ -45,7 +44,7 @@ body{
 }
 
 .lineup-box button{
-    background:#ff5bbd;
+    background:#ff2b2b;
     border:none;
     color:white;
     padding:13px 30px;
@@ -53,6 +52,11 @@ body{
     font-size:17px;
     font-weight:bold;
     cursor:pointer;
+    transition:.2s;
+}
+
+.lineup-box button:hover{
+    background:#d70000;
 }
 
 .lineup-list{
@@ -61,10 +65,13 @@ body{
     justify-content:center;
     gap:14px;
     flex-wrap:wrap;
+    max-width:620px;
+    margin-left:auto;
+    margin-right:auto;
 }
 
 .member{
-    width:86px;
+    width:85px;
     text-align:center;
 }
 
@@ -74,7 +81,8 @@ body{
     border-radius:50%;
     object-fit:cover;
     background:#222;
-    border:2px solid #ff5bbd;
+    border:2px solid #ff2b2b;
+    box-shadow:0 0 8px rgba(255,43,43,.35);
 }
 
 .member div{
@@ -170,6 +178,11 @@ body{
         font-size:24px;
     }
 
+    .lineup-list{
+        max-width:360px;
+        gap:12px;
+    }
+
     .member{
         width:72px;
     }
@@ -194,8 +207,8 @@ body{
         <div class="player">
             <iframe
                 id="mainPlayer"
-                src="https://www.youtube.com/embed/8PQIt0DT5ls?rel=0&playsinline=0&fs=1"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                src="https://www.youtube.com/embed/8PQIt0DT5ls?autoplay=1&mute=1&rel=0&playsinline=0&fs=1"
+                allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                 allowfullscreen
                 webkitallowfullscreen
                 mozallowfullscreen>
@@ -300,7 +313,7 @@ body{
 <script>
 function changeVideo(card, videoId){
     document.getElementById("mainPlayer").src =
-    "https://www.youtube.com/embed/" + videoId + "?rel=0&playsinline=0&fs=1&autoplay=1";
+    "https://www.youtube.com/embed/" + videoId + "?autoplay=1&mute=1&rel=0&playsinline=0&fs=1";
 
     document.querySelectorAll(".replay-card").forEach(el=>{
         el.classList.remove("active");
