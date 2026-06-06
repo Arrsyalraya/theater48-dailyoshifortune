@@ -206,10 +206,41 @@ function openSingleCard(cardElement){
   if(["Ultra Rare","Legendary Rare","Secret","Infinity"].includes(card.tier)){
     setTimeout(() => {
       triggerRareEffects([card]);
-      showBigRareCard(card);
+      showRareCardModal(card);
       cardElement.classList.add("rare-reveal-boom");
-    }, 450);
+    }, 500);
   }
+}
+
+function showRareCardModal(card){
+  const modal = document.getElementById("rareCardModal");
+  const content = document.getElementById("rareModalContent");
+
+  if(!modal || !content) return;
+
+  const tierClass = getTierClass(card.tier);
+
+  content.innerHTML = `
+    <div class="rare-modal-card ${tierClass}">
+      <div class="rare-tier-badge">${card.tier}</div>
+      <img src="${card.img}">
+      <h2>${card.member}</h2>
+      <p>${card.jiko}</p>
+    </div>
+
+    <div class="rare-modal-info">
+      <div class="rare-title">${card.tier}</div>
+      <div class="rare-member">${card.member}</div>
+      <div class="rare-sub">Klik × untuk menutup</div>
+    </div>
+  `;
+
+  modal.classList.add("show");
+}
+
+function closeRareModal(){
+  const modal = document.getElementById("rareCardModal");
+  if(modal) modal.classList.remove("show");
 }
 
 function showBigRareCard(card){
