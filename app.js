@@ -360,12 +360,12 @@ const label = {
 function claimBonusPack(){
   let dupe = getDupe();
 
-  if(dupe < 20){
+  if(dupe < 10){
     alert("Duplicate belum cukup. Butuh 20 duplicate untuk 1 pack tambahan.");
     return;
   }
 
-  setDupe(dupe - 20);
+  setDupe(dupe - 10);
   openPack(1, false);
   updateUI();
 }
@@ -406,7 +406,7 @@ function updateUI(){
   }
 
   if(dupeCount){
-    dupeCount.innerText = `${getDupe()} / 20`;
+    dupeCount.innerText = `${getDupe()} / 10`;
   }
 
 }
@@ -414,6 +414,24 @@ function updateUI(){
 function setFilter(tier){
   currentFilter = tier;
   updateCollection();
+}
+
+function setMemberFilter(memberName){
+  currentMemberFilter = memberName;
+  updateCollection();
+}
+
+function renderMemberFilter(){
+  const select = document.getElementById("memberFilter");
+  if(!select) return;
+
+  select.innerHTML = `<option value="ALL">Semua Member</option>`;
+
+  members.forEach(member => {
+    select.innerHTML += `<option value="${member.name}">${member.name}</option>`;
+  });
+
+  select.innerHTML += `<option value="OGURI YUI AKB">OGURI YUI AKB</option>`;
 }
 
 function updateHeaderOnly(){
@@ -439,7 +457,7 @@ function updateHeaderOnly(){
   }
 
   if(dupeCount){
-    dupeCount.innerText = `${getDupe()} / 20`;
+    dupeCount.innerText = `${getDupe()} / 10`;
   }
 }
 
