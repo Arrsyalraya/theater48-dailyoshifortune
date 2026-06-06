@@ -252,56 +252,56 @@ button:hover{
   100%{transform:translateX(120%);}
 }
 
-.card-front.N::before{
+.card-front.normal::before{
   background-image:
     linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.55)),
     url("assets/card-bg/n.jpg"),
     radial-gradient(circle at top,#777,#111);
 }
 
-.card-front.R::before{
+.card-front.rare::before{
   background-image:
     linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.48)),
     url("assets/card-bg/r.jpg"),
     radial-gradient(circle at top,#00d4ff,#003cff);
 }
 
-.card-front.SR::before{
+.card-front.super-rare::before{
   background-image:
     linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,.5)),
     url("assets/card-bg/sr.jpg"),
     radial-gradient(circle at top,#f107a3,#3b006e);
 }
 
-.card-front.SSR::before{
+.card-front.super-star-rare::before{
   background-image:
     linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.45)),
     url("assets/card-bg/ssr.jpg"),
     radial-gradient(circle at top,#ffdf6b,#ff1744);
 }
 
-.card-front.UR::before{
+.card-front.ultra-rare::before{
   background-image:
     linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.42)),
     url("assets/card-bg/ur.jpg"),
     radial-gradient(circle at top,#2afadf,#7928ca,#ff0080);
 }
 
-.card-front.LR::before{
+.card-front.legendary-rare::before{
   background-image:
     linear-gradient(rgba(0,0,0,.08),rgba(0,0,0,.42)),
     url("assets/card-bg/lr.jpg"),
     radial-gradient(circle at top,#ffe259,#ff3cac,#784ba0);
 }
 
-.card-front.SECRET::before{
+.card-front.secret::before{
   background-image:
     linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.38)),
     url("assets/card-bg/secret.jpg"),
     radial-gradient(circle at top,#fff,#6a00ff,#000);
 }
 
-.card-front.INFINITY::before{
+.card-front.infinity::before{
   background-image:
     linear-gradient(rgba(0,0,0,.02),rgba(0,0,0,.35)),
     url("assets/card-bg/infinity.jpg"),
@@ -350,14 +350,14 @@ button:hover{
   text-shadow:0 0 8px black;
 }
 
-.N .tier{background:#777;}
-.R .tier{background:#007bff;}
-.SR .tier{background:#9c27b0;}
-.SSR .tier{background:#ff9800;}
-.UR .tier{background:#e91e63;}
-.LR .tier{background:#ffc107;color:#111;}
-.SECRET .tier{background:#fff;color:#111;}
-.INFINITY .tier{
+.normal .tier{background:#777;}
+.rare .tier{background:#007bff;}
+.super-rare .tier{background:#9c27b0;}
+.super-star-rare .tier{background:#ff9800;}
+.ultra-rare .tier{background:#e91e63;}
+.legendary-rare .tier{background:#ffc107;color:#111;}
+.secret .tier{background:#fff;color:#111;}
+.infinity .tier{
   background:linear-gradient(135deg,#fff8b8,#ff4fd8,#2afadf);
   color:#111;
 }
