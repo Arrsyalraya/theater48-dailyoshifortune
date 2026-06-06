@@ -9,6 +9,9 @@ const STORAGE_DUPE = "t48_dupe_v8";
 let pendingPackAmount = 0;
 let currentFilter = "ALL";
 let currentMemberFilter = "ALL";
+let slashStartX = 0;
+let slashStartY = 0;
+let isSlashing = false;
 
 const tiers = [
   {name:"Normal", rate:45},
@@ -130,12 +133,18 @@ function preparePack(amount){
 
 function tearPack(){
   const box = document.getElementById("packBox");
+  const overlay = document.getElementById("packOverlay");
+
+  if(box.classList.contains("opening")) return;
+
   box.classList.add("opening");
+  overlay.classList.add("slash-open");
 
   setTimeout(() => {
-    document.getElementById("packOverlay").style.display = "none";
+    overlay.style.display = "none";
+    overlay.classList.remove("slash-open");
     openPack(pendingPackAmount, true);
-  }, 700);
+  }, 950);
 }
 
 function openPack(packAmount, countDaily){
@@ -166,6 +175,11 @@ function showCards(cards){
   if(!area) return;
 
   area.innerHTML = "";
+  area.classList.remove("pack-five-layout");
+
+if(cards.length === 5){
+  area.classList.add("pack-five-layout");
+}
 
   cards.forEach((c, index) => {
     setTimeout(() => {
@@ -451,6 +465,29 @@ function updateUI(){
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  const packBox = document.getElementById("packBox");
+
+if(packBox){
+  packBox.addEventListener("pointerdown", e => {
+    isSlashing = true;
+    slashStartX = e.clientX;
+    slashStartY = e.clientY;
+  });
+
+  packBox.addEventListener("pointerup", e => {
+    if(!isSlashing) return;
+
+    const dx = Math.abs(e.clientX - slashStartX);
+    const dy = Math.abs(e.clientY - slashStartY);
+
+    isSlashing = false;
+
+    if(dx > 70 || dy > 70){
+      tearPack();
+    }
+  });
+}
+  
   const packOverlay = document.getElementById("packOverlay");
 
   if(packOverlay){
