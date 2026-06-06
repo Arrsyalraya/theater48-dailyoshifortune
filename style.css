@@ -253,59 +253,35 @@ button:hover{
 }
 
 .card-front.normal::before{
-  background-image:
-    linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.55)),
-    url("assets/card-bg/n.jpg"),
-    radial-gradient(circle at top,#777,#111);
+  background-image:url("assets/card-bg/normal.jpg");
 }
 
 .card-front.rare::before{
-  background-image:
-    linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.48)),
-    url("assets/card-bg/r.jpg"),
-    radial-gradient(circle at top,#00d4ff,#003cff);
+  background-image:url("assets/card-bg/rare.jpg");
 }
 
 .card-front.super-rare::before{
-  background-image:
-    linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,.5)),
-    url("assets/card-bg/sr.jpg"),
-    radial-gradient(circle at top,#f107a3,#3b006e);
+  background-image:url("assets/card-bg/super-rare.jpg");
 }
 
 .card-front.super-star-rare::before{
-  background-image:
-    linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.45)),
-    url("assets/card-bg/ssr.jpg"),
-    radial-gradient(circle at top,#ffdf6b,#ff1744);
+  background-image:url("assets/card-bg/super-star-rare.jpg");
 }
 
 .card-front.ultra-rare::before{
-  background-image:
-    linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.42)),
-    url("assets/card-bg/ur.jpg"),
-    radial-gradient(circle at top,#2afadf,#7928ca,#ff0080);
+  background-image:url("assets/card-bg/ultra-rare.jpg");
 }
 
 .card-front.legendary-rare::before{
-  background-image:
-    linear-gradient(rgba(0,0,0,.08),rgba(0,0,0,.42)),
-    url("assets/card-bg/lr.jpg"),
-    radial-gradient(circle at top,#ffe259,#ff3cac,#784ba0);
+  background-image:url("assets/card-bg/legendary-rare.jpg");
 }
 
 .card-front.secret::before{
-  background-image:
-    linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.38)),
-    url("assets/card-bg/secret.jpg"),
-    radial-gradient(circle at top,#fff,#6a00ff,#000);
+  background-image:url("assets/card-bg/secret.jpg");
 }
 
 .card-front.infinity::before{
-  background-image:
-    linear-gradient(rgba(0,0,0,.02),rgba(0,0,0,.35)),
-    url("assets/card-bg/infinity.jpg"),
-    radial-gradient(circle at top,#fff8b8,#ff4fd8,#2afadf,#030007);
+  background-image:url("assets/card-bg/infinity.jpg");
 }
 
 .card-front img{
@@ -317,6 +293,11 @@ button:hover{
   position:relative;
   z-index:3;
   border:1px solid rgba(255,255,255,.45);
+}
+
+.card-front img{
+  object-fit:cover;
+  object-position:center top;
 }
 
 .tier{
