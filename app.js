@@ -240,7 +240,7 @@ function showCards(cards){
 
   cards.forEach((c, index) => {
     setTimeout(() => {
-      const rareClass = ["UR","LR","SECRET","INFINITY"].includes(c.tier)
+      const rareClass = ["Ultra Rare","Legendary Rare","Secret","Infinity"].includes(c.tier)
         ? "rare-" + c.tier
         : "";
 
@@ -305,12 +305,12 @@ function showRareOverlay(tier){
 
   if(!overlay || !text) return;
 
-  const label = {
-    UR:"💜 ULTRA RARE 💜",
-    LR:"🏆 LEGEND RARE 🏆",
-    SECRET:"✨ SECRET CARD ✨",
-    INFINITY:"🌌 INFINITY CARD 🌌"
-  };
+const label = {
+ "Ultra Rare":"💜 ULTRA RARE 💜",
+ "Legendary Rare":"🏆 LEGENDARY RARE 🏆",
+ "Secret":"✨ SECRET CARD ✨",
+ "Infinity":"🌌 INFINITY CARD 🌌"
+};
 
   text.innerText = label[tier] || tier;
   overlay.style.display = "flex";
