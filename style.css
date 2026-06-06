@@ -658,3 +658,40 @@ body{
 .collection .mini.infinity::before{
   background-image:url("assets/card-bg/infinity.jpg");
 }
+
+.rare-reveal-boom{
+  animation:rareRevealBoom 1.8s ease-in-out;
+}
+
+@keyframes rareRevealBoom{
+  0%{
+    transform:scale(1);
+    filter:brightness(1);
+  }
+  30%{
+    transform:scale(1.12);
+    filter:brightness(1.8) drop-shadow(0 0 35px white);
+  }
+  60%{
+    transform:scale(1.04);
+    filter:brightness(1.4) drop-shadow(0 0 45px #ff4fd8);
+  }
+  100%{
+    transform:scale(1);
+    filter:brightness(1);
+  }
+}
+
+.rare-overlay{
+  backdrop-filter:blur(8px);
+}
+
+.rare-text{
+  padding:30px 45px;
+  border-radius:28px;
+  background:linear-gradient(135deg,rgba(255,255,255,.18),rgba(255,0,180,.18));
+  border:1px solid rgba(255,255,255,.35);
+  box-shadow:
+    0 0 35px rgba(255,255,255,.45),
+    0 0 70px rgba(255,0,200,.55);
+}
