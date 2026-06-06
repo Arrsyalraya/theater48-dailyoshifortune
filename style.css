@@ -695,3 +695,218 @@ body{
     0 0 35px rgba(255,255,255,.45),
     0 0 70px rgba(255,0,200,.55);
 }
+/* Efek kartu jatuh setelah pack dibuka */
+.card-area.drop-start .card-shell{
+  animation:cardDropIn .75s ease both;
+}
+
+.card-area.drop-start .card-shell:nth-child(2){animation-delay:.08s;}
+.card-area.drop-start .card-shell:nth-child(3){animation-delay:.16s;}
+.card-area.drop-start .card-shell:nth-child(4){animation-delay:.24s;}
+.card-area.drop-start .card-shell:nth-child(5){animation-delay:.32s;}
+
+@keyframes cardDropIn{
+  0%{
+    transform:translateY(-120px) rotate(-8deg) scale(.75);
+    opacity:0;
+    filter:blur(8px);
+  }
+  70%{
+    transform:translateY(12px) rotate(2deg) scale(1.04);
+    opacity:1;
+    filter:blur(0);
+  }
+  100%{
+    transform:translateY(0) rotate(0) scale(1);
+  }
+}
+
+/* Border dan shine khusus Ultra Rare ke atas */
+.card-front.ultra-rare,
+.card-front.legendary-rare,
+.card-front.secret,
+.card-front.infinity,
+.collection .mini.ultra-rare,
+.collection .mini.legendary-rare,
+.collection .mini.secret,
+.collection .mini.infinity{
+  border:2px solid rgba(255,255,255,.75);
+  box-shadow:
+    0 0 18px rgba(255,255,255,.45),
+    0 0 35px rgba(255,0,200,.45),
+    inset 0 0 25px rgba(255,255,255,.18);
+}
+
+.card-front.ultra-rare::after,
+.card-front.legendary-rare::after,
+.card-front.secret::after,
+.card-front.infinity::after,
+.collection .mini.ultra-rare::after,
+.collection .mini.legendary-rare::after,
+.collection .mini.secret::after,
+.collection .mini.infinity::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(120deg,transparent 25%,rgba(255,255,255,.45),transparent 65%),
+    radial-gradient(circle at top,rgba(255,255,255,.35),transparent 45%);
+  mix-blend-mode:screen;
+  animation:rareShine 2.4s infinite;
+  pointer-events:none;
+  z-index:2;
+}
+
+@keyframes rareShine{
+  0%{transform:translateX(-140%);}
+  55%{transform:translateX(140%);}
+  100%{transform:translateX(140%);}
+}
+
+.card-front.infinity,
+.collection .mini.infinity{
+  animation:infinityAura 2s infinite alternate;
+}
+
+@keyframes infinityAura{
+  from{
+    box-shadow:
+      0 0 20px #fff,
+      0 0 35px #ff4fd8,
+      0 0 55px #2afadf;
+  }
+  to{
+    box-shadow:
+      0 0 35px #fff8b8,
+      0 0 65px #ff4fd8,
+      0 0 90px #2afadf;
+  }
+}
+
+/* Popup kartu besar rare */
+.big-card-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.78);
+  backdrop-filter:blur(10px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:10000;
+}
+
+.big-card-box{
+  position:relative;
+  animation:bigCardFloat 2.8s ease-in-out infinite alternate;
+}
+
+.big-card-content{
+  width:330px;
+  min-height:520px;
+  border-radius:28px;
+  padding:18px;
+  position:relative;
+  overflow:hidden;
+  text-align:center;
+  border:3px solid rgba(255,255,255,.7);
+  box-shadow:
+    0 0 35px rgba(255,255,255,.6),
+    0 0 80px rgba(255,0,200,.7);
+}
+
+.big-card-content::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  filter:brightness(.65);
+  z-index:-2;
+}
+
+.big-card-content::after{
+  content:"";
+  position:absolute;
+  inset:-30%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.5),transparent);
+  animation:rareShine 2.2s infinite;
+  z-index:-1;
+}
+
+.big-card-content.normal::before{background-image:url("assets/card-bg/normal.jpg");}
+.big-card-content.rare::before{background-image:url("assets/card-bg/rare.jpg");}
+.big-card-content.super-rare::before{background-image:url("assets/card-bg/super-rare.jpg");}
+.big-card-content.super-star-rare::before{background-image:url("assets/card-bg/super-star-rare.jpg");}
+.big-card-content.ultra-rare::before{background-image:url("assets/card-bg/ultra-rare.jpg");}
+.big-card-content.legendary-rare::before{background-image:url("assets/card-bg/legendary-rare.jpg");}
+.big-card-content.secret::before{background-image:url("assets/card-bg/secret.jpg");}
+.big-card-content.infinity::before{background-image:url("assets/card-bg/infinity.jpg");}
+
+.big-card-content img{
+  width:100%;
+  height:300px;
+  object-fit:cover;
+  object-position:center top;
+  border-radius:20px;
+  border:2px solid rgba(255,255,255,.75);
+  margin-top:35px;
+}
+
+.big-card-content .name{
+  font-size:32px;
+  margin-top:18px;
+}
+
+.big-card-content .jiko{
+  font-size:14px;
+  padding:0 10px;
+}
+
+.big-close{
+  position:absolute;
+  right:14px;
+  top:12px;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  padding:0;
+  font-size:24px;
+  background:rgba(0,0,0,.55);
+  border:1px solid rgba(255,255,255,.35);
+  z-index:5;
+}
+
+@keyframes bigCardFloat{
+  from{
+    transform:translateY(0) scale(1);
+  }
+  to{
+    transform:translateY(-18px) scale(1.03);
+  }
+}
+
+/* Pack dibuka lebih dramatis */
+.pack-box.opening{
+  animation:packCutOpen .9s forwards;
+}
+
+@keyframes packCutOpen{
+  0%{
+    clip-path:polygon(0 0,100% 0,100% 100%,0 100%);
+    transform:scale(1) rotate(0);
+    filter:brightness(1);
+  }
+  35%{
+    transform:scale(1.12) rotate(-5deg);
+    filter:brightness(1.8);
+  }
+  65%{
+    clip-path:polygon(0 0,100% 8%,100% 100%,0 92%);
+    transform:scale(1.18) rotate(4deg);
+  }
+  100%{
+    clip-path:polygon(0 45%,100% 55%,100% 55%,0 45%);
+    transform:scale(.3) rotate(25deg);
+    opacity:0;
+  }
+}
