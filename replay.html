@@ -14,7 +14,7 @@ body{
 }
 
 .replay-wrap{
-    max-width:900px;
+    max-width:1100px;
     margin:auto;
     background:#0b0b0b;
 }
@@ -33,16 +33,34 @@ body{
     display:block;
 }
 
+.action-row{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    flex-wrap:wrap;
+    background:#111;
+    padding:12px;
+}
+
+.action-row a{
+    background:#ff2b2b;
+    color:white;
+    text-decoration:none;
+    padding:10px 18px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
 .lineup-box{
     background:#151515;
     margin:12px 0;
-    padding:28px 15px;
+    padding:22px 15px;
     text-align:center;
     border-radius:0 0 22px 22px;
 }
 
 .lineup-box h2{
-    margin:0 0 22px;
+    margin:0 0 18px;
     font-size:26px;
 }
 
@@ -50,16 +68,44 @@ body{
     background:#ff5bbd;
     border:none;
     color:white;
-    padding:14px 34px;
+    padding:13px 30px;
     border-radius:12px;
-    font-size:18px;
+    font-size:17px;
     font-weight:bold;
+    cursor:pointer;
+}
+
+.lineup-list{
+    display:none;
+    margin-top:18px;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.member{
+    width:82px;
+    text-align:center;
+}
+
+.member img{
+    width:64px;
+    height:64px;
+    border-radius:50%;
+    object-fit:cover;
+    background:#222;
+    border:2px solid #ff2b2b;
+}
+
+.member div{
+    margin-top:5px;
+    font-size:12px;
 }
 
 .replay-list{
     padding:18px;
-    display:flex;
-    flex-direction:column;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
     gap:14px;
 }
 
@@ -68,7 +114,7 @@ body{
     gap:16px;
     align-items:center;
     background:#1b1b1b;
-    border:1px solid #333;
+    border:1.5px solid #ff2b2b;
     border-radius:14px;
     padding:12px;
     cursor:pointer;
@@ -81,13 +127,14 @@ body{
 }
 
 .replay-card.active{
-    border:1px solid #ff5bbd;
-    background:#242024;
+    border:2px solid #ff2b2b;
+    background:#251515;
+    box-shadow:0 0 12px rgba(255,43,43,.5);
 }
 
 .replay-card img{
-    width:210px;
-    height:118px;
+    width:170px;
+    height:96px;
     object-fit:cover;
     border-radius:10px;
     background:#222;
@@ -99,7 +146,7 @@ body{
 }
 
 .replay-title{
-    font-size:20px;
+    font-size:18px;
     font-weight:bold;
     line-height:1.35;
 }
@@ -107,17 +154,26 @@ body{
 .replay-date{
     margin-top:8px;
     color:#aaa;
-    font-size:17px;
+    font-size:15px;
 }
 
-@media(max-width:600px){
+/* MOBILE */
+@media(max-width:650px){
+    .replay-wrap{
+        max-width:100%;
+    }
+
     .replay-list{
         padding:12px;
+        display:flex;
+        flex-direction:column;
+        gap:14px;
     }
 
     .replay-card{
         gap:12px;
         padding:10px;
+        border:1.5px solid #ff2b2b;
     }
 
     .replay-card img{
@@ -155,11 +211,32 @@ body{
                 mozallowfullscreen>
             </iframe>
         </div>
+
+        <div class="action-row">
+            <a id="openYoutube" href="https://youtu.be/8PQIt0DT5ls" target="_blank">
+                Buka di YouTube
+            </a>
+        </div>
     </div>
 
     <div class="lineup-box">
         <h2>Line up Member</h2>
-        <button onclick="alert('Line-up member akan ditambahkan.')">Tampilkan Line-up</button>
+        <button onclick="toggleLineup()">Tampilkan Line-up</button>
+
+        <div class="lineup-list" id="lineupList">
+            <div class="member">
+                <img src="images/freya.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=FREYA'">
+                <div>Freya</div>
+            </div>
+            <div class="member">
+                <img src="images/christy.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=CHRISTY'">
+                <div>Christy</div>
+            </div>
+            <div class="member">
+                <img src="images/flora.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=FLORA'">
+                <div>Flora</div>
+            </div>
+        </div>
     </div>
 
     <div class="replay-list">
@@ -205,23 +282,19 @@ function changeVideo(card, videoId){
     document.getElementById("mainPlayer").src =
     "https://www.youtube.com/embed/" + videoId + "?rel=0&playsinline=0&fs=1&autoplay=1";
 
+    document.getElementById("openYoutube").href =
+    "https://youtu.be/" + videoId;
+
     document.querySelectorAll(".replay-card").forEach(el=>{
         el.classList.remove("active");
     });
 
     card.classList.add("active");
-
-    tryLandscape();
 }
 
-async function tryLandscape(){
-    try{
-        if(document.fullscreenElement && screen.orientation && screen.orientation.lock){
-            await screen.orientation.lock("landscape");
-        }
-    }catch(e){
-        console.log("Orientation lock dibatasi browser.");
-    }
+function toggleLineup(){
+    const list = document.getElementById("lineupList");
+    list.style.display = list.style.display === "flex" ? "none" : "flex";
 }
 </script>
 
