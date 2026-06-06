@@ -10,14 +10,14 @@ let pendingPackAmount = 0;
 let currentFilter = "ALL";
 
 const tiers = [
-  {name:"N", rate:45},
-  {name:"R", rate:30},
-  {name:"SR", rate:15},
-  {name:"SSR", rate:6},
-  {name:"UR", rate:2.8},
-  {name:"LR", rate:0.8},
-  {name:"SECRET", rate:0.35},
-  {name:"INFINITY", rate:0.05}
+ {name:"Normal", rate:45},
+ {name:"Rare", rate:30},
+ {name:"Super Rare", rate:15},
+ {name:"Super Star Rare", rate:6},
+ {name:"Ultra Rare", rate:2.8},
+ {name:"Legendary Rare", rate:0.8},
+ {name:"Secret", rate:0.35},
+ {name:"Infinity", rate:0.05}
 ];
 
 const normalTiers = tiers.filter(t => t.name !== "INFINITY");
