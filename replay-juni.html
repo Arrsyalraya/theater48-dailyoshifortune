@@ -185,10 +185,12 @@ body{
     }
 
     .lineup-list{
-        max-width:420px;
-        gap:14px;
-        display:none;
-    }
+    max-width:420px;
+    gap:14px;
+    display:none;
+    grid-template-columns:repeat(4,1fr);
+    justify-items:center;
+}
 
     .member{
         width:72px;
@@ -402,15 +404,15 @@ function toggleLineup(){
     const list = document.getElementById("lineupList");
     const btn = document.querySelector(".lineup-box button");
 
-    if(list.style.display === "flex"){
+    if(list.style.display === "grid"){
         list.style.display = "none";
         btn.innerText = "Tampilkan Line-up";
     }else{
-        list.style.display = "flex";
+        list.style.display = "grid";
         btn.innerText = "Tutupkan Line-up";
     }
 }
-
+    
 renderReplayList();
 renderLineup(videos[0].id);
 </script>
