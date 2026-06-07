@@ -185,8 +185,9 @@ body{
     }
 
     .lineup-list{
-        max-width:360px;
-        gap:12px;
+        max-width:420px;
+        gap:14px;
+        display:none;
     }
 
     .member{
@@ -399,7 +400,15 @@ function changeVideo(card, videoId){
 
 function toggleLineup(){
     const list = document.getElementById("lineupList");
-    list.style.display = list.style.display === "flex" ? "none" : "flex";
+    const btn = document.querySelector(".lineup-box button");
+
+    if(list.style.display === "flex"){
+        list.style.display = "none";
+        btn.innerText = "Tampilkan Line-up";
+    }else{
+        list.style.display = "flex";
+        btn.innerText = "Tutupkan Line-up";
+    }
 }
 
 renderReplayList();
