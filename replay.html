@@ -62,10 +62,10 @@ body{
 .lineup-list{
     display:none;
     margin-top:18px;
-    justify-content:center;
     gap:14px;
     flex-wrap:wrap;
-    max-width:620px;
+    justify-content:center;
+    max-width:650px;
     margin-left:auto;
     margin-right:auto;
 }
@@ -76,9 +76,9 @@ body{
 }
 
 .member img{
-    width:66px;
-    height:66px;
-    border-radius:50%;
+    width:72px;
+    height:72px;
+    border-radius:12px;
     object-fit:cover;
     background:#222;
     border:2px solid #ff2b2b;
@@ -144,6 +144,12 @@ body{
     font-size:15px;
 }
 
+.empty-lineup{
+    color:#aaa;
+    font-size:15px;
+    margin-top:15px;
+}
+
 @media(max-width:650px){
     .replay-wrap{
         max-width:100%;
@@ -188,8 +194,10 @@ body{
     }
 
     .member img{
-        width:58px;
-        height:58px;
+        width:64px;
+        height:64px;
+        border-radius:10px;
+        object-fit:cover;
     }
 
     .member div{
@@ -219,98 +227,98 @@ body{
     <div class="lineup-box">
         <h2>Line up Member</h2>
         <button onclick="toggleLineup()">Tampilkan Line-up</button>
-
-        <div class="lineup-list" id="lineupList">
-            <div class="member">
-                <img src="images/freya.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=FREYA'">
-                <div>Freya</div>
-            </div>
-            <div class="member">
-                <img src="images/christy.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=CHRISTY'">
-                <div>Christy</div>
-            </div>
-            <div class="member">
-                <img src="images/gracia.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=GRACIA'">
-                <div>Gracia</div>
-            </div>
-            <div class="member">
-                <img src="images/feni.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=FENI'">
-                <div>Feni</div>
-            </div>
-            <div class="member">
-                <img src="images/gita.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=GITA'">
-                <div>Gita</div>
-            </div>
-            <div class="member">
-                <img src="images/eli.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=ELI'">
-                <div>Eli</div>
-            </div>
-            <div class="member">
-                <img src="images/olla.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=OLLA'">
-                <div>Olla</div>
-            </div>
-            <div class="member">
-                <img src="images/muthe.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=MUTHE'">
-                <div>Muthe</div>
-            </div>
-            <div class="member">
-                <img src="images/lulu.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=LULU'">
-                <div>Lulu</div>
-            </div>
-            <div class="member">
-                <img src="images/flora.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=FLORA'">
-                <div>Flora</div>
-            </div>
-            <div class="member">
-                <img src="images/marsha.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=MARSHA'">
-                <div>Marsha</div>
-            </div>
-            <div class="member">
-                <img src="images/kathrina.jpg" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=KATHRINA'">
-                <div>Kathrina</div>
-            </div>
-        </div>
+        <div class="lineup-list" id="lineupList"></div>
     </div>
 
-    <div class="replay-list">
-
-        <div class="replay-card active" onclick="changeVideo(this,'8PQIt0DT5ls')">
-            <img src="https://img.youtube.com/vi/8PQIt0DT5ls/maxresdefault.jpg">
-            <div class="replay-info">
-                <div class="replay-title">ITADAKI♥LOVE - Team Love</div>
-                <div class="replay-date">06/06/2026</div>
-            </div>
-        </div>
-
-        <div class="replay-card" onclick="changeVideo(this,'F4vvxxJ0RbU')">
-            <img src="https://img.youtube.com/vi/F4vvxxJ0RbU/maxresdefault.jpg">
-            <div class="replay-info">
-                <div class="replay-title">Sambil Menggandeng Erat Tanganku - Team Passion</div>
-                <div class="replay-date">06/06/2026</div>
-            </div>
-        </div>
-
-        <div class="replay-card" onclick="changeVideo(this,'4oTnrSgaAtI')">
-            <img src="https://img.youtube.com/vi/4oTnrSgaAtI/maxresdefault.jpg">
-            <div class="replay-info">
-                <div class="replay-title">DREAM BAKUDAN - Team Dream</div>
-                <div class="replay-date">05/06/2026</div>
-            </div>
-        </div>
-
-        <div class="replay-card" onclick="changeVideo(this,'PpYzXO7RJ0s')">
-            <img src="https://img.youtube.com/vi/PpYzXO7RJ0s/maxresdefault.jpg">
-            <div class="replay-info">
-                <div class="replay-title">Pajama Drive</div>
-                <div class="replay-date">04/06/2026</div>
-            </div>
-        </div>
-
-    </div>
+    <div class="replay-list" id="replayList"></div>
 
 </div>
 
 <script>
+const memberData = {
+    freya:{name:"Freya", img:"images/freya.jpg"},
+    christy:{name:"Christy", img:"images/christy.jpg"},
+    gracia:{name:"Gracia", img:"images/gracia.jpg"},
+    feni:{name:"Feni", img:"images/feni.jpg"},
+    gita:{name:"Gita", img:"images/gita.jpg"},
+    eli:{name:"Eli", img:"images/eli.jpg"},
+    olla:{name:"Olla", img:"images/olla.jpg"},
+    muthe:{name:"Muthe", img:"images/muthe.jpg"},
+    lulu:{name:"Lulu", img:"images/lulu.jpg"},
+    flora:{name:"Flora", img:"images/flora.jpg"},
+    marsha:{name:"Marsha", img:"images/marsha.jpg"},
+    kathrina:{name:"Kathrina", img:"images/kathrina.jpg"}
+};
+
+const videos = [
+    {
+        id:"8PQIt0DT5ls",
+        title:"ITADAKI♥LOVE - Team Love",
+        date:"06/06/2026",
+        lineup:["freya","christy","gracia","feni","gita","eli","olla","muthe","lulu","flora","marsha","kathrina"]
+    },
+    {
+        id:"F4vvxxJ0RbU",
+        title:"Sambil Menggandeng Erat Tanganku - Team Passion",
+        date:"06/06/2026",
+        lineup:["freya","christy","gracia","feni","gita","eli","olla","muthe","lulu","flora","marsha","kathrina"]
+    },
+    {
+        id:"4oTnrSgaAtI",
+        title:"DREAM BAKUDAN - Team Dream",
+        date:"05/06/2026",
+        lineup:["freya","christy","gracia","feni","gita","eli","olla","muthe","lulu","flora","marsha","kathrina"]
+    },
+    {
+        id:"PpYzXO7RJ0s",
+        title:"Pajama Drive",
+        date:"04/06/2026",
+        lineup:["freya","christy","gracia","feni","gita","eli","olla","muthe","lulu","flora","marsha","kathrina"]
+    }
+];
+
+function renderReplayList(){
+    const list = document.getElementById("replayList");
+    list.innerHTML = "";
+
+    videos.forEach((video,index)=>{
+        list.innerHTML += `
+            <div class="replay-card ${index === 0 ? "active" : ""}" onclick="changeVideo(this,'${video.id}')">
+                <img src="https://img.youtube.com/vi/${video.id}/maxresdefault.jpg">
+                <div class="replay-info">
+                    <div class="replay-title">${video.title}</div>
+                    <div class="replay-date">${video.date}</div>
+                </div>
+            </div>
+        `;
+    });
+}
+
+function renderLineup(videoId){
+    const video = videos.find(v => v.id === videoId);
+    const lineupBox = document.getElementById("lineupList");
+
+    if(!video || !video.lineup || video.lineup.length === 0){
+        lineupBox.innerHTML = `<div class="empty-lineup">Line-up belum tersedia.</div>`;
+        return;
+    }
+
+    lineupBox.innerHTML = "";
+
+    video.lineup.forEach(key=>{
+        const member = memberData[key];
+
+        if(member){
+            lineupBox.innerHTML += `
+                <div class="member">
+                    <img src="${member.img}" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=${member.name}'">
+                    <div>${member.name}</div>
+                </div>
+            `;
+        }
+    });
+}
+
 function changeVideo(card, videoId){
     document.getElementById("mainPlayer").src =
     "https://www.youtube.com/embed/" + videoId + "?autoplay=1&mute=1&rel=0&playsinline=0&fs=1";
@@ -320,6 +328,8 @@ function changeVideo(card, videoId){
     });
 
     card.classList.add("active");
+
+    renderLineup(videoId);
 
     window.scrollTo({
         top:0,
@@ -331,6 +341,9 @@ function toggleLineup(){
     const list = document.getElementById("lineupList");
     list.style.display = list.style.display === "flex" ? "none" : "flex";
 }
+
+renderReplayList();
+renderLineup(videos[0].id);
 </script>
 
 </body>
