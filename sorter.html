@@ -1,132 +1,351 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Theater48Fight Oshi Sorter</title>
 
 <style>
+*{box-sizing:border-box}
+
 body{
   margin:0;
+  min-height:100vh;
   padding:20px;
-  background:#0f0f0f;
   color:white;
   font-family:Arial,sans-serif;
   text-align:center;
+  background:
+    radial-gradient(circle at 20% 10%,rgba(255,43,43,.25),transparent 25%),
+    radial-gradient(circle at 80% 15%,rgba(255,215,122,.18),transparent 22%),
+    linear-gradient(135deg,#050505,#17070a 45%,#050505);
+}
+
+.wrap{
+  max-width:1050px;
+  margin:auto;
 }
 
 .box{
-  max-width:900px;
-  margin:auto;
-  background:#171717;
-  border-radius:24px;
-  padding:30px;
+  background:rgba(10,10,10,.88);
+  border:1px solid rgba(255,43,43,.45);
+  border-radius:28px;
+  padding:28px;
+  box-shadow:0 0 35px rgba(255,43,43,.18);
 }
 
-h1{color:#fff;}
-.sub{color:#aaa;}
+h1{
+  margin:0;
+  font-size:44px;
+  color:#ffd77a;
+  text-shadow:0 0 18px rgba(255,215,122,.35);
+}
+
+.sub{
+  color:#ccc;
+  margin-top:10px;
+}
+
+.progress{
+  margin-top:18px;
+  color:#ffd77a;
+  font-weight:bold;
+}
 
 .battle{
   display:flex;
-  gap:20px;
+  gap:26px;
   justify-content:center;
   align-items:center;
   margin-top:30px;
   flex-wrap:wrap;
 }
 
-.member{
-  background:#fff;
-  color:#8B1D2C;
-  border-radius:22px;
-  padding:35px 20px;
-  width:280px;
-  font-size:36px;
-  font-weight:bold;
+.member-card{
+  width:310px;
+  background:linear-gradient(180deg,#201010,#090909);
+  border:1px solid rgba(255,43,43,.7);
+  border-radius:24px;
+  padding:14px;
   cursor:pointer;
-  transition:.2s;
+  transition:.25s;
+  box-shadow:0 0 22px rgba(255,43,43,.18);
+  position:relative;
+  overflow:hidden;
 }
 
-.member:hover{
-  transform:scale(1.05);
-  background:#ffecef;
+.member-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 30% 15%,rgba(255,255,255,.18),transparent 18%),
+    linear-gradient(120deg,transparent 20%,rgba(255,255,255,.12),transparent 60%);
+  opacity:.8;
+  pointer-events:none;
+}
+
+.member-card:hover{
+  transform:translateY(-5px) scale(1.03);
+  box-shadow:0 0 28px rgba(255,43,43,.45);
+}
+
+.member-card img{
+  width:100%;
+  height:360px;
+  object-fit:cover;
+  border-radius:18px;
+  background:#222;
+  border:2px solid #ff2b2b;
+  position:relative;
+  z-index:1;
+}
+
+.member-name{
+  position:relative;
+  z-index:1;
+  margin-top:14px;
+  font-size:32px;
+  font-weight:bold;
+  color:#fff;
+}
+
+.member-tag{
+  position:relative;
+  z-index:1;
+  margin-top:6px;
+  font-size:13px;
+  color:#ffd77a;
+  letter-spacing:1px;
 }
 
 .vs{
-  font-size:28px;
-  color:#f39c12;
+  font-size:34px;
+  color:#ffd77a;
   font-weight:bold;
+  text-shadow:0 0 12px rgba(255,215,122,.5);
+}
+
+.action-row{
+  margin-top:22px;
 }
 
 button{
-  margin-top:20px;
-  padding:12px 20px;
+  margin:8px;
+  padding:13px 22px;
   border:none;
   border-radius:14px;
   font-weight:bold;
   cursor:pointer;
+  color:white;
+  background:linear-gradient(135deg,#ff2b2b,#8b1d2c);
+  box-shadow:0 0 14px rgba(255,43,43,.28);
+}
+
+button:hover{
+  transform:scale(1.04);
 }
 
 .result{
-  text-align:left;
-  max-width:500px;
-  margin:30px auto;
-  background:#fff;
+  max-width:700px;
+  margin:30px auto 0;
+  background:#f7f7f7;
   color:#111;
-  padding:25px;
-  border-radius:20px;
+  padding:24px;
+  border-radius:22px;
+  text-align:left;
 }
 
-.result h2{text-align:center;}
+.result h2{
+  text-align:center;
+  margin-top:0;
+}
 
 .rank{
-  padding:10px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:12px;
   border-bottom:1px solid #ddd;
   font-size:18px;
+}
+
+.rank img{
+  width:58px;
+  height:58px;
+  border-radius:12px;
+  object-fit:cover;
+  background:#222;
+}
+
+.rank b{
+  color:#8b1d2c;
+}
+
+@media(max-width:700px){
+  body{
+    padding:10px;
+  }
+
+  .box{
+    padding:20px 12px;
+  }
+
+  h1{
+    font-size:32px;
+  }
+
+  .battle{
+    gap:12px;
+  }
+
+  .member-card{
+    width:46%;
+    padding:8px;
+    border-radius:18px;
+  }
+
+  .member-card img{
+    height:210px;
+    border-radius:13px;
+  }
+
+  .member-name{
+    font-size:20px;
+  }
+
+  .member-tag{
+    font-size:10px;
+  }
+
+  .vs{
+    width:100%;
+    font-size:24px;
+    order:2;
+  }
+
+  #leftCard{
+    order:1;
+  }
+
+  #rightCard{
+    order:3;
+  }
+
+  .rank{
+    font-size:15px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="box">
-  <h1>🎭 Oshi Sorter</h1>
-  <p class="sub">Pilih member yang lebih kamu suka sampai ranking oshimu terbentuk.</p>
+<div class="wrap">
+  <div class="box">
+    <h1>🎭 Oshi Sorter</h1>
+    <p class="sub">Pilih member yang lebih kamu suka sampai ranking oshimu terbentuk.</p>
 
-  <div id="game">
-    <p id="progress"></p>
+    <div id="game">
+      <p class="progress" id="progress"></p>
 
-    <div class="battle">
-      <div class="member" id="left" onclick="choose('left')"></div>
-      <div class="vs">VS</div>
-      <div class="member" id="right" onclick="choose('right')"></div>
+      <div class="battle">
+        <div class="member-card" id="leftCard" onclick="choose('left')">
+          <img id="leftImg" src="">
+          <div class="member-name" id="leftName"></div>
+          <div class="member-tag">PILIH OSHI INI</div>
+        </div>
+
+        <div class="vs">VS</div>
+
+        <div class="member-card" id="rightCard" onclick="choose('right')">
+          <img id="rightImg" src="">
+          <div class="member-name" id="rightName"></div>
+          <div class="member-tag">PILIH OSHI INI</div>
+        </div>
+      </div>
+
+      <div class="action-row">
+        <button onclick="skip()">Skip</button>
+        <button onclick="location.reload()">Ulangi</button>
+      </div>
     </div>
 
-    <button onclick="skip()">Skip</button>
+    <div id="result" style="display:none;"></div>
   </div>
-
-  <div id="result" style="display:none;"></div>
 </div>
 
 <script>
 const members = [
-  "FREYA", "CHRISTY", "GRACIE", "FENI", "GITA", "ELI",
-  "OLLA", "MUTHE", "LULU", "FIONY", "MARSHA", "KATHRINA",
-  "JESSI", "LYN", "OGURI YUI", "GREESEL", "ELLA", "ALYA",
-  "ANIN", "CATHY", "LANA", "ONIEL", "ELIN", "GENDIS",
-  "INDAH", "LIA", "NALA", "NAYLA", "RAISHA", "RIBKA",
-  "TRISHA", "KIMMY", "MICHIE", "DANELLA", "DAISY",
-  "OLINE", "DELYNN", "LILY", "ARALIE", "NACHIA", "LEVI",
-  "CYNTHIA", "FRITZY", "ERINE", "JEMIMA", "EKIN", "INTAN",
-  "MIKAELA", "RILLY", "VIRGI", "AUWIA", "GIA", "MAIRA",
-  "FERA", "CARISSA", "BELLA", "FAHIRA", "RARA",
-  "HEIDI", "MAXINE", "JAZZY", "RALYNE", "SONA"
+{name:"Freya",img:"images/freya.jpg"},
+{name:"Christy",img:"images/christy.jpg"},
+{name:"Gracie",img:"images/gracie.jpg"},
+{name:"Feni",img:"images/feni.jpg"},
+{name:"Gita",img:"images/gita.jpg"},
+{name:"Eli",img:"images/eli.jpg"},
+{name:"Olla",img:"images/olla.jpg"},
+{name:"Muthe",img:"images/muthe.jpg"},
+{name:"Lulu",img:"images/lulu.jpg"},
+{name:"Fiony",img:"images/fiony.jpg"},
+{name:"Marsha",img:"images/marsha.jpg"},
+{name:"Kathrina",img:"images/kathrina.jpg"},
+{name:"Jessi",img:"images/jessi.jpg"},
+{name:"Lyn",img:"images/lyn.jpg"},
+{name:"Greesel",img:"images/greesel.jpg"},
+{name:"Ella",img:"images/ella.jpg"},
+{name:"Alya",img:"images/alya.jpg"},
+{name:"Anindya",img:"images/anindya.jpg"},
+{name:"Cathy",img:"images/cathy.jpg"},
+{name:"Lana",img:"images/lana.jpg"},
+{name:"Oniel",img:"images/oniel.jpg"},
+{name:"Elin",img:"images/elin.jpg"},
+{name:"Gendis",img:"images/gendis.jpg"},
+{name:"Indah",img:"images/indah.jpg"},
+{name:"Lia",img:"images/lia.jpg"},
+{name:"Nala",img:"images/nala.jpg"},
+{name:"Nayla",img:"images/nayla.jpg"},
+{name:"Raisha",img:"images/raisha.jpg"},
+{name:"Ribka",img:"images/ribka.jpg"},
+{name:"Trisha",img:"images/trisha.jpg"},
+{name:"Kimmy",img:"images/kimmy.jpg"},
+{name:"Michie",img:"images/michie.jpg"},
+{name:"Danella",img:"images/danella.jpg"},
+{name:"Daisy",img:"images/daisy.jpg"},
+{name:"Oline",img:"images/oline.jpg"},
+{name:"Delynn",img:"images/delynn.jpg"},
+{name:"Lily",img:"images/lily.jpg"},
+{name:"Aralie",img:"images/aralie.jpg"},
+{name:"Nachia",img:"images/nachia.jpg"},
+{name:"Levi",img:"images/levi.jpg"},
+{name:"Cynthia",img:"images/cynthia.jpg"},
+{name:"Fritzy",img:"images/fritzy.jpg"},
+{name:"Erine",img:"images/erine.jpg"},
+{name:"Jemima",img:"images/jemima.jpg"},
+{name:"Ekin",img:"images/ekin.jpg"},
+{name:"Intan",img:"images/intan.jpg"},
+{name:"Mikaela",img:"images/mikaela.jpg"},
+{name:"Rilly",img:"images/rilly.jpg"},
+{name:"Virgi",img:"images/virgi.jpg"},
+{name:"Auwia",img:"images/auwia.jpg"},
+{name:"Gia",img:"images/gia.jpg"},
+{name:"Maira",img:"images/maira.jpg"},
+{name:"Fera",img:"images/fera.jpg"},
+{name:"Carissa",img:"images/carissa.jpg"},
+{name:"Bella",img:"images/bella.jpg"},
+{name:"Fahira",img:"images/fahira.jpg"},
+{name:"Rara",img:"images/rara.jpg"},
+{name:"Heidi",img:"images/heidi.jpg"},
+{name:"Maxine",img:"images/maxine.jpg"},
+{name:"Jazzy",img:"images/jazzy.jpg"},
+{name:"Ralyne",img:"images/ralyne.jpg"},
+{name:"Sona",img:"images/sona.jpg"}
 ];
 
 let scores = {};
 let pairs = [];
 let current = 0;
 
-members.forEach(m => scores[m] = 0);
+members.forEach(m => scores[m.name] = 0);
 
 for(let i=0; i<members.length; i++){
   for(let j=i+1; j<members.length; j++){
@@ -134,7 +353,12 @@ for(let i=0; i<members.length; i++){
   }
 }
 
-pairs = pairs.sort(() => Math.random() - 0.5).slice(0, 60);
+pairs = pairs.sort(() => Math.random() - 0.5).slice(0, 80);
+
+function fallback(img, name){
+  img.onerror = null;
+  img.src = "https://via.placeholder.com/400x500/111111/ffffff?text=" + encodeURIComponent(name);
+}
 
 function showPair(){
   if(current >= pairs.length){
@@ -142,57 +366,13 @@ function showPair(){
     return;
   }
 
-  document.getElementById("left").innerText = pairs[current][0];
-  document.getElementById("right").innerText = pairs[current][1];
-  document.getElementById("progress").innerText =
-    "Progress: " + (current + 1) + " / " + pairs.length;
-}
+  const left = pairs[current][0];
+  const right = pairs[current][1];
 
-function choose(side){
-  const pair = pairs[current];
+  document.getElementById("leftName").innerText = left.name;
+  document.getElementById("leftImg").src = left.img;
+  document.getElementById("leftImg").onerror = function(){ fallback(this,left.name); };
 
-  if(side === "left"){
-    scores[pair[0]] += 1;
-  }else{
-    scores[pair[1]] += 1;
-  }
-
-  current++;
-  showPair();
-}
-
-function skip(){
-  current++;
-  showPair();
-}
-
-function showResult(){
-  document.getElementById("game").style.display = "none";
-
-  const sorted = Object.entries(scores)
-    .sort((a,b) => b[1] - a[1])
-    .slice(0, 20);
-
-  let html = `
-    <div class="result">
-    <h2>🏆 Ranking Oshi Kamu</h2>
-  `;
-
-  sorted.forEach((item,index)=>{
-    html += `<div class="rank">${index+1}. ${item[0]}</div>`;
-  });
-
-  html += `
-    <button onclick="location.reload()">Ulangi Sorter</button>
-    </div>
-  `;
-
-  document.getElementById("result").innerHTML = html;
-  document.getElementById("result").style.display = "block";
-}
-
-showPair();
-</script>
-
-</body>
-</html>
+  document.getElementById("rightName").innerText = right.name;
+  document.getElementById("rightImg").src = right.img;
+  document.getElementById("rightImg").onerror = function(){
