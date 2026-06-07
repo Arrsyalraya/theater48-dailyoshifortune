@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -11,16 +11,22 @@ body{
     color:white;
     font-family:Arial,sans-serif;
     margin:0;
+    padding:0;
 }
-
+    
 .replay-wrap{
-    max-width:1100px;
-    margin:auto;
+    width:100%;
+    max-width:none;
+    margin:0;
+    padding:0;
     background:#0b0b0b;
 }
 
 .player-box{
     background:#000;
+    width:100%;
+    margin:0;
+    padding:0;
 }
 
 .player iframe{
@@ -61,11 +67,12 @@ body{
 
 .lineup-list{
     display:none;
-    margin-top:18px;
-    gap:14px;
-    flex-wrap:wrap;
+    grid-template-columns:repeat(6,90px);
+    gap:22px 26px;
     justify-content:center;
-    max-width:650px;
+    justify-items:center;
+    margin-top:20px;
+    max-width:720px;
     margin-left:auto;
     margin-right:auto;
 }
@@ -149,11 +156,105 @@ body{
     font-size:15px;
     margin-top:15px;
 }
+    
+.month-dropdown{
+    width:280px;
+    margin:15px auto 20px auto;
+    position:relative;
+    z-index:9999;
+}
 
+.month-dropdown details{
+    background:#151515;
+    border:1px solid #ff2b2b;
+    border-radius:12px;
+    overflow:visible;
+}
+
+.month-dropdown summary{
+    list-style:none;
+    cursor:pointer;
+    padding:12px 16px;
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+    text-align:center;
+    user-select:none;
+}
+
+.month-dropdown summary::-webkit-details-marker{
+    display:none;
+}
+
+.month-dropdown summary::after{
+    content:"▼";
+    float:right;
+    font-size:10px;
+    opacity:.8;
+    margin-top:4px;
+}
+
+.month-dropdown details[open] summary::after{
+    content:"▲";
+}
+
+/* Dropdown ngambang */
+.month-dropdown details[open] .dropdown-content{
+    display:block;
+}
+
+.dropdown-content{
+    display:none;
+    position:absolute;
+    top:100%;
+    left:0;
+    width:100%;
+    background:#111;
+    border:1px solid #ff2b2b;
+    border-radius:0 0 12px 12px;
+    box-shadow:0 10px 25px rgba(0,0,0,.5);
+}
+
+.dropdown-content a{
+    display:block;
+    padding:12px 15px;
+    color:white;
+    text-decoration:none;
+    text-align:center;
+    font-size:14px;
+    border-top:1px solid #222;
+}
+
+.dropdown-content a:hover{
+    background:#202020;
+    color:#ff2b2b;
+}
+
+/* Mobile */
+@media(max-width:650px){
+
+    .month-dropdown{
+        width:220px;
+    }
+
+    .month-dropdown summary{
+        font-size:13px;
+        padding:10px 14px;
+    }
+
+    .dropdown-content a{
+        font-size:12px;
+        padding:10px;
+    }
+}
+    
 @media(max-width:650px){
     .replay-wrap{
-        max-width:100%;
-    }
+    width:100%;
+    max-width:none;
+    margin:0;
+    padding:0;
+}
 
     .replay-list{
         padding:12px;
@@ -185,9 +286,12 @@ body{
     }
 
     .lineup-list{
-        max-width:360px;
-        gap:12px;
-    }
+    max-width:420px;
+    gap:14px;
+    display:none;
+    grid-template-columns:repeat(4,1fr);
+    justify-items:center;
+}
 
     .member{
         width:72px;
@@ -211,6 +315,30 @@ body{
 
 <div class="replay-wrap">
 
+    <div class="month-dropdown">
+    <details>
+
+        <summary>
+            📅 Pilih Bulan Replay
+        </summary>
+
+        <div class="dropdown-content">
+
+            <a href="https://www.theater48fight.my.id/replay-mei-2026"
+               onclick="top.location.href=this.href; return false;">
+               Mei 2026
+            </a>
+
+            <a href="https://www.theater48fight.my.id/replay-juni-2026"
+               onclick="top.location.href=this.href; return false;">
+               Juni 2026
+            </a>
+
+        </div>
+
+    </details>
+</div>
+    
     <div class="player-box">
         <div class="player">
             <iframe
@@ -229,7 +357,7 @@ body{
         <button onclick="toggleLineup()">Tampilkan Line-up</button>
         <div class="lineup-list" id="lineupList"></div>
     </div>
-
+    
     <div class="replay-list" id="replayList"></div>
 
 </div>
@@ -311,30 +439,110 @@ const memberData = {
 };
 
 const videos = [
-    const videos = [
 
 {
     type:"youtube",
     id:"Yy-MU6d1edo",
-    title:"Sambil Menggandeng Erat Tanganku (STS Cathy) - Team Love",
+    title:"ambil Menggandeng Erat Tanganku (STS Cathy) - Team Love",
     date:"31/05/2026",
     month:"2026-05",
-    lineup:["freya","christy","gracie","feni","gita","eli","olla","muthe","lulu","fiony","marsha","kathrina"]
+    lineup:["anindya","lia","lana","cathy","cynthia","elin","fiony","fritzy","gracie","indah","trisha","nayla"]
 },
 
 {
     type:"youtube",
-    id:"F4vvxxJ0RbU",
-    title:"Sambil Menggandeng Erat Tanganku - Team Passion",
-    date:"06/06/2026",
+    id:"cuHRFHnX2Aw",
+    title:"PASSION 200% - Team Passion",
+    date:"31/05/2026",
+    month:"2026-05",
+    lineup:["aralie","christy","erine","danella","jessi","kathrina","lulu","levi","muthe","raisha","ribka","kimmy"]
+},
+
+{
+    type:"youtube",
+    id:"2DaZJcJo6-E",
+    title:"DREAM BAKUDAN (Last Show Chelsea) - Team Dream",
+    date:"30/05/2026",
+    month:"2026-05",
+    lineup:["delynn","chelsea","olla","freya","ella","gita","greesel","eli","lyn","marsha","oline","nala"]
+},
+
+{
+    type:"youtube",
+    id:"pkyS0PbMMq8",
+    title:"Pajama Drive",
+    date:"29/05/2026",
+    month:"2026-05",
+    lineup:["virgi","auwia","giaa","ekin","mikaela","fera","bella","fahira","heidi","maxine","jazzy","ralyne"]
+},
+
+{
+    type:"youtube",
+    id:"e3w8x60R9j4",
+    title:"Pertaruhan Cinta",
+    date:"28/05/2026",
+    month:"2026-05",
+    lineup:["alya","elin","cynthia","fiony","freya","gendis","indah","jessi","kathrina","marsha","michie","muthe"]
+},
+
+{
+    type:"youtube",
+    id:"FTiOaz1sNFw",
+    title:"Pajama Drive (24/05/2026)",
+    date:"05/06/2026",
     month:"2026-06",
     lineup:["freya","christy","gracie","feni","gita","eli","olla","muthe","lulu","fiony","marsha","kathrina"]
 },
 
 {
     type:"youtube",
-    id:"4oTnrSgaAtI",
-    title:"Dream Bakudan - Team Dream",
+    id:"SoUSokuF9zs",
+    title:"DREAM BAKUDAN - Team Dream (21/05/2026)",
+    date:"05/06/2026",
+    month:"2026-06",
+    lineup:["freya","christy","gracie","feni","gita","eli","olla","muthe","lulu","fiony","marsha","kathrina"]
+},
+
+{
+    type:"youtube",
+    id:"hfcWh51Q2qw",
+    title:"ITADAKI♥LOVE - Team Love (20/05/2026)",
+    date:"20/05/2026",
+    month:"2026-05",
+    lineup:["freya","christy","gracie","feni","gita","eli","olla","muthe","lulu","fiony","marsha","kathrina"]
+},
+
+{
+    type:"youtube",
+    id:"MQXeVHb_x0Y",
+    title:"PASSION 200% (Ladies Night) - Team Passion",
+    date:"19/05/2026",
+    month:"2026-05",
+    lineup:["freya","christy","gracie","feni","gita","eli","olla","muthe","lulu","fiony","marsha","kathrina"]
+},
+
+{
+    type:"youtube",
+    id:"OeKhrAC0J3k",
+    title:"Cara Meminum Ramune - Team Love (17/05/2026)",
+    date:"05/06/2026",
+    month:"2026-06",
+    lineup:["freya","christy","gracie","feni","gita","eli","olla","muthe","lulu","fiony","marsha","kathrina"]
+},
+
+{
+    type:"youtube",
+    id:"RYxwbAFeUYM",
+    title:"Cara Meminum Ramune - Team Dream (16/05/2026)",
+    date:"05/06/2026",
+    month:"2026-06",
+    lineup:["freya","christy","gracie","feni","gita","eli","olla","muthe","lulu","fiony","marsha","kathrina"]
+},
+
+{
+    type:"youtube",
+    id:"y4cDtC7mfDA",
+    title:"Sambil Menggandeng Erat Tanganku - Team Passion (16/05/2026)",
     date:"05/06/2026",
     month:"2026-06",
     lineup:["freya","christy","gracie","feni","gita","eli","olla","muthe","lulu","fiony","marsha","kathrina"]
@@ -342,16 +550,109 @@ const videos = [
 
 {
     type:"drive",
-    id:"1ABCDEF123456789XYZ",
-    thumbnail:"images/drive-thumb.jpg",
-    title:"Backup Replay Google Drive",
+    id:"1zTYMjogwkBYN6S0E1z3ICwhW2bjDj70O",
+    thumbnail:"images/pajamadrive.png",
+    title:"Pajama Drive (15/05/2026)",
     date:"05/06/2026",
     month:"2026-06",
     lineup:["freya","christy","gracie","feni","gita","eli","olla","muthe","lulu","fiony","marsha","kathrina"]
 }
 
-];
+{
+    type:"drive",
+    id:"18X9mRhPC5zveTmm7cgKcEuwRAKI58PSY",
+    thumbnail:"images/itadakilove.png",
+    title:"ITADAKI♥LOVE - Team Love (14/05/2026)",
+    date:"05/06/2026",
+    month:"2026-06",
+    lineup:["freya","christy","gracie","feni","gita","eli","olla","muthe","lulu","fiony","marsha","kathrina"]
+}
 
+{
+    type:"youtube",
+    id:"MrAKA8zPyOE",
+    title:"DREAM BAKUDAN - Team Dream (10/05/2026)",
+    date:"05/06/2026",
+    month:"2026-06",
+    lineup:["freya","christy","gracie","feni","gita","eli","olla","muthe","lulu","fiony","marsha","kathrina"]
+},
+
+{
+    type:"drive",
+    id:"1-xc3PKkwj7nvPRHcY7l-fYL_k6tJLz_p",
+    thumbnail:"images/sambilmenggandengerattanganku.png",
+    title:"Sambil Menggandeng Erat Tanganku - Team Passion (09/05/2026)",
+    date:"05/06/2026",
+    month:"2026-06",
+    lineup:["freya","christy","gracie","feni","gita","eli","olla","muthe","lulu","fiony","marsha","kathrina"]
+}
+
+{
+    type:"youtube",
+    id:"W1mejI3siOg",
+    title:"Pajama Drive (09/05/2026)",
+    date:"05/06/2026",
+    month:"2026-06",
+    lineup:["freya","christy","gracie","feni","gita","eli","olla","muthe","lulu","fiony","marsha","kathrina"]
+},
+
+{
+    type:"drive",
+    id:"1luWo_jfStwJTvpX4Gctu962egXXetO4Q",
+    thumbnail:"images/itadakilove.png",
+    title:"ITADAKI♥LOVE (STS Michie) - Team Love (08/05/2026)",
+    date:"05/06/2026",
+    month:"2026-06",
+    lineup:["freya","christy","gracie","feni","gita","eli","olla","muthe","lulu","fiony","marsha","kathrina"]
+}
+
+{
+    type:"youtube",
+    id:"fz-gJeO4D3g",
+    title:"Pertaruhan Cinta - Special Show JKT48 with Pocky (07/05/2026)",
+    date:"05/06/2026",
+    month:"2026-06",
+    lineup:["freya","christy","gracie","feni","gita","eli","olla","muthe","lulu","fiony","marsha","kathrina"]
+},
+
+{
+    type:"youtube",
+    id:"Bk2_z8qkLXM",
+    title:"Pertaruhan Cinta (03/05/2026)",
+    date:"05/06/2026",
+    month:"2026-06",
+    lineup:["freya","christy","gracie","feni","gita","eli","olla","muthe","lulu","fiony","marsha","kathrina"]
+},
+
+{
+    type:"youtube",
+    id:"Oa2sLDW5EqQ",
+    title:"Pajama Drive (03/05/2026)",
+    date:"05/06/2026",
+    month:"2026-06",
+    lineup:["freya","christy","gracie","feni","gita","eli","olla","muthe","lulu","fiony","marsha","kathrina"]
+},
+
+{
+    type:"youtube",
+    id:"hzvVGZ5FhUE",
+    title:"Pajama Drive (02/05/2026)",
+    date:"05/06/2026",
+    month:"2026-06",
+    lineup:["freya","christy","gracie","feni","gita","eli","olla","muthe","lulu","fiony","marsha","kathrina"]
+},
+
+{
+    type:"youtube",
+    id:"A4MdX5skH5I",
+    title:"Cara Meminum Ramune - Team Love (01/05/2026)",
+    date:"05/06/2026",
+    month:"2026-06",
+    lineup:["freya","christy","gracie","feni","gita","eli","olla","muthe","lulu","fiony","marsha","kathrina"]
+},
+
+];
+    
 function renderReplayList(){
     const list = document.getElementById("replayList");
     list.innerHTML = "";
@@ -415,7 +716,7 @@ function getVideoUrl(video){
     }
 
 }
-  
+    
 function changeVideo(card, videoId){
 
     const video = videos.find(v => v.id === videoId);
@@ -437,12 +738,20 @@ function changeVideo(card, videoId){
     });
 
 }
-  
+    
 function toggleLineup(){
     const list = document.getElementById("lineupList");
-    list.style.display = list.style.display === "flex" ? "none" : "flex";
-}
+    const btn = document.querySelector(".lineup-box button");
 
+    if(list.style.display === "grid"){
+        list.style.display = "none";
+        btn.innerText = "Tampilkan Line-up";
+    }else{
+        list.style.display = "grid";
+        btn.innerText = "Tutupkan Line-up";
+    }
+}
+    
 renderReplayList();
 renderLineup(videos[0].id);
 
