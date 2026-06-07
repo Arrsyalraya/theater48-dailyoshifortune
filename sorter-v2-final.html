@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Theater48Fight Oshi Sorter V2</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#0b0b0b;color:#fff}
+.wrap{max-width:1100px;margin:auto;padding:20px}
+.box{background:#151515;border:1px solid #ff2b2b;border-radius:24px;padding:20px}
+.progress-wrap{height:14px;background:#222;border-radius:20px;overflow:hidden}
+.progress-bar{height:100%;width:0;background:linear-gradient(90deg,#ff2b2b,#ffd77a)}
+.battle{display:flex;gap:20px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:20px}
+.card{width:320px;background:#111;border:1px solid #ff2b2b;border-radius:20px;padding:10px;cursor:pointer}
+.card img{width:100%;height:360px;object-fit:cover;border-radius:12px}
+.name{font-size:28px;font-weight:bold;padding:10px}
+.vs{font-size:32px;color:#ffd77a}
+button{padding:10px 16px;border:none;border-radius:10px;background:#ff2b2b;color:#fff}
+.result{display:none}
+.rank{display:flex;align-items:center;gap:10px;padding:8px;border-bottom:1px solid #333}
+.rank img{width:50px;height:50px;border-radius:10px}
+@media(max-width:700px){.card{width:46%}.card img{height:220px}.name{font-size:18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="box">
+<h1>🎭 Theater48Fight Oshi Sorter V2</h1>
+<div class="progress-wrap"><div class="progress-bar" id="bar"></div></div>
+<p id="progress">Loading...</p>
+<div id="game">
+<div class="battle">
+<div class="card" onclick="pick(0)"><img id="img1"><div class="name" id="name1"></div></div>
+<div class="vs">VS</div>
+<div class="card" onclick="pick(1)"><img id="img2"><div class="name" id="name2"></div></div>
+</div>
+<p><button onclick="skip()">Skip</button></p>
+</div>
+<div id="result" class="result"></div>
+</div></div>
+<script>
+const members=[
+"Freya","Christy","Gracie","Feni","Gita","Eli","Olla","Muthe","Lulu","Fiony","Marsha","Kathrina",
+"Jessi","Lyn","Greesel","Ella","Alya","Anindya","Cathy","Lana","Oniel","Elin","Gendis","Indah",
+"Lia","Nala","Nayla","Raisha","Ribka","Trisha","Kimmy","Michie","Danella","Daisy","Oline","Delynn",
+"Lily","Aralie","Nachia","Levi","Cynthia","Fritzy","Erine","Jemima","Ekin","Intan","Mikaela","Rilly",
+"Virgi","Auwia","Gia","Maira","Fera","Carissa","Bella","Fahira","Rara","Heidi","Maxine","Jazzy","Ralyne","Sona"
+].map(n=>({name:n,img:'images/'+n.toLowerCase().replace(/ /g,'')+'.jpg'}));
+let scores={}; members.forEach(m=>scores[m.name]=0);
+let pairs=[]; for(let i=0;i<members.length;i++){for(let j=i+1;j<members.length;j++)pairs.push([members[i],members[j]])}
+pairs=pairs.sort(()=>Math.random()-0.5).slice(0,180);
+let cur=0;
+function show(){
+ if(cur>=pairs.length)return finish();
+ let a=pairs[cur][0], b=pairs[cur][1];
+ name1.textContent=a.name; name2.textContent=b.name;
+ img1.src=a.img; img2.src=b.img;
+ progress.textContent=`Battle ${cur+1} / ${pairs.length}`;
+ bar.style.width=((cur/pairs.length)*100)+'%';
+}
+function pick(i){scores[pairs[cur][i].name]++; cur++; show();}
+function skip(){cur++; show();}
+function finish(){
+ game.style.display='none';
+ result.style.display='block';
+ let sorted=[...members].sort((a,b)=>scores[b.name]-scores[a.name]);
+ let html='<h2>🏆 Ranking Oshi Kamu</h2>';
+ sorted.forEach((m,i)=>{
+ html+=`<div class="rank"><img src="${m.img}" onerror="this.style.display='none'"><div>#${i+1} ${m.name}<br><small>${scores[m.name]} poin</small></div></div>`;
+ });
+ html+='<p><button onclick="location.reload()">Ulangi Sorter</button></p>';
+ result.innerHTML=html;
+}
+show();
+</script>
+</body></html>
