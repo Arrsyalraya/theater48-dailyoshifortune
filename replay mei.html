@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Replay Theater48Fight</title>
+
+<style>
+body{
+    background:#0b0b0b;
+    color:white;
+    font-family:Arial,sans-serif;
+    margin:0;
+}
+
+.replay-wrap{
+    max-width:1100px;
+    margin:auto;
+    background:#0b0b0b;
+}
+
+.player-box{
+    background:#000;
+}
+
+.player iframe{
+    width:100%;
+    aspect-ratio:16/9;
+    border:none;
+    display:block;
+}
+
+.lineup-box{
+    background:#151515;
+    margin:12px 0;
+    padding:22px 15px;
+    text-align:center;
+    border-radius:0 0 22px 22px;
+}
+
+.lineup-box h2{
+    margin:0 0 18px;
+    font-size:26px;
+}
+
+.lineup-box button{
+    background:#ff2b2b;
+    border:none;
+    color:white;
+    padding:13px 30px;
+    border-radius:12px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.lineup-box button:hover{
+    background:#d70000;
+}
+
+.lineup-list{
+    display:none;
+    margin-top:18px;
+    gap:14px;
+    flex-wrap:wrap;
+    justify-content:center;
+    max-width:650px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.member{
+    width:85px;
+    text-align:center;
+}
+
+.member img{
+    width:72px;
+    height:72px;
+    border-radius:12px;
+    object-fit:cover;
+    background:#222;
+    border:2px solid #ff2b2b;
+    box-shadow:0 0 8px rgba(255,43,43,.35);
+}
+
+.member div{
+    margin-top:6px;
+    font-size:12px;
+    color:#eee;
+}
+
+.replay-list{
+    padding:18px;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+    gap:14px;
+}
+
+.replay-card{
+    display:flex;
+    gap:16px;
+    align-items:center;
+    background:#1b1b1b;
+    border:1px solid transparent;
+    border-radius:14px;
+    padding:12px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.replay-card:hover{
+    background:#252525;
+}
+
+.replay-card.active{
+    border:1px solid #ff2b2b;
+    background:#251515;
+}
+
+.replay-card img{
+    width:170px;
+    height:96px;
+    object-fit:cover;
+    border-radius:10px;
+    background:#222;
+    flex-shrink:0;
+}
+
+.replay-info{
+    text-align:left;
+}
+
+.replay-title{
+    font-size:18px;
+    font-weight:bold;
+    line-height:1.35;
+}
+
+.replay-date{
+    margin-top:8px;
+    color:#aaa;
+    font-size:15px;
+}
+
+.empty-lineup{
+    color:#aaa;
+    font-size:15px;
+    margin-top:15px;
+}
+
+@media(max-width:650px){
+    .replay-wrap{
+        max-width:100%;
+    }
+
+    .replay-list{
+        padding:12px;
+        display:flex;
+        flex-direction:column;
+        gap:14px;
+    }
+
+    .replay-card{
+        gap:12px;
+        padding:10px;
+    }
+
+    .replay-card img{
+        width:135px;
+        height:76px;
+    }
+
+    .replay-title{
+        font-size:16px;
+    }
+
+    .replay-date{
+        font-size:14px;
+    }
+
+    .lineup-box h2{
+        font-size:24px;
+    }
+
+    .lineup-list{
+        max-width:360px;
+        gap:12px;
+    }
+
+    .member{
+        width:72px;
+    }
+
+    .member img{
+        width:64px;
+        height:64px;
+        border-radius:10px;
+        object-fit:cover;
+    }
+
+    .member div{
+        font-size:11px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="replay-wrap">
+
+    <div class="player-box">
+        <div class="player">
+            <iframe
+                id="mainPlayer"
+                src=""
+                allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                allowfullscreen
+                webkitallowfullscreen
+                mozallowfullscreen>
+            </iframe>
+        </div>
+    </div>
+
+    <div class="lineup-box">
+        <h2>Line up Member</h2>
+        <button onclick="toggleLineup()">Tampilkan Line-up</button>
+        <div class="lineup-list" id="lineupList"></div>
+    </div>
+
+    <div class="replay-list" id="replayList"></div>
+
+</div>
+
+<script>
+const memberData = {
+    freya:{name:"Freya",img:"images/freya.jpg"},
+    christy:{name:"Christy",img:"images/christy.jpg"},
+    gracie:{name:"Gracie",img:"images/gracie.jpg"},
+    feni:{name:"Feni",img:"images/feni.jpg"},
+    gita:{name:"Gita",img:"images/gita.jpg"},
+    eli:{name:"Eli",img:"images/eli.jpg"},
+
+    olla:{name:"Olla",img:"images/olla.jpg"},
+    muthe:{name:"Muthe",img:"images/muthe.jpg"},
+    lulu:{name:"Lulu",img:"images/lulu.jpg"},
+    fiony:{name:"Fiony",img:"images/fiony.jpg"},
+    marsha:{name:"Marsha",img:"images/marsha.jpg"},
+    kathrina:{name:"Kathrina",img:"images/kathrina.jpg"},
+
+    jessi:{name:"Jessi",img:"images/jessi.jpg"},
+    lyn:{name:"Lyn",img:"images/lyn.jpg"},
+    greesel:{name:"Greesel",img:"images/greesel.jpg"},
+    ella:{name:"Ella",img:"images/ella.jpg"},
+    alya:{name:"Alya",img:"images/alya.jpg"},
+
+    anin:{name:"Anin",img:"images/anin.jpg"},
+    cathy:{name:"Cathy",img:"images/cathy.jpg"},
+    lana:{name:"Lana",img:"images/lana.jpg"},
+    oniel:{name:"Oniel",img:"images/oniel.jpg"},
+    elin:{name:"Elin",img:"images/elin.jpg"},
+    gendis:{name:"Gendis",img:"images/gendis.jpg"},
+
+    indah:{name:"Indah",img:"images/indah.jpg"},
+    lia:{name:"Lia",img:"images/lia.jpg"},
+    nala:{name:"Nala",img:"images/nala.jpg"},
+    nayla:{name:"Nayla",img:"images/nayla.jpg"},
+    raisha:{name:"Raisha",img:"images/raisha.jpg"},
+    ribka:{name:"Ribka",img:"images/ribka.jpg"},
+
+    trisha:{name:"Trisha",img:"images/trisha.jpg"},
+    kimmy:{name:"Kimmy",img:"images/kimmy.jpg"},
+    michie:{name:"Michie",img:"images/michie.jpg"},
+    danella:{name:"Danella",img:"images/danella.jpg"},
+    daisy:{name:"Daisy",img:"images/daisy.jpg"},
+
+    oline:{name:"Oline",img:"images/oline.jpg"},
+    delynn:{name:"Delynn",img:"images/delynn.jpg"},
+    lily:{name:"Lily",img:"images/lily.jpg"},
+    aralie:{name:"Aralie",img:"images/aralie.jpg"},
+    nachia:{name:"Nachia",img:"images/nachia.jpg"},
+    levi:{name:"Levi",img:"images/levi.jpg"},
+
+    cynthia:{name:"Cynthia",img:"images/cynthia.jpg"},
+    fritzy:{name:"Fritzy",img:"images/fritzy.jpg"},
+    erine:{name:"Erine",img:"images/erine.jpg"},
+    jemima:{name:"Jemima",img:"images/jemima.jpg"},
+    ekin:{name:"Ekin",img:"images/ekin.jpg"},
+    intan:{name:"Intan",img:"images/intan.jpg"},
+
+    mikaela:{name:"Mikaela",img:"images/mikaela.jpg"},
+    rilly:{name:"Rilly",img:"images/rilly.jpg"},
+    virgi:{name:"Virgi",img:"images/virgi.jpg"},
+    auwia:{name:"Auwia",img:"images/auwia.jpg"},
+    giaa:{name:"Giaa",img:"images/giaa.jpg"},
+    maira:{name:"Maira",img:"images/maira.jpg"},
+
+    fera:{name:"Fera",img:"images/fera.jpg"},
+    carissa:{name:"Carissa",img:"images/carissa.jpg"},
+    bella:{name:"Bella",img:"images/bella.jpg"},
+    fahira:{name:"Fahira",img:"images/fahira.jpg"},
+    rara:{name:"Rara",img:"images/rara.jpg"},
+
+    heidi:{name:"Heidi",img:"images/heidi.jpg"},
+    maxine:{name:"Maxine",img:"images/maxine.jpg"},
+    jazzy:{name:"Jazzy",img:"images/jazzy.jpg"},
+    ralyne:{name:"Ralyne",img:"images/ralyne.jpg"},
+    sona:{name:"Sona",img:"images/sona.jpg"}
+};
+
+const videos = [
+    const videos = [
+
+{
+    type:"youtube",
+    id:"Yy-MU6d1edo",
+    title:"Sambil Menggandeng Erat Tanganku (STS Cathy) - Team Love",
+    date:"31/05/2026",
+    month:"2026-05",
+    lineup:["freya","christy","gracie","feni","gita","eli","olla","muthe","lulu","fiony","marsha","kathrina"]
+},
+
+{
+    type:"youtube",
+    id:"F4vvxxJ0RbU",
+    title:"Sambil Menggandeng Erat Tanganku - Team Passion",
+    date:"06/06/2026",
+    month:"2026-06",
+    lineup:["freya","christy","gracie","feni","gita","eli","olla","muthe","lulu","fiony","marsha","kathrina"]
+},
+
+{
+    type:"youtube",
+    id:"4oTnrSgaAtI",
+    title:"Dream Bakudan - Team Dream",
+    date:"05/06/2026",
+    month:"2026-06",
+    lineup:["freya","christy","gracie","feni","gita","eli","olla","muthe","lulu","fiony","marsha","kathrina"]
+},
+
+{
+    type:"drive",
+    id:"1ABCDEF123456789XYZ",
+    thumbnail:"images/drive-thumb.jpg",
+    title:"Backup Replay Google Drive",
+    date:"05/06/2026",
+    month:"2026-06",
+    lineup:["freya","christy","gracie","feni","gita","eli","olla","muthe","lulu","fiony","marsha","kathrina"]
+}
+
+];
+
+function renderReplayList(){
+    const list = document.getElementById("replayList");
+    list.innerHTML = "";
+
+    videos.forEach((video,index)=>{
+        list.innerHTML += `
+            <div class="replay-card ${index === 0 ? "active" : ""}" onclick="changeVideo(this,'${video.id}')">
+                <img src="${
+                video.type === 'youtube'
+                ?
+                'https://img.youtube.com/vi/' + video.id + '/maxresdefault.jpg'
+                :
+                video.thumbnail
+                }">
+                <div class="replay-info">
+                    <div class="replay-title">${video.title}</div>
+                    <div class="replay-date">${video.date}</div>
+                </div>
+            </div>
+        `;
+    });
+}
+
+function renderLineup(videoId){
+    const video = videos.find(v => v.id === videoId);
+    const lineupBox = document.getElementById("lineupList");
+
+    if(!video || !video.lineup || video.lineup.length === 0){
+        lineupBox.innerHTML = `<div class="empty-lineup">Line-up belum tersedia.</div>`;
+        return;
+    }
+
+    lineupBox.innerHTML = "";
+
+    video.lineup.forEach(key=>{
+        const member = memberData[key];
+
+        if(member){
+            lineupBox.innerHTML += `
+                <div class="member">
+                    <img src="${member.img}" onerror="this.src='https://via.placeholder.com/120/111111/ffffff?text=${member.name}'">
+                    <div>${member.name}</div>
+                </div>
+            `;
+        }
+    });
+}
+
+function getVideoUrl(video){
+
+    if(video.type === "youtube"){
+        return "https://www.youtube.com/embed/" +
+        video.id +
+        "?autoplay=1&mute=1&rel=0&playsinline=0&fs=1";
+    }
+
+    if(video.type === "drive"){
+        return "https://drive.google.com/file/d/" +
+        video.id +
+        "/preview";
+    }
+
+}
+  
+function changeVideo(card, videoId){
+
+    const video = videos.find(v => v.id === videoId);
+
+    document.getElementById("mainPlayer").src =
+    getVideoUrl(video);
+
+    document.querySelectorAll(".replay-card").forEach(el=>{
+        el.classList.remove("active");
+    });
+
+    card.classList.add("active");
+
+    renderLineup(videoId);
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+  
+function toggleLineup(){
+    const list = document.getElementById("lineupList");
+    list.style.display = list.style.display === "flex" ? "none" : "flex";
+}
+
+renderReplayList();
+renderLineup(videos[0].id);
+
+document.getElementById("mainPlayer").src =
+getVideoUrl(videos[0]);
+</script>
+
+</body>
+</html>
