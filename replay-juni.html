@@ -156,7 +156,59 @@ body{
     font-size:15px;
     margin-top:15px;
 }
+    
+.month-dropdown{
+    max-width:420px;
+    margin:25px auto;
+}
 
+.month-dropdown details{
+    background:#111;
+    border:1px solid #2b2b2b;
+    border-radius:14px;
+    overflow:hidden;
+}
+
+.month-dropdown summary{
+    list-style:none;
+    cursor:pointer;
+    padding:16px 20px;
+    color:#fff;
+    font-size:18px;
+    font-weight:600;
+    user-select:none;
+}
+
+.month-dropdown summary::-webkit-details-marker{
+    display:none;
+}
+
+.month-dropdown summary::after{
+    content:"▼";
+    float:right;
+    font-size:12px;
+    opacity:.7;
+    margin-top:5px;
+}
+
+.month-dropdown details[open] summary::after{
+    content:"▲";
+}
+
+.month-dropdown a{
+    display:block;
+    padding:15px 20px;
+    color:white;
+    text-decoration:none;
+    border-top:1px solid #222;
+    transition:.2s;
+}
+
+.month-dropdown a:hover{
+    background:#202020;
+    color:#ff2b2b;
+}
+    
 @media(max-width:650px){
     .replay-wrap{
     width:100%;
@@ -242,7 +294,31 @@ body{
         <button onclick="toggleLineup()">Tampilkan Line-up</button>
         <div class="lineup-list" id="lineupList"></div>
     </div>
+    
+    <div class="month-dropdown">
 
+    <details>
+
+        <summary>
+            📅 Pilih Bulan Replay
+        </summary>
+
+        <a href="https://theater48fight.my.id/replay-mei">
+            Mei 2026
+        </a>
+
+        <a href="https://theater48fight.my.id/replay-juni">
+            Juni 2026
+        </a>
+
+        <a href="https://theater48fight.my.id/replay-juli">
+            Juli 2026
+        </a>
+
+    </details>
+
+</div>
+    
     <div class="replay-list" id="replayList"></div>
 
 </div>
