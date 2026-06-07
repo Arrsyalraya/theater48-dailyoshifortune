@@ -26,6 +26,17 @@ body{
     color:#13294B;
 }
 
+.oshi-photo{
+    width:220px;
+    height:220px;
+    object-fit:cover;
+    border-radius:20px;
+    margin:30px auto 10px;
+    display:block;
+    border:4px solid #8B1D2C;
+    box-shadow:0 8px 25px rgba(139,29,44,.25);
+}
+
 .oshi-member{
     margin-top:30px;
     font-size:64px;
@@ -54,6 +65,10 @@ body{
 }
 
 @media(max-width:600px){
+    .oshi-photo{
+        width:160px;
+        height:160px;
+    }
     .oshi-card{
         padding:30px 20px;
     }
@@ -73,7 +88,10 @@ body{
 
 <div class="oshi-card">
     <div class="oshi-title">Oshi Hari Ini</div>
-    <div class="oshi-member" id="oshiName">Loading...</div>
+
+<img id="oshiPhoto" class="oshi-photo" src="">
+
+<div class="oshi-member" id="oshiName">Loading...</div>
     <div class="oshi-rank" id="oshiRank">Loading...</div>
     <div class="oshi-quote" id="oshiQuote">Loading...</div>
     <div class="oshi-footer">Daily Oshimen Fortune • Theater48Fight</div>
@@ -81,19 +99,82 @@ body{
 
 <script>
 const members = [
-    "FREYA", "CHRISTY", "GRACIE", "FENI", "GITA", "ELI",
-  "OLLA", "MUTHE", "LULU", "FIONY", "MARSHA", "KATHRINA",
-  "JESSI", "LYN", "OGURI YUI", "GREESEL", "ELLA", "ALYA",
-  "ANIN", "CATHY", "LANA", "ONIEL", "ELIN", "GENDIS",
-  "INDAH", "LIA", "NALA", "NAYLA", "RAISHA", "RIBKA",
-  "TRISHA", "KIMMY", "MICHIE", "DANELLA", "DAISY",
-  "OLINE", "DELYNN", "LILY", "ARALIE", "NACHIA", "LEVI",
-  "CYNTHIA", "FRITZY", "ERINE", "JEMIMA", "EKIN", "INTAN",
-  "MIKAELA", "RILLY", "VIRGI", "AUWIA", "GIAA", "MAIRA",
-  "FERA", "CARISSA", "BELLA", "FAHIRA", "RARA",
-  "HEIDI", "MAXINE", "JAZZY", "RALYNE", "SONA"
-];
 
+{name:"Freya",photo:"images/freya.jpg"},
+{name:"Christy",photo:"images/christy.jpg"},
+{name:"Gracie",photo:"images/gracie.jpg"},
+{name:"Feni",photo:"images/feni.jpg"},
+{name:"Gita",photo:"images/gita.jpg"},
+{name:"Eli",photo:"images/eli.jpg"},
+
+{name:"Olla",photo:"images/olla.jpg"},
+{name:"Muthe",photo:"images/muthe.jpg"},
+{name:"Lulu",photo:"images/lulu.jpg"},
+{name:"Fiony",photo:"images/fiony.jpg"},
+{name:"Marsha",photo:"images/marsha.jpg"},
+{name:"Kathrina",photo:"images/kathrina.jpg"},
+
+{name:"Jessi",photo:"images/jessi.jpg"},
+{name:"Lyn",photo:"images/lyn.jpg"},
+{name:"Oguri Yui",photo:"images/oguriyui.jpg"},
+{name:"Greesel",photo:"images/greesel.jpg"},
+{name:"Ella",photo:"images/ella.jpg"},
+{name:"Alya",photo:"images/alya.jpg"},
+
+{name:"Anindya",photo:"images/anindya.jpg"},
+{name:"Cathy",photo:"images/cathy.jpg"},
+{name:"Lana",photo:"images/lana.jpg"},
+{name:"Oniel",photo:"images/oniel.jpg"},
+{name:"Elin",photo:"images/elin.jpg"},
+{name:"Gendis",photo:"images/gendis.jpg"},
+
+{name:"Indah",photo:"images/indah.jpg"},
+{name:"Lia",photo:"images/lia.jpg"},
+{name:"Nala",photo:"images/nala.jpg"},
+{name:"Nayla",photo:"images/nayla.jpg"},
+{name:"Raisha",photo:"images/raisha.jpg"},
+{name:"Ribka",photo:"images/ribka.jpg"},
+
+{name:"Trisha",photo:"images/trisha.jpg"},
+{name:"Kimmy",photo:"images/kimmy.jpg"},
+{name:"Michie",photo:"images/michie.jpg"},
+{name:"Danella",photo:"images/danella.jpg"},
+{name:"Daisy",photo:"images/daisy.jpg"},
+
+{name:"Oline",photo:"images/oline.jpg"},
+{name:"Delynn",photo:"images/delynn.jpg"},
+{name:"Lily",photo:"images/lily.jpg"},
+{name:"Aralie",photo:"images/aralie.jpg"},
+{name:"Nachia",photo:"images/nachia.jpg"},
+{name:"Levi",photo:"images/levi.jpg"},
+
+{name:"Cynthia",photo:"images/cynthia.jpg"},
+{name:"Fritzy",photo:"images/fritzy.jpg"},
+{name:"Erine",photo:"images/erine.jpg"},
+{name:"Jemima",photo:"images/jemima.jpg"},
+{name:"Ekin",photo:"images/ekin.jpg"},
+{name:"Intan",photo:"images/intan.jpg"},
+
+{name:"Mikaela",photo:"images/mikaela.jpg"},
+{name:"Rilly",photo:"images/rilly.jpg"},
+{name:"Virgi",photo:"images/virgi.jpg"},
+{name:"Auwia",photo:"images/auwia.jpg"},
+{name:"Giaa",photo:"images/giaa.jpg"},
+{name:"Maira",photo:"images/maira.jpg"},
+
+{name:"Fera",photo:"images/fera.jpg"},
+{name:"Carissa",photo:"images/carissa.jpg"},
+{name:"Bella",photo:"images/bella.jpg"},
+{name:"Fahira",photo:"images/fahira.jpg"},
+{name:"Rara",photo:"images/rara.jpg"},
+
+{name:"Heidi",photo:"images/heidi.jpg"},
+{name:"Maxine",photo:"images/maxine.jpg"},
+{name:"Jazzy",photo:"images/jazzy.jpg"},
+{name:"Ralyne",photo:"images/ralyne.jpg"},
+{name:"Sona",photo:"images/sona.jpg"}
+
+];
 const ranks = [
     "SSR MEMBER ✨",
   "SR MEMBER 💫",
@@ -195,8 +276,27 @@ function pickDaily(list, offset){
   return list[seed % list.length];
 }
 
-document.getElementById("oshiName").innerHTML = pickDaily(members, "member");
-document.getElementById("oshiRank").innerHTML = pickDaily(ranks, "rank");
+const dailyMember = pickDaily(members,"member");
+
+document.getElementById("oshiName").innerHTML =
+dailyMember.name;
+
+document.getElementById("oshiPhoto").src =
+dailyMember.photo;
+
+document.getElementById("oshiRank").innerHTML =
+pickDaily(ranks,"rank");
+
+document.getElementById("oshiQuote").innerHTML =
+pickDaily(quotes,"quote");
+    
+const rank = pickDaily(ranks,"rank");
+
+document.getElementById("oshiRank").innerHTML = rank;
+
+if(rank.includes("SSR")){
+    document.getElementById("oshiRank").style.color="#FFD700";
+}
 document.getElementById("oshiQuote").innerHTML = pickDaily(quotes, "quote");
 </script>
 
