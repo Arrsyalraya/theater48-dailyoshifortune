@@ -341,38 +341,118 @@ const members = [
 {name:"Sona",img:"images/sona.jpg"}
 ];
 
+<script>
+
 let scores = {};
 let pairs = [];
 let current = 0;
 
-members.forEach(m => scores[m.name] = 0);
+members.forEach(m => {
+    scores[m.name] = 0;
+});
 
-for(let i=0; i<members.length; i++){
-  for(let j=i+1; j<members.length; j++){
-    pairs.push([members[i], members[j]]);
-  }
+for(let i=0;i<members.length;i++){
+    for(let j=i+1;j<members.length;j++){
+        pairs.push([members[i],members[j]]);
+    }
 }
 
-pairs = pairs.sort(() => Math.random() - 0.5).slice(0, 80);
+pairs = pairs.sort(() => Math.random() - 0.5).slice(0,180)
 
-function fallback(img, name){
-  img.onerror = null;
-  img.src = "https://via.placeholder.com/400x500/111111/ffffff?text=" + encodeURIComponent(name);
+function fallback(img,name){
+    img.onerror=null;
+    img.src="https://via.placeholder.com/400x500/111111/ffffff?text="+encodeURIComponent(name);
 }
 
 function showPair(){
-  if(current >= pairs.length){
-    showResult();
-    return;
-  }
 
-  const left = pairs[current][0];
-  const right = pairs[current][1];
+    if(current >= pairs.length){
+        showResult();
+        return;
+    }
 
-  document.getElementById("leftName").innerText = left.name;
-  document.getElementById("leftImg").src = left.img;
-  document.getElementById("leftImg").onerror = function(){ fallback(this,left.name); };
+    const left = pairs[current][0];
+    const right = pairs[current][1];
 
-  document.getElementById("rightName").innerText = right.name;
-  document.getElementById("rightImg").src = right.img;
-  document.getElementById("rightImg").onerror = function(){
+    document.getElementById("leftName").innerText = left.name;
+    document.getElementById("leftImg").src = left.img;
+    document.getElementById("leftImg").onerror = function(){
+        fallback(this,left.name);
+    };
+
+    document.getElementById("rightName").innerText = right.name;
+    document.getElementById("rightImg").src = right.img;
+    document.getElementById("rightImg").onerror = function(){
+        fallback(this,right.name);
+    };
+
+    document.getElementById("progress").innerText =
+    `Progress ${current+1} / ${pairs.length}`;
+}
+
+function choose(side){
+
+    const pair = pairs[current];
+
+    if(side === "left"){
+        scores[pair[0].name]++;
+    }else{
+        scores[pair[1].name]++;
+    }
+
+    current++;
+    showPair();
+}
+
+function skip(){
+    current++;
+    showPair();
+}
+
+function showResult(){
+
+    document.getElementById("game").style.display = "none";
+
+    const sorted = Object.entries(scores)
+    .sort((a,b)=>b[1]-a[1]);
+
+    let html = `
+    <div class="result">
+        <h2>🏆 Ranking Oshi Kamu</h2>
+    `;
+
+    sorted.forEach((item,index)=>{
+
+        const member = members.find(
+            m => m.name === item[0]
+        );
+
+        html += `
+        <div class="rank">
+            <img src="${member.img}"
+                 onerror="this.src='https://via.placeholder.com/80'">
+
+            <div>
+                <b>#${index+1}</b><br>
+                ${member.name}
+            </div>
+        </div>
+        `;
+    });
+
+    html += `
+        <div style="text-align:center;margin-top:20px;">
+            <button onclick="location.reload()">
+                🔄 Ulangi Sorter
+            </button>
+        </div>
+    </div>
+    `;
+
+    document.getElementById("result").innerHTML = html;
+    document.getElementById("result").style.display = "block";
+}
+
+showPair();
+
+</script>
