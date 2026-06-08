@@ -53,20 +53,27 @@ h1{
 }
 
 .progress-wrap{
-  width:100%;
-  max-width:600px;
-  height:14px;
-  margin:15px auto;
-  background:#222;
-  border-radius:20px;
-  overflow:hidden;
+height:18px;
+background:#111;
+border:1px solid #333;
+box-shadow:0 0 20px rgba(255,43,43,.25);
 }
 
 .progress-bar{
-  width:0%;
-  height:100%;
-  background:linear-gradient(90deg,#ff2b2b,#ffd77a);
-  transition:.3s;
+background:linear-gradient(
+90deg,
+#ff2b2b,
+#ff6b6b,
+#ffd77a,
+#ff2b2b
+);
+background-size:300% 100%;
+animation:flow 3s linear infinite;
+}
+
+@keyframes flow{
+0%{background-position:0%}
+100%{background-position:300%}
 }
 
 .battle{
@@ -104,6 +111,27 @@ linear-gradient(180deg,#201010,#090909);
   opacity:.8;
   pointer-events:none;
 }
+
+.member-card::after{
+content:"";
+position:absolute;
+inset:-50%;
+background:
+linear-gradient(
+120deg,
+transparent,
+rgba(255,255,255,.25),
+transparent
+);
+transform:rotate(25deg);
+animation:shine 4s infinite;
+}
+
+@keyframes shine{
+0%{left:-150%}
+100%{left:150%}
+}
+
 
 .member-card:hover{
   transform:translateY(-5px) scale(1.03);
@@ -150,6 +178,10 @@ linear-gradient(180deg,#201010,#090909);
   margin-top:22px;
 }
 
+  <button onclick="drawBattle()">
+🤝 Sama Suka
+</button>
+  
 button{
   margin:8px;
   padding:13px 22px;
@@ -227,7 +259,18 @@ button:hover{
 }
 
 .first{
-  transform:scale(1.08);
+transform:scale(1.15);
+order:2;
+}
+
+.second{
+order:1;
+margin-bottom:40px;
+}
+
+.third{
+order:3;
+margin-bottom:20px;
 }
 
 @media(max-width:700px){
@@ -248,7 +291,7 @@ button:hover{
   }
 
   .member-card{
-    width:48%;
+    width:45%;
     padding:8px;
     border-radius:18px;
   }
@@ -259,7 +302,7 @@ button:hover{
   }
 
   .member-name{
-    font-size:20px;
+    font-size:16px;
   }
 
   .member-tag{
@@ -380,7 +423,7 @@ const members = [
 {name:"Rilly",img:"images/rilly.jpg"},
 {name:"Virgi",img:"images/virgi.jpg"},
 {name:"Auwia",img:"images/auwia.jpg"},
-{name:"Gia",img:"images/gia.jpg"},
+{name:"Giaa",img:"images/giaa.jpg"},
 {name:"Maira",img:"images/maira.jpg"},
 {name:"Fera",img:"images/fera.jpg"},
 {name:"Carissa",img:"images/carissa.jpg"},
@@ -410,6 +453,13 @@ for(let i=0;i<members.length;i++){
 
 pairs = pairs.sort(() => Math.random() - 0.5).slice(0,180);
 
+  function drawBattle(){
+scores[pairs[current][0].name]+=0.5;
+scores[pairs[current][1].name]+=0.5;
+current++;
+showPair();
+}
+  
 function fallback(img,name){
     img.onerror=null;
     img.src="https://via.placeholder.com/400x500/111111/ffffff?text="+encodeURIComponent(name);
@@ -418,7 +468,12 @@ function fallback(img,name){
 function showPair(){
 
     if(current >= pairs.length){
-        showResult();
+        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  confetti({
+particleCount:200,
+spread:120
+});
+  showResult();
         return;
     }
 
@@ -479,6 +534,15 @@ function showResult(){
     const top2 = sorted[1];
     const top3 = sorted[2];
 
+  let tier = "Rare";
+
+if(scores[top1.name] >= 10) tier = "SSR";
+if(scores[top1.name] >= 15) tier = "Ultra Rare";
+if(scores[top1.name] >= 20) tier = "Infinity Rare";
+  <h2>🏆 Oshi Utama Kamu</h2>
+<h1>${top1.name}</h1>
+<p>${tier}</p>
+  
     let html = `
     <div class="result">
         <h2>🏆 Ranking Oshi Kamu</h2>
