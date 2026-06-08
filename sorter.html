@@ -18,18 +18,7 @@ body{
     linear-gradient(135deg,#050505,#17070a 48%,#050505);
   overflow-x:hidden;position:relative;
 }
-body::before{
-  content:"✦ ✧ ✦ ✧ ✦";
-  position:fixed;inset:0;
-  font-size:80px;letter-spacing:55px;line-height:180px;
-  color:rgba(255,215,122,.08);
-  pointer-events:none;animation:bgFloat 9s ease-in-out infinite alternate;
-}
-body::after{
-  content:"";position:fixed;inset:-40%;
-  background:conic-gradient(from 0deg,transparent,rgba(255,43,43,.09),transparent,rgba(255,215,122,.08),transparent);
-  animation:spinBg 18s linear infinite;pointer-events:none;
-}
+
 @keyframes bgFloat{from{transform:translateY(0)}to{transform:translateY(-30px)}}
 @keyframes spinBg{to{transform:rotate(360deg)}}
 
@@ -148,38 +137,74 @@ button:hover{transform:scale(1.04)}
 .tip{color:#aaa;font-size:13px;margin-top:10px}
 
 @media(max-width:700px){
-  body{padding:9px}
-  .box{padding:16px 10px;border-radius:22px}
-  h1{font-size:28px}
+  body{padding:8px}
+  .box{padding:14px 9px;border-radius:20px}
+  h1{font-size:26px}
   .sub{font-size:12px}
+  .progress-area{margin-top:12px}
   .progress-text{font-size:11px}
+
   .battle{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    grid-template-areas:
-      "left vs"
-      "vs right";
-    gap:8px;
-    margin-top:16px;
+    display:flex;
+    justify-content:center;
     align-items:center;
+    gap:7px;
+    flex-wrap:nowrap;
+    margin-top:15px;
   }
-  #leftCard{grid-area:left;justify-self:start}
-  #rightCard{grid-area:right;justify-self:end}
-  .vs{grid-area:vs;font-size:22px;align-self:center;justify-self:center}
-  .member-card{width:42vw;max-width:170px;padding:7px;border-radius:16px}
-  .member-card img{height:190px;border-radius:12px}
-  .member-name{font-size:16px;margin-top:7px}
-  .member-tag{font-size:8px;letter-spacing:.5px}
-  .action-row button{padding:11px 14px;font-size:12px}
-  .result{padding:14px}
-  .podium-card{width:30%;padding:7px}
-  .podium-card img{height:112px}
-  .podium-card h3{font-size:12px}
-  .first{transform:scale(1.06)}
-  .second,.third{margin-bottom:14px}
+
+  .member-card{
+    width:41%;
+    max-width:155px;
+    padding:7px;
+    border-radius:15px;
+  }
+
+  .member-card img{
+    height:175px;
+    border-radius:11px;
+  }
+
+  .member-name{
+    font-size:15px;
+    margin-top:7px;
+  }
+
+  .member-tag{
+    font-size:8px;
+    letter-spacing:.4px;
+  }
+
+  .vs{
+    width:34px;
+    min-width:34px;
+    font-size:18px;
+    padding:0;
+    background:none;
+    box-shadow:none;
+  }
+
+  .action-row{
+    margin-top:16px;
+    gap:8px;
+  }
+
+  .action-row button{
+    padding:10px 15px;
+    font-size:12px;
+  }
+
+  .result{padding:13px;border-radius:18px}
+  .main-oshi h1{font-size:30px}
+  .podium{gap:7px}
+  .podium-card{width:31%;padding:6px}
+  .podium-card img{height:105px}
+  .podium-card h3{font-size:11px}
+  .first{transform:scale(1.03)}
+  .second,.third{margin-bottom:10px}
   .rank-list{grid-template-columns:1fr}
-  .rank{font-size:14px}
 }
+  
 </style>
 </head>
 
@@ -373,83 +398,98 @@ function getTier(score){
 }
 
 function showResult(){
-  document.getElementById("game").style.display="none";
+  const game = document.getElementById("game");
+  const result = document.getElementById("result");
 
-  const sorted=[...members].sort((a,b)=>scores[b.name]-scores[a.name]);
-  const top1=sorted[0], top2=sorted[1], top3=sorted[2];
-  const tier=getTier(scores[top1.name]);
+  if(!game || !result) return;
 
-  let shareText="🏆 Hasil Oshi Sorter Theater48Fight\\n\\n";
-  shareText+="Oshi Utama: "+top1.name+"\\n";
-  shareText+="Tier: "+tier+"\\n\\n";
-  shareText+="Top 10:\\n";
+  game.style.display = "none";
 
-  sorted.slice(0,10).forEach((m,i)=>{
-    shareText+=(i+1)+". "+m.name+" - "+scores[m.name]+" poin\\n";
+  const sorted = [...members].sort((a,b)=>{
+    return (scores[b.name] || 0) - (scores[a.name] || 0);
   });
 
-  shareText+="\\nCoba juga di Theater48Fight!";
+  const top1 = sorted[0];
+  const top2 = sorted[1];
+  const top3 = sorted[2];
 
-  let html=`
-  <div class="main-oshi">
-    <h2>🏆 Oshi Utama Kamu</h2>
-    <h1>${top1.name}</h1>
-    <p>${tier}</p>
-    <small>Total Battle: ${pairs.length} • Member: ${members.length}</small>
-  </div>
+  const tier = getTier(scores[top1.name] || 0);
 
-  <h2>🥇 Podium Top 3</h2>
+  let shareText = "🏆 Hasil Oshi Sorter Theater48Fight\n\n";
+  shareText += "Oshi Utama: " + top1.name + "\n";
+  shareText += "Tier: " + tier + "\n\n";
+  shareText += "Top 10:\n";
 
-  <div class="podium">
-    <div class="podium-card second">
-      <img src="${top2.img}" onerror="fallback(this,'${top2.name}')">
-      <h3>🥈 ${top2.name}</h3>
+  sorted.slice(0,10).forEach((m,i)=>{
+    shareText += (i+1) + ". " + m.name + " - " + (scores[m.name] || 0) + " poin\n";
+  });
+
+  window.__shareText = shareText;
+
+  let html = `
+    <div class="main-oshi">
+      <h2>🏆 Oshi Utama Kamu</h2>
+      <h1>${top1.name}</h1>
+      <p>${tier}</p>
+      <small>Total Battle: ${pairs.length} • Member: ${members.length}</small>
     </div>
 
-    <div class="podium-card first">
-      <img src="${top1.img}" onerror="fallback(this,'${top1.name}')">
-      <h3>🥇 ${top1.name}</h3>
+    <h2>🥇 Podium Top 3</h2>
+
+    <div class="podium">
+      <div class="podium-card second">
+        <img src="${top2.img}" onerror="fallback(this,'${top2.name}')">
+        <h3>🥈 ${top2.name}</h3>
+      </div>
+
+      <div class="podium-card first">
+        <img src="${top1.img}" onerror="fallback(this,'${top1.name}')">
+        <h3>🥇 ${top1.name}</h3>
+      </div>
+
+      <div class="podium-card third">
+        <img src="${top3.img}" onerror="fallback(this,'${top3.name}')">
+        <h3>🥉 ${top3.name}</h3>
+      </div>
     </div>
 
-    <div class="podium-card third">
-      <img src="${top3.img}" onerror="fallback(this,'${top3.name}')">
-      <h3>🥉 ${top3.name}</h3>
-    </div>
-  </div>
-
-  <h2>📋 Rangking Lengkap 1–62</h2>
-  <div class="rank-list">
+    <h2>📋 Ranking Lengkap</h2>
+    <div class="rank-list">
   `;
 
   sorted.forEach((member,index)=>{
-    html+=`
-    <div class="rank">
-      <img src="${member.img}" onerror="fallback(this,'${member.name}')">
-      <div>
-        <b>#${index+1}</b> ${member.name}<br>
-        <small>${scores[member.name]} poin</small>
+    html += `
+      <div class="rank">
+        <img src="${member.img}" onerror="fallback(this,'${member.name}')">
+        <div>
+          <b>#${index+1}</b> ${member.name}<br>
+          <small>${scores[member.name] || 0} poin</small>
+        </div>
       </div>
-    </div>`;
+    `;
   });
 
-  html+=`
-  </div>
+  html += `
+    </div>
 
-  <div class="share-box">
-    <button onclick="shareNative()">📤 Share</button>
-    <button onclick="shareWhatsApp()">🟢 WhatsApp</button>
-    <button onclick="shareX()">⚫ X / Twitter</button>
-    <button onclick="copyResult()">📋 Copy</button>
-    <button onclick="location.reload()">🔄 Ulangi</button>
-  </div>
+    <div class="share-box">
+      <button onclick="shareNative()">📤 Share</button>
+      <button onclick="shareWhatsApp()">🟢 WhatsApp</button>
+      <button onclick="shareX()">⚫ X</button>
+      <button onclick="copyResult()">📋 Copy</button>
+      <button onclick="location.reload()">🔄 Ulangi</button>
+    </div>
   `;
 
-  document.getElementById("result").innerHTML=html;
-  document.getElementById("result").style.display="block";
-  window.__shareText=shareText;
-  document.getElementById("progressBar").style.width="100%";
-}
+  result.innerHTML = html;
+  result.style.display = "block";
 
+  window.scrollTo({
+    top: result.offsetTop - 15,
+    behavior: "smooth"
+  });
+}
+  
 function shareNative(){
   const text=window.__shareText||"Hasil Oshi Sorter Theater48Fight";
   if(navigator.share){
