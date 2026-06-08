@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Theater48Fight Oshi Sorter Premium</title>
+<style>
+*{box-sizing:border-box}
+:root{--red:#ff2b2b;--deep:#8b1d2c;--gold:#ffd77a}
+body{margin:0;min-height:100vh;padding:22px;color:white;font-family:Arial,sans-serif;text-align:center;background:radial-gradient(circle at 10% 0%,rgba(255,43,43,.35),transparent 28%),radial-gradient(circle at 90% 10%,rgba(255,215,122,.18),transparent 24%),linear-gradient(135deg,#050505,#17070a 48%,#050505);overflow-x:hidden}
+.wrap{width:100%;max-width:1120px;margin:auto}
+.box{background:rgba(10,10,10,.9);border:1px solid rgba(255,43,43,.45);border-radius:30px;padding:28px;box-shadow:0 0 40px rgba(255,43,43,.18);overflow:hidden}
+h1{margin:0;font-size:44px;color:var(--gold);text-shadow:0 0 20px rgba(255,215,122,.35)}
+.sub{color:#ccc;margin:10px auto 18px;max-width:720px;line-height:1.5}
+.progress-area{max-width:680px;margin:18px auto 0}
+.progress-text{display:flex;justify-content:space-between;gap:10px;color:var(--gold);font-weight:bold;font-size:14px;margin-bottom:8px}
+.progress-wrap{height:18px;background:#111;border:1px solid #333;border-radius:20px;overflow:hidden;box-shadow:0 0 20px rgba(255,43,43,.25)}
+.progress-bar{width:0%;height:100%;background:linear-gradient(90deg,#ff2b2b,#ff6b6b,#ffd77a,#ff2b2b);background-size:300% 100%;animation:flow 3s linear infinite;transition:.25s}
+@keyframes flow{0%{background-position:0%}100%{background-position:300%}}
+.battle{display:flex;gap:28px;justify-content:center;align-items:center;margin-top:28px;flex-wrap:wrap}
+.member-card{width:320px;background:radial-gradient(circle at top,rgba(255,255,255,.12),transparent 32%),linear-gradient(180deg,#251015,#090909);border:1px solid rgba(255,43,43,.8);border-radius:26px;padding:14px;cursor:pointer;transition:.22s;box-shadow:0 0 24px rgba(255,43,43,.22);position:relative;overflow:hidden;user-select:none}
+.member-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 15%,rgba(255,255,255,.16),transparent 20%),linear-gradient(120deg,transparent 20%,rgba(255,255,255,.10),transparent 62%);opacity:.8;pointer-events:none}
+.member-card::after{content:"";position:absolute;top:-80%;left:-120%;width:70%;height:260%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.22),transparent);transform:rotate(24deg);animation:shine 4.5s infinite;pointer-events:none}
+@keyframes shine{0%{left:-130%}55%{left:140%}100%{left:140%}}
+.member-card:hover{transform:translateY(-6px) scale(1.025);box-shadow:0 0 32px rgba(255,43,43,.48)}
+.member-card img{width:100%;height:365px;object-fit:cover;border-radius:18px;background:#222;border:2px solid var(--red);position:relative;z-index:1}
+.member-name{position:relative;z-index:1;margin-top:13px;font-size:32px;font-weight:bold;color:#fff}
+.member-tag{position:relative;z-index:1;margin-top:6px;font-size:12px;color:var(--gold);letter-spacing:1.2px}
+.vs{font-size:36px;color:var(--gold);font-weight:bold;text-shadow:0 0 14px rgba(255,215,122,.55)}
+.action-row{margin-top:24px;display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
+button{padding:13px 20px;border:none;border-radius:14px;font-weight:bold;cursor:pointer;color:white;background:linear-gradient(135deg,var(--red),var(--deep));box-shadow:0 0 14px rgba(255,43,43,.28);transition:.15s}
+button:hover{transform:scale(1.04)}
+.result{display:none;max-width:880px;margin:26px auto 0;background:#f7f7f7;color:#111;padding:24px;border-radius:24px;text-align:left}
+.result h2{text-align:center;margin-top:0}
+.main-oshi{text-align:center;background:linear-gradient(135deg,#12070a,#2b0c10);color:white;border:1px solid var(--red);border-radius:22px;padding:18px;margin-bottom:24px}
+.main-oshi h1{font-size:42px;margin:4px 0}
+.main-oshi p{color:var(--gold);font-weight:bold}
+.podium{display:flex;justify-content:center;align-items:flex-end;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+.podium-card{background:#111;color:white;border:1px solid var(--red);border-radius:18px;padding:12px;width:170px;text-align:center;box-shadow:0 0 18px rgba(255,43,43,.22)}
+.podium-card img{width:100%;height:180px;object-fit:cover;border-radius:12px;background:#222}
+.first{transform:scale(1.12);order:2}.second{order:1;margin-bottom:34px}.third{order:3;margin-bottom:18px}
+.rank-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.rank{display:flex;align-items:center;gap:12px;padding:10px;border:1px solid #e4e4e4;border-radius:14px;background:white}
+.rank img{width:58px;height:58px;border-radius:12px;object-fit:cover;background:#222}.rank b{color:var(--deep)}
+.share-box{text-align:center;margin-top:20px}.tip{color:#aaa;font-size:13px;margin-top:10px}
+@media(max-width:700px){body{padding:10px}.box{padding:20px 12px;border-radius:22px}h1{font-size:30px}.sub{font-size:13px}.progress-text{font-size:12px}.battle{gap:10px;margin-top:18px}.member-card{width:46.5%;padding:8px;border-radius:18px}.member-card img{height:235px;border-radius:13px}.member-name{font-size:17px;margin-top:8px}.member-tag{font-size:9px;letter-spacing:.6px}.vs{width:100%;font-size:24px;order:2}#leftCard{order:1}#rightCard{order:3}.action-row button{padding:11px 13px;font-size:12px}.result{padding:14px}.podium-card{width:30%;padding:7px}.podium-card img{height:120px}.podium-card h3{font-size:12px}.first{transform:scale(1.06)}.second,.third{margin-bottom:14px}.rank-list{grid-template-columns:1fr}.rank{font-size:14px}}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="box">
+<h1>🎭 Oshi Sorter</h1>
+<p class="sub">Pilih member yang lebih kamu suka. Bisa klik kiri/kanan, skip, atau pilih sama suka. Hasil akhir menampilkan ranking lengkap 1–62.</p>
+<div id="game">
+<div class="progress-area"><div class="progress-text"><span id="progress">Battle 1 / 180</span><span id="percent">0%</span></div><div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div></div>
+<div class="battle">
+<div class="member-card" id="leftCard" onclick="choose('left')"><img id="leftImg" src="" alt=""><div class="member-name" id="leftName"></div><div class="member-tag">PILIH OSHI INI</div></div>
+<div class="vs">VS</div>
+<div class="member-card" id="rightCard" onclick="choose('right')"><img id="rightImg" src="" alt=""><div class="member-name" id="rightName"></div><div class="member-tag">PILIH OSHI INI</div></div>
+</div>
+<div class="action-row"><button onclick="choose('left')">⬅️ Pilih Kiri</button><button onclick="drawBattle()">🤝 Sama Suka</button><button onclick="choose('right')">Pilih Kanan ➡️</button><button onclick="skip()">Skip</button><button onclick="location.reload()">Ulangi</button></div>
+<p class="tip">Keyboard desktop: ← pilih kiri, → pilih kanan, Spasi sama suka, S skip.</p>
+</div>
+<div id="result" class="result"></div>
+</div></div>
+<script>
+const members = [
+{name:"Freya",img:"images/freya.jpg"},
+{name:"Christy",img:"images/christy.jpg"},
+{name:"Gracie",img:"images/gracie.jpg"},
+{name:"Feni",img:"images/feni.jpg"},
+{name:"Gita",img:"images/gita.jpg"},
+{name:"Eli",img:"images/eli.jpg"},
+{name:"Olla",img:"images/olla.jpg"},
+{name:"Muthe",img:"images/muthe.jpg"},
+{name:"Lulu",img:"images/lulu.jpg"},
+{name:"Fiony",img:"images/fiony.jpg"},
+{name:"Marsha",img:"images/marsha.jpg"},
+{name:"Kathrina",img:"images/kathrina.jpg"},
+{name:"Jessi",img:"images/jessi.jpg"},
+{name:"Lyn",img:"images/lyn.jpg"},
+{name:"Greesel",img:"images/greesel.jpg"},
+{name:"Ella",img:"images/ella.jpg"},
+{name:"Alya",img:"images/alya.jpg"},
+{name:"Anindya",img:"images/anindya.jpg"},
+{name:"Cathy",img:"images/cathy.jpg"},
+{name:"Lana",img:"images/lana.jpg"},
+{name:"Oniel",img:"images/oniel.jpg"},
+{name:"Elin",img:"images/elin.jpg"},
+{name:"Gendis",img:"images/gendis.jpg"},
+{name:"Indah",img:"images/indah.jpg"},
+{name:"Lia",img:"images/lia.jpg"},
+{name:"Nala",img:"images/nala.jpg"},
+{name:"Nayla",img:"images/nayla.jpg"},
+{name:"Raisha",img:"images/raisha.jpg"},
+{name:"Ribka",img:"images/ribka.jpg"},
+{name:"Trisha",img:"images/trisha.jpg"},
+{name:"Kimmy",img:"images/kimmy.jpg"},
+{name:"Michie",img:"images/michie.jpg"},
+{name:"Danella",img:"images/danella.jpg"},
+{name:"Daisy",img:"images/daisy.jpg"},
+{name:"Oline",img:"images/oline.jpg"},
+{name:"Delynn",img:"images/delynn.jpg"},
+{name:"Lily",img:"images/lily.jpg"},
+{name:"Aralie",img:"images/aralie.jpg"},
+{name:"Nachia",img:"images/nachia.jpg"},
+{name:"Levi",img:"images/levi.jpg"},
+{name:"Cynthia",img:"images/cynthia.jpg"},
+{name:"Fritzy",img:"images/fritzy.jpg"},
+{name:"Erine",img:"images/erine.jpg"},
+{name:"Jemima",img:"images/jemima.jpg"},
+{name:"Ekin",img:"images/ekin.jpg"},
+{name:"Intan",img:"images/intan.jpg"},
+{name:"Mikaela",img:"images/mikaela.jpg"},
+{name:"Rilly",img:"images/rilly.jpg"},
+{name:"Virgi",img:"images/virgi.jpg"},
+{name:"Auwia",img:"images/auwia.jpg"},
+{name:"Giaa",img:"images/giaa.jpg"},
+{name:"Maira",img:"images/maira.jpg"},
+{name:"Fera",img:"images/fera.jpg"},
+{name:"Carissa",img:"images/carissa.jpg"},
+{name:"Bella",img:"images/bella.jpg"},
+{name:"Fahira",img:"images/fahira.jpg"},
+{name:"Rara",img:"images/rara.jpg"},
+{name:"Heidi",img:"images/heidi.jpg"},
+{name:"Maxine",img:"images/maxine.jpg"},
+{name:"Jazzy",img:"images/jazzy.jpg"},
+{name:"Ralyne",img:"images/ralyne.jpg"},
+{name:"Sona",img:"images/sona.jpg"}
+];
+
+let scores = {};
+let pairs = [];
+let current = 0;
+let totalBattle = 180;
+
+members.forEach(m => scores[m.name] = 0);
+for(let i=0; i<members.length; i++){for(let j=i+1; j<members.length; j++){pairs.push([members[i], members[j]]);}}
+pairs = pairs.sort(() => Math.random() - 0.5).slice(0,totalBattle);
+
+function fallback(img, name){img.onerror=null;img.src="https://via.placeholder.com/400x500/111111/ffffff?text="+encodeURIComponent(name);}
+function updateProgress(){const percent=Math.round((current/pairs.length)*100);document.getElementById("progressBar").style.width=percent+"%";document.getElementById("progress").innerText="Battle "+Math.min(current+1,pairs.length)+" / "+pairs.length;document.getElementById("percent").innerText=percent+"%";}
+function showPair(){if(current>=pairs.length){showResult();return;}const left=pairs[current][0];const right=pairs[current][1];document.getElementById("leftName").innerText=left.name;document.getElementById("leftImg").src=left.img;document.getElementById("leftImg").onerror=function(){fallback(this,left.name);};document.getElementById("rightName").innerText=right.name;document.getElementById("rightImg").src=right.img;document.getElementById("rightImg").onerror=function(){fallback(this,right.name);};updateProgress();}
+function nextBattle(){current++;showPair();if(window.innerWidth<=700){window.scrollTo({top:0,behavior:"smooth"});}}
+function choose(side){if(current>=pairs.length)return;const pair=pairs[current];if(side==="left"){scores[pair[0].name]+=1;}else{scores[pair[1].name]+=1;}nextBattle();}
+function drawBattle(){if(current>=pairs.length)return;const pair=pairs[current];scores[pair[0].name]+=0.5;scores[pair[1].name]+=0.5;nextBattle();}
+function skip(){if(current>=pairs.length)return;nextBattle();}
+function getTier(score){if(score>=20)return"INFINITY RARE ✨";if(score>=15)return"ULTRA RARE 🔥";if(score>=10)return"SSR MEMBER 👑";if(score>=5)return"RARE MEMBER 🌟";return"LUCKY MEMBER 🍀";}
+function showResult(){document.getElementById("game").style.display="none";const sorted=[...members].sort((a,b)=>scores[b.name]-scores[a.name]);const top1=sorted[0],top2=sorted[1],top3=sorted[2];const tier=getTier(scores[top1.name]);let shareText="🏆 Hasil Oshi Sorter Theater48Fight\\n\\n";sorted.slice(0,10).forEach((m,i)=>{shareText+=(i+1)+". "+m.name+"\\n";});let html=`<div class="main-oshi"><h2>🏆 Oshi Utama Kamu</h2><h1>${top1.name}</h1><p>${tier}</p><small>Total Battle: ${pairs.length} • Member: ${members.length}</small></div><h2>🥇 Podium Top 3</h2><div class="podium"><div class="podium-card second"><img src="${top2.img}" onerror="fallback(this,'${top2.name}')"><h3>🥈 ${top2.name}</h3></div><div class="podium-card first"><img src="${top1.img}" onerror="fallback(this,'${top1.name}')"><h3>🥇 ${top1.name}</h3></div><div class="podium-card third"><img src="${top3.img}" onerror="fallback(this,'${top3.name}')"><h3>🥉 ${top3.name}</h3></div></div><h2>📋 Ranking Lengkap 1–62</h2><div class="rank-list">`;sorted.forEach((member,index)=>{html+=`<div class="rank"><img src="${member.img}" onerror="fallback(this,'${member.name}')"><div><b>#${index+1}</b> ${member.name}<br><small>${scores[member.name]} poin</small></div></div>`;});html+=`</div><div class="share-box"><button onclick="copyResult()">📤 Copy Hasil Top 10</button><button onclick="location.reload()">🔄 Ulangi Sorter</button></div>`;document.getElementById("result").innerHTML=html;document.getElementById("result").style.display="block";window.__shareText=shareText;document.getElementById("progressBar").style.width="100%";}
+function copyResult(){navigator.clipboard.writeText(window.__shareText||"Hasil Oshi Sorter Theater48Fight").then(()=>alert("Hasil Top 10 sudah dicopy!")).catch(()=>alert(window.__shareText||"Hasil Oshi Sorter Theater48Fight"));}
+document.addEventListener("keydown",function(e){if(document.getElementById("game").style.display==="none")return;if(e.key==="ArrowLeft")choose("left");if(e.key==="ArrowRight")choose("right");if(e.key===" ")drawBattle();if(e.key.toLowerCase()==="s")skip();});
+showPair();
+</script>
+</body>
+</html>
