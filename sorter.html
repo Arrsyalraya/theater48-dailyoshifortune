@@ -3,347 +3,206 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Theater48Fight Oshi Sorter</title>
+<title>Theater48Fight Oshi Sorter Premium</title>
 
 <style>
 *{box-sizing:border-box}
+:root{--red:#ff2b2b;--deep:#8b1d2c;--gold:#ffd77a}
 
 body{
-  margin:0;
-  min-height:100vh;
-  padding:20px;
-  color:white;
-  font-family:Arial,sans-serif;
-  text-align:center;
+  margin:0;min-height:100vh;padding:18px;color:white;font-family:Arial,sans-serif;text-align:center;
   background:
-    radial-gradient(circle at 20% 10%,rgba(255,43,43,.25),transparent 25%),
-    radial-gradient(circle at 80% 15%,rgba(255,215,122,.18),transparent 22%),
-    linear-gradient(135deg,#050505,#17070a 45%,#050505);
+    radial-gradient(circle at 12% 10%,rgba(255,43,43,.35),transparent 25%),
+    radial-gradient(circle at 88% 18%,rgba(255,215,122,.22),transparent 22%),
+    radial-gradient(circle at 50% 100%,rgba(255,43,43,.18),transparent 28%),
+    linear-gradient(135deg,#050505,#17070a 48%,#050505);
+  overflow-x:hidden;position:relative;
 }
+body::before{
+  content:"✦ ✧ ✦ ✧ ✦";
+  position:fixed;inset:0;
+  font-size:80px;letter-spacing:55px;line-height:180px;
+  color:rgba(255,215,122,.08);
+  pointer-events:none;animation:bgFloat 9s ease-in-out infinite alternate;
+}
+body::after{
+  content:"";position:fixed;inset:-40%;
+  background:conic-gradient(from 0deg,transparent,rgba(255,43,43,.09),transparent,rgba(255,215,122,.08),transparent);
+  animation:spinBg 18s linear infinite;pointer-events:none;
+}
+@keyframes bgFloat{from{transform:translateY(0)}to{transform:translateY(-30px)}}
+@keyframes spinBg{to{transform:rotate(360deg)}}
 
-.wrap{
-  max-width:1050px;
-  margin:auto;
-}
+.wrap{width:100%;max-width:1000px;margin:auto;position:relative;z-index:1}
 
 .box{
-  background:rgba(10,10,10,.88);
+  background:rgba(10,10,10,.9);
   border:1px solid rgba(255,43,43,.45);
-  border-radius:28px;
-  padding:28px;
-  box-shadow:0 0 35px rgba(255,43,43,.18);
+  border-radius:26px;
+  padding:22px;
+  box-shadow:0 0 42px rgba(255,43,43,.22), inset 0 0 30px rgba(255,215,122,.05);
+  overflow:hidden;position:relative;
 }
-
-h1{
-  margin:0;
-  font-size:44px;
-  color:#ffd77a;
-  text-shadow:0 0 18px rgba(255,215,122,.35);
+.box::before{
+  content:"";position:absolute;inset:-2px;
+  background:linear-gradient(120deg,transparent,rgba(255,215,122,.18),transparent);
+  animation:boxShine 5s infinite;pointer-events:none;
 }
+@keyframes boxShine{0%{transform:translateX(-100%)}55%,100%{transform:translateX(100%)}}
 
-.sub{
-  color:#ccc;
-  margin-top:10px;
-}
+h1{margin:0;font-size:38px;color:var(--gold);text-shadow:0 0 20px rgba(255,215,122,.45)}
+.sub{color:#ccc;margin:10px auto 16px;max-width:680px;line-height:1.5;font-size:14px}
 
-.progress{
-  margin-top:18px;
-  color:#ffd77a;
-  font-weight:bold;
-}
+.progress-area{max-width:620px;margin:16px auto 0}
+.progress-text{display:flex;justify-content:space-between;gap:10px;color:var(--gold);font-weight:bold;font-size:13px;margin-bottom:8px}
+.progress-wrap{height:16px;background:#111;border:1px solid #333;border-radius:20px;overflow:hidden;box-shadow:0 0 20px rgba(255,43,43,.25)}
+.progress-bar{width:0%;height:100%;background:linear-gradient(90deg,#ff2b2b,#ff6b6b,#ffd77a,#ff2b2b);background-size:300% 100%;animation:flow 3s linear infinite;transition:.25s}
+@keyframes flow{0%{background-position:0%}100%{background-position:300%}}
 
-.progress-wrap{
-height:18px;
-background:#111;
-border:1px solid #333;
-box-shadow:0 0 20px rgba(255,43,43,.25);
-}
-
-.progress-bar{
-background:linear-gradient(
-90deg,
-#ff2b2b,
-#ff6b6b,
-#ffd77a,
-#ff2b2b
-);
-background-size:300% 100%;
-animation:flow 3s linear infinite;
-}
-
-@keyframes flow{
-0%{background-position:0%}
-100%{background-position:300%}
-}
-
-.battle{
-  display:flex;
-  gap:26px;
-  justify-content:center;
-  align-items:center;
-  margin-top:30px;
-  flex-wrap:wrap;
-}
-
+.battle{display:flex;gap:24px;justify-content:center;align-items:center;margin-top:24px;flex-wrap:wrap}
 .member-card{
-  width:310px;
-  background:linear-gradient(180deg,#201010,#090909);
-  border:1px solid rgba(255,43,43,.7);
+  width:275px;
+  background:radial-gradient(circle at top,rgba(255,255,255,.12),transparent 32%),linear-gradient(180deg,#251015,#090909);
+  border:1px solid rgba(255,43,43,.8);
   border-radius:24px;
-  padding:14px;
+  padding:12px;
   cursor:pointer;
-  transition:.25s;
-  box-shadow:0 0 22px rgba(255,43,43,.18);
-  position:relative;
-  overflow:hidden;
-  background:
-radial-gradient(circle at top,rgba(255,255,255,.12),transparent 30%),
-linear-gradient(180deg,#201010,#090909);
+  transition:.22s;
+  box-shadow:0 0 24px rgba(255,43,43,.22);
+  position:relative;overflow:hidden;user-select:none;
 }
-
 .member-card::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(circle at 30% 15%,rgba(255,255,255,.18),transparent 18%),
-    linear-gradient(120deg,transparent 20%,rgba(255,255,255,.12),transparent 60%);
-  opacity:.8;
-  pointer-events:none;
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 30% 15%,rgba(255,255,255,.16),transparent 20%),linear-gradient(120deg,transparent 20%,rgba(255,255,255,.10),transparent 62%);
+  opacity:.8;pointer-events:none;
 }
-
 .member-card::after{
-content:"";
-position:absolute;
-inset:-50%;
-background:
-linear-gradient(
-120deg,
-transparent,
-rgba(255,255,255,.25),
-transparent
-);
-transform:rotate(25deg);
-animation:shine 4s infinite;
+  content:"";position:absolute;top:-80%;left:-120%;width:70%;height:260%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.22),transparent);
+  transform:rotate(24deg);animation:shine 4.5s infinite;pointer-events:none;
 }
+@keyframes shine{0%{left:-130%}55%,100%{left:140%}}
+.member-card:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 0 32px rgba(255,43,43,.48)}
+.member-card img{width:100%;height:310px;object-fit:cover;border-radius:17px;background:#222;border:2px solid var(--red);position:relative;z-index:1}
+.member-name{position:relative;z-index:1;margin-top:11px;font-size:28px;font-weight:bold;color:#fff}
+.member-tag{position:relative;z-index:1;margin-top:5px;font-size:11px;color:var(--gold);letter-spacing:1px}
+.vs{font-size:34px;color:var(--gold);font-weight:bold;text-shadow:0 0 14px rgba(255,215,122,.65)}
 
-@keyframes shine{
-0%{left:-150%}
-100%{left:150%}
-}
-
-
-.member-card:hover{
-  transform:translateY(-5px) scale(1.03);
-  box-shadow:0 0 28px rgba(255,43,43,.45);
-}
-
-.member-card img{
-  width:100%;
-  height:360px;
-  object-fit:cover;
-  border-radius:18px;
-  background:#222;
-  border:2px solid #ff2b2b;
-  position:relative;
-  z-index:1;
-}
-
-.member-name{
-  position:relative;
-  z-index:1;
-  margin-top:14px;
-  font-size:32px;
-  font-weight:bold;
-  color:#fff;
-}
-
-.member-tag{
-  position:relative;
-  z-index:1;
-  margin-top:6px;
-  font-size:13px;
-  color:#ffd77a;
-  letter-spacing:1px;
-}
-
-.vs{
-  font-size:34px;
-  color:#ffd77a;
-  font-weight:bold;
-  text-shadow:0 0 12px rgba(255,215,122,.5);
-}
-
-.action-row{
-  margin-top:22px;
-}
-  
+.action-row{margin-top:22px;display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
 button{
-  margin:8px;
-  padding:13px 22px;
-  border:none;
-  border-radius:14px;
-  font-weight:bold;
-  cursor:pointer;
-  color:white;
-  background:linear-gradient(135deg,#ff2b2b,#8b1d2c);
-  box-shadow:0 0 14px rgba(255,43,43,.28);
+  padding:13px 20px;border:none;border-radius:14px;font-weight:bold;cursor:pointer;color:white;
+  background:linear-gradient(135deg,var(--red),var(--deep));
+  box-shadow:0 0 14px rgba(255,43,43,.28);transition:.15s
 }
+button:hover{transform:scale(1.04)}
 
-button:hover{
-  transform:scale(1.04);
-}
+.result{display:none;max-width:850px;margin:24px auto 0;background:#f7f7f7;color:#111;padding:22px;border-radius:24px;text-align:left}
+.result h2{text-align:center;margin-top:0}
 
-.result{
-  max-width:700px;
-  margin:30px auto 0;
-  background:#f7f7f7;
-  color:#111;
-  padding:24px;
-  border-radius:22px;
-  text-align:left;
-}
-
-.result h2{
+.main-oshi{
   text-align:center;
-  margin-top:0;
+  background:linear-gradient(135deg,#12070a,#2b0c10);
+  color:white;border:1px solid var(--red);
+  border-radius:22px;padding:18px;margin-bottom:24px;
+  box-shadow:0 0 26px rgba(255,43,43,.38), inset 0 0 20px rgba(255,215,122,.08);
+  position:relative;overflow:hidden;
 }
-
-.rank{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  padding:12px;
-  border-bottom:1px solid #ddd;
-  font-size:18px;
+.main-oshi::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.16),transparent);
+  animation:shineWinner 3.5s infinite;
 }
-
-.rank img{
-  width:58px;
-  height:58px;
-  border-radius:12px;
-  object-fit:cover;
-  background:#222;
+@keyframes shineWinner{0%{transform:translateX(-100%)}60%,100%{transform:translateX(100%)}}
+.main-oshi h1{
+  font-size:42px;margin:4px 0;
+  color:var(--gold);
+  text-shadow:0 0 10px #ffd77a,0 0 25px #ff2b2b,0 0 40px #ff2b2b;
+  animation:winnerText 1.6s ease-in-out infinite alternate;
 }
+@keyframes winnerText{from{letter-spacing:0}to{letter-spacing:2px}}
+.main-oshi p{color:var(--gold);font-weight:bold}
 
-.rank b{
-  color:#8b1d2c;
-}
-
-.podium{
-  display:flex;
-  justify-content:center;
-  align-items:flex-end;
-  gap:15px;
-  margin-bottom:30px;
-  flex-wrap:wrap;
-}
-
+.podium{display:flex;justify-content:center;align-items:flex-end;gap:16px;margin-bottom:28px;flex-wrap:wrap}
 .podium-card{
-  background:#111;
-  border:1px solid #ff2b2b;
-  border-radius:18px;
-  padding:12px;
-  width:160px;
+  background:#111;color:white;border:1px solid var(--red);border-radius:18px;padding:12px;width:160px;text-align:center;
+  box-shadow:0 0 20px rgba(255,43,43,.35), inset 0 0 18px rgba(255,215,122,.06);
+  position:relative;overflow:hidden;
 }
+.podium-card::before{
+  content:"";position:absolute;inset:-2px;border-radius:20px;padding:2px;
+  background:linear-gradient(135deg,#ff2b2b,#ffd77a,#ff2b2b);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  animation:borderGlow 2.5s linear infinite;
+}
+@keyframes borderGlow{to{filter:hue-rotate(360deg)}}
+.podium-card img{width:100%;height:170px;object-fit:cover;border-radius:12px;background:#222}
+.first{transform:scale(1.12);order:2}.second{order:1;margin-bottom:34px}.third{order:3;margin-bottom:18px}
 
-.podium-card img{
-  width:100%;
-  height:180px;
-  object-fit:cover;
-  border-radius:12px;
-}
+.rank-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.rank{display:flex;align-items:center;gap:12px;padding:10px;border:1px solid #e4e4e4;border-radius:14px;background:white}
+.rank img{width:58px;height:58px;border-radius:12px;object-fit:cover;background:#222}
+.rank b{color:var(--deep)}
 
-.first{
-transform:scale(1.15);
-order:2;
-}
-
-.second{
-order:1;
-margin-bottom:40px;
-}
-
-.third{
-order:3;
-margin-bottom:20px;
-}
+.share-box{text-align:center;margin-top:20px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.tip{color:#aaa;font-size:13px;margin-top:10px}
 
 @media(max-width:700px){
-  body{
-    padding:10px;
-  }
-
-  .box{
-    padding:20px 12px;
-  }
-
-  h1{
-    font-size:32px;
-  }
-
+  body{padding:9px}
+  .box{padding:16px 10px;border-radius:22px}
+  h1{font-size:28px}
+  .sub{font-size:12px}
+  .progress-text{font-size:11px}
   .battle{
-    gap:12px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-areas:
+      "left vs"
+      "vs right";
+    gap:8px;
+    margin-top:16px;
+    align-items:center;
   }
-
-  .member-card{
-    width:45%;
-    padding:8px;
-    border-radius:18px;
-  }
-
-  .member-card img{
-    height:230px;
-    border-radius:13px;
-  }
-
-  .member-name{
-    font-size:16px;
-  }
-
-  .member-tag{
-    font-size:10px;
-  }
-
-  .vs{
-    width:100%;
-    font-size:24px;
-    order:2;
-  }
-
-  #leftCard{
-    order:1;
-  }
-
-  #rightCard{
-    order:3;
-  }
-
-  .rank{
-    font-size:15px;
-  }
+  #leftCard{grid-area:left;justify-self:start}
+  #rightCard{grid-area:right;justify-self:end}
+  .vs{grid-area:vs;font-size:22px;align-self:center;justify-self:center}
+  .member-card{width:42vw;max-width:170px;padding:7px;border-radius:16px}
+  .member-card img{height:190px;border-radius:12px}
+  .member-name{font-size:16px;margin-top:7px}
+  .member-tag{font-size:8px;letter-spacing:.5px}
+  .action-row button{padding:11px 14px;font-size:12px}
+  .result{padding:14px}
+  .podium-card{width:30%;padding:7px}
+  .podium-card img{height:112px}
+  .podium-card h3{font-size:12px}
+  .first{transform:scale(1.06)}
+  .second,.third{margin-bottom:14px}
+  .rank-list{grid-template-columns:1fr}
+  .rank{font-size:14px}
 }
 </style>
 </head>
 
 <body>
-
 <div class="wrap">
   <div class="box">
     <h1>🎭 Oshi Sorter</h1>
-    <p class="sub">Pilih member yang lebih kamu suka sampai ranking oshimu terbentuk.</p>
+    <p class="sub">Pilih member yang lebih kamu suka. Klik untuk memilih. Bisa skip atau ulangi sorter dari awal. Hasil akhir menampilkan rangking lengkap 1–62.</p>
 
     <div id="game">
-      
-      <div class="progress-wrap">
-  <div class="progress-bar" id="progressBar"></div>
-</div>
-
-<p class="progress" id="progress"></p>
+      <div class="progress-area">
+        <div class="progress-text">
+          <span id="progress">Battle 1 / 180</span>
+          <span id="percent">0%</span>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+      </div>
 
       <div class="battle">
         <div class="member-card" id="leftCard" onclick="choose('left')">
-          <img id="leftImg" src="">
+          <img id="leftImg" src="" alt="">
           <div class="member-name" id="leftName"></div>
           <div class="member-tag">PILIH OSHI INI</div>
         </div>
@@ -351,19 +210,18 @@ margin-bottom:20px;
         <div class="vs">VS</div>
 
         <div class="member-card" id="rightCard" onclick="choose('right')">
-          <img id="rightImg" src="">
+          <img id="rightImg" src="" alt="">
           <div class="member-name" id="rightName"></div>
           <div class="member-tag">PILIH OSHI INI</div>
         </div>
       </div>
 
       <div class="action-row">
-        <button onclick="skip()">Skip</button>
-        <button onclick="location.reload()">Ulangi</button>
+        <button onclick="skip()">⏭️ Skip</button>
+        <button onclick="location.reload()">🔄 Ulangi</button>
       </div>
-    </div>
 
-    <div id="result" style="display:none;"></div>
+    <div id="result" class="result"></div>
   </div>
 </div>
 
@@ -436,156 +294,199 @@ const members = [
 let scores = {};
 let pairs = [];
 let current = 0;
+let totalBattle = 180;
 
-members.forEach(m => {
-    scores[m.name] = 0;
-});
+members.forEach(m => scores[m.name] = 0);
 
-for(let i=0;i<members.length;i++){
-    for(let j=i+1;j<members.length;j++){
-        pairs.push([members[i],members[j]]);
-    }
+for(let i=0; i<members.length; i++){
+  for(let j=i+1; j<members.length; j++){
+    pairs.push([members[i], members[j]]);
+  }
 }
 
-pairs = pairs.sort(() => Math.random() - 0.5).slice(0,180);
+pairs = pairs.sort(() => Math.random() - 0.5).slice(0,totalBattle);
 
-  function drawBattle(){
-scores[pairs[current][0].name]+=0.5;
-scores[pairs[current][1].name]+=0.5;
-current++;
-showPair();
+function fallback(img, name){
+  img.onerror=null;
+  img.src="https://via.placeholder.com/400x500/111111/ffffff?text="+encodeURIComponent(name);
 }
-  
-function fallback(img,name){
-    img.onerror=null;
-    img.src="https://via.placeholder.com/400x500/111111/ffffff?text="+encodeURIComponent(name);
+
+function updateProgress(){
+  const percent=Math.round((current/pairs.length)*100);
+  document.getElementById("progressBar").style.width=percent+"%";
+  document.getElementById("progress").innerText="Battle "+Math.min(current+1,pairs.length)+" / "+pairs.length;
+  document.getElementById("percent").innerText=percent+"%";
 }
 
 function showPair(){
+  if(current>=pairs.length){
+    showResult();
+    return;
+  }
 
-    if(current >= pairs.length){
-        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  confetti({
-particleCount:200,
-spread:120
-});
-  showResult();
-        return;
-    }
+  const left=pairs[current][0];
+  const right=pairs[current][1];
 
-  const percent = ((current+1)/pairs.length)*100;
+  document.getElementById("leftName").innerText=left.name;
+  document.getElementById("leftImg").src=left.img;
+  document.getElementById("leftImg").onerror=function(){fallback(this,left.name);};
 
-document.getElementById("progressBar").style.width =
-percent + "%";
+  document.getElementById("rightName").innerText=right.name;
+  document.getElementById("rightImg").src=right.img;
+  document.getElementById("rightImg").onerror=function(){fallback(this,right.name);};
 
-    const left = pairs[current][0];
-    const right = pairs[current][1];
+  updateProgress();
+}
 
-    document.getElementById("leftName").innerText = left.name;
-    document.getElementById("leftImg").src = left.img;
-    document.getElementById("leftImg").onerror = function(){
-        fallback(this,left.name);
-    };
-
-    document.getElementById("rightName").innerText = right.name;
-    document.getElementById("rightImg").src = right.img;
-    document.getElementById("rightImg").onerror = function(){
-        fallback(this,right.name);
-    };
-
-    document.getElementById("progress").innerText =
-    `Progress ${current+1} / ${pairs.length}`;
+function nextBattle(){
+  current++;
+  showPair();
+  if(window.innerWidth<=700){
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
 }
 
 function choose(side){
+  if(current>=pairs.length)return;
+  const pair=pairs[current];
 
-    const pair = pairs[current];
+  if(side==="left"){
+    scores[pair[0].name]+=1;
+  }else{
+    scores[pair[1].name]+=1;
+  }
 
-    if(side === "left"){
-        scores[pair[0].name]++;
-    }else{
-        scores[pair[1].name]++;
-    }
-
-    current++;
-    showPair();
-  window.scrollTo({
-  top:0,
-  behavior:"smooth"
-});
+  nextBattle();
 }
 
 function skip(){
-    current++;
-    showPair();
+  if(current>=pairs.length)return;
+  nextBattle();
+}
+
+function getTier(score){
+  if(score>=20)return"OSHI KANDUNG 😈";
+  if(score>=15)return"OSHI KESAYANGAN 🥶";
+  if(score>=10)return"INFINITY OSHI 👑";
+  if(score>=5)return"ULTRA OSHI 🔥";
+  return"LUCKY MEMBER 🍀";
 }
 
 function showResult(){
+  document.getElementById("game").style.display="none";
 
-    document.getElementById("game").style.display = "none";
+  const sorted=[...members].sort((a,b)=>scores[b.name]-scores[a.name]);
+  const top1=sorted[0], top2=sorted[1], top3=sorted[2];
+  const tier=getTier(scores[top1.name]);
 
-    const sorted = [...members].sort((a,b)=>scores[b.name]-scores[a.name]);
+  let shareText="🏆 Hasil Oshi Sorter Theater48Fight\\n\\n";
+  shareText+="Oshi Utama: "+top1.name+"\\n";
+  shareText+="Tier: "+tier+"\\n\\n";
+  shareText+="Top 10:\\n";
 
-    const top1 = sorted[0];
-    const top2 = sorted[1];
-    const top3 = sorted[2];
+  sorted.slice(0,10).forEach((m,i)=>{
+    shareText+=(i+1)+". "+m.name+" - "+scores[m.name]+" poin\\n";
+  });
 
-  let tier = "Rare";
+  shareText+="\\nCoba juga di Theater48Fight!";
 
-if(scores[top1.name] >= 10) tier = "SSR";
-if(scores[top1.name] >= 15) tier = "Ultra Rare";
-if(scores[top1.name] >= 20) tier = "Infinity Rare";
-  <h2>🏆 Oshi Utama Kamu</h2>
-<h1>${top1.name}</h1>
-<p>${tier}</p>
-  
-    let html = `
-    <div class="result">
-        <h2>🏆 Ranking Oshi Kamu</h2>
+  let html=`
+  <div class="main-oshi">
+    <h2>🏆 Oshi Utama Kamu</h2>
+    <h1>${top1.name}</h1>
+    <p>${tier}</p>
+    <small>Total Battle: ${pairs.length} • Member: ${members.length}</small>
+  </div>
 
-        <div class="podium">
-            <div class="podium-card second">
-                <img src="${top2.img}">
-                <h3>🥈 ${top2.name}</h3>
-            </div>
+  <h2>🥇 Podium Top 3</h2>
 
-            <div class="podium-card first">
-                <img src="${top1.img}">
-                <h3>🥇 ${top1.name}</h3>
-            </div>
-
-            <div class="podium-card third">
-                <img src="${top3.img}">
-                <h3>🥉 ${top3.name}</h3>
-            </div>
-        </div>
-    `;
-
-    sorted.forEach((member,index)=>{
-        html += `
-        <div class="rank">
-            <img src="${member.img}" onerror="this.src='https://via.placeholder.com/80'">
-            <div>
-                <b>#${index+1}</b><br>
-                ${member.name}
-            </div>
-        </div>
-        `;
-    });
-
-    html += `
-        <div style="text-align:center;margin-top:20px;">
-            <button onclick="location.reload()">🔄 Ulangi Sorter</button>
-        </div>
+  <div class="podium">
+    <div class="podium-card second">
+      <img src="${top2.img}" onerror="fallback(this,'${top2.name}')">
+      <h3>🥈 ${top2.name}</h3>
     </div>
-    `;
 
-    document.getElementById("result").innerHTML = html;
-    document.getElementById("result").style.display = "block";
+    <div class="podium-card first">
+      <img src="${top1.img}" onerror="fallback(this,'${top1.name}')">
+      <h3>🥇 ${top1.name}</h3>
+    </div>
+
+    <div class="podium-card third">
+      <img src="${top3.img}" onerror="fallback(this,'${top3.name}')">
+      <h3>🥉 ${top3.name}</h3>
+    </div>
+  </div>
+
+  <h2>📋 Rangking Lengkap 1–62</h2>
+  <div class="rank-list">
+  `;
+
+  sorted.forEach((member,index)=>{
+    html+=`
+    <div class="rank">
+      <img src="${member.img}" onerror="fallback(this,'${member.name}')">
+      <div>
+        <b>#${index+1}</b> ${member.name}<br>
+        <small>${scores[member.name]} poin</small>
+      </div>
+    </div>`;
+  });
+
+  html+=`
+  </div>
+
+  <div class="share-box">
+    <button onclick="shareNative()">📤 Share</button>
+    <button onclick="shareWhatsApp()">🟢 WhatsApp</button>
+    <button onclick="shareX()">⚫ X / Twitter</button>
+    <button onclick="copyResult()">📋 Copy</button>
+    <button onclick="location.reload()">🔄 Ulangi</button>
+  </div>
+  `;
+
+  document.getElementById("result").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.__shareText=shareText;
+  document.getElementById("progressBar").style.width="100%";
 }
 
-showPair();
+function shareNative(){
+  const text=window.__shareText||"Hasil Oshi Sorter Theater48Fight";
+  if(navigator.share){
+    navigator.share({
+      title:"Hasil Oshi Sorter Theater48Fight",
+      text:text,
+      url:location.href
+    });
+  }else{
+    copyResult();
+  }
+}
 
+function shareWhatsApp(){
+  const text=encodeURIComponent((window.__shareText||"Hasil Oshi Sorter Theater48Fight")+"\\n"+location.href);
+  window.open("https://wa.me/?text="+text,"_blank");
+}
+
+function shareX(){
+  const text=encodeURIComponent(window.__shareText||"Hasil Oshi Sorter Theater48Fight");
+  window.open("https://twitter.com/intent/tweet?text="+text+"&url="+encodeURIComponent(location.href),"_blank");
+}
+
+function copyResult(){
+  navigator.clipboard.writeText(window.__shareText||"Hasil Oshi Sorter Theater48Fight")
+  .then(()=>alert("Hasil sudah dicopy!"))
+  .catch(()=>alert(window.__shareText||"Hasil Oshi Sorter Theater48Fight"));
+}
+
+document.addEventListener("keydown",function(e){
+  if(document.getElementById("game").style.display==="none")return;
+  if(e.key==="ArrowLeft")choose("left");
+  if(e.key==="ArrowRight")choose("right");
+  if(e.key.toLowerCase()==="s")skip();
+});
+
+showPair();
 </script>
 </body>
 </html>
