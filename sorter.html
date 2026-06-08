@@ -52,41 +52,55 @@ h1{margin:0;font-size:38px;color:var(--gold);text-shadow:0 0 18px rgba(255,215,1
 .member-card{
   width:275px;
   background:
-    linear-gradient(rgba(10,10,10,.28),rgba(10,10,10,.28)),
-    url("https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?auto=format&fit=crop&w=900&q=80");
+    url("images/card-bg.jpg");
   background-size:cover;
   background-position:center;
-  border:2px solid rgba(255,215,122,.85);
-  border-radius:24px;
-  padding:13px;
+  border:2px solid rgba(255,255,255,.25);
+  border-radius:26px;
+  padding:14px;
   cursor:pointer;
-  transition:.2s;
-  box-shadow:
-    0 0 18px rgba(255,43,43,.45),
-    0 0 36px rgba(255,215,122,.25),
-    inset 0 0 22px rgba(255,255,255,.08);
+  transition:.25s;
   position:relative;
+  overflow:hidden;
+
+  box-shadow:
+    0 0 18px rgba(255,43,43,.5),
+    0 0 40px rgba(255,43,43,.25);
 }
 
-.member-card:nth-child(1){
-  border-color:#ff5bbd;
-  box-shadow:
-    0 0 18px rgba(255,91,189,.75),
-    0 0 38px rgba(255,43,43,.35),
-    inset 0 0 22px rgba(255,255,255,.08);
+.member-card::before{
+  content:"";
+  position:absolute;
+  top:-50%;
+  left:-120%;
+  width:60%;
+  height:220%;
+  background:
+  linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,.45),
+    transparent
+  );
+
+  transform:rotate(20deg);
+  animation:cardShine 4s infinite;
 }
 
-.member-card:nth-child(3){
-  border-color:#ffd77a;
-  box-shadow:
-    0 0 18px rgba(255,215,122,.8),
-    0 0 38px rgba(255,150,43,.35),
-    inset 0 0 22px rgba(255,255,255,.08);
+@keyframes cardShine{
+  0%{
+    left:-120%;
+  }
+  50%{
+    left:160%;
+  }
+  100%{
+    left:160%;
+  }
 }
 
 .member-card:hover{
-  transform:translateY(-5px) scale(1.025);
-  filter:brightness(1.08);
+  transform:translateY(-5px) scale(1.02);
 }
 
 .member-card img{
@@ -382,6 +396,201 @@ button{
 
   .rank-list{
     grid-template-columns:1fr;
+  }
+}
+  /* ==================================================
+   REVISI FINAL:
+   1. Battle card kiri & kanan = mengkilap / shine
+   2. VS = efek slice
+   3. Podium Top 3 = border efek khusus hasil akhir
+   ================================================== */
+
+
+/* BATTLE CARD ATAS — KARTU KIRI & KANAN SAJA */
+.member-card{
+  position:relative;
+  overflow:hidden;
+  border-radius:26px;
+  border:2px solid rgba(255,255,255,.25);
+  background:
+    radial-gradient(circle at 20% 10%,rgba(255,255,255,.16),transparent 24%),
+    linear-gradient(180deg,#151515,#070707);
+}
+
+/* efek kilap lewat khusus battle card */
+.member-card::before{
+  content:"";
+  position:absolute;
+  top:-60%;
+  left:-140%;
+  width:65%;
+  height:240%;
+  background:linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,.48),
+    transparent
+  );
+  transform:rotate(22deg);
+  animation:battleCardShine 3.2s infinite;
+  pointer-events:none;
+  z-index:3;
+}
+
+@keyframes battleCardShine{
+  0%{left:-140%}
+  55%{left:150%}
+  100%{left:150%}
+}
+
+.member-card img,
+.member-name,
+.member-tag{
+  position:relative;
+  z-index:2;
+}
+
+
+/* TEKS VS EFEK SLICE */
+.vs{
+  position:relative;
+  font-size:58px;
+  font-weight:900;
+  color:#ffd77a;
+  background:linear-gradient(135deg,#fff2b0,#ff4b2b,#ffd77a);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:
+    0 0 18px rgba(255,77,77,.8),
+    0 0 34px rgba(255,215,122,.55);
+}
+
+.vs::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:120px;
+  height:5px;
+  background:linear-gradient(90deg,transparent,#ff2b2b,#ffd77a,transparent);
+  transform:translate(-50%,-50%) rotate(-28deg);
+  filter:blur(.2px);
+  box-shadow:0 0 18px rgba(255,43,43,.9);
+}
+
+
+/* PODIUM TOP 3 — INI KHUSUS HASIL AKHIR */
+.podium-card{
+  position:relative;
+  overflow:hidden;
+  border-radius:24px;
+  background:
+    radial-gradient(circle at 20% 10%,rgba(255,255,255,.14),transparent 25%),
+    linear-gradient(180deg,#171717,#060606);
+  color:white;
+}
+
+/* bintang kecil di dalam podium */
+.podium-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 20% 25%,#fff 0 1px,transparent 2px),
+    radial-gradient(circle at 80% 18%,#fff 0 1px,transparent 2px),
+    radial-gradient(circle at 65% 78%,#fff 0 1px,transparent 2px),
+    radial-gradient(circle at 12% 70%,#fff 0 1px,transparent 2px);
+  opacity:.55;
+  pointer-events:none;
+  z-index:1;
+}
+
+/* border fancy luar */
+.podium-card::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:26px;
+  pointer-events:none;
+  z-index:3;
+}
+
+.podium-card img,
+.podium-card h3{
+  position:relative;
+  z-index:2;
+}
+
+/* JUARA 1 - GOLD */
+.podium-card.first{
+  border:2px solid #ffd54f;
+  box-shadow:
+    0 0 12px #ffd54f,
+    0 0 28px rgba(255,213,79,.9),
+    0 0 52px rgba(255,213,79,.45);
+}
+
+.podium-card.first::after{
+  border:2px solid #fff0a8;
+  box-shadow:
+    inset 0 0 18px rgba(255,213,79,.75),
+    0 0 20px rgba(255,213,79,.8);
+}
+
+/* JUARA 2 - SILVER */
+.podium-card.second{
+  border:2px solid #dfe8ff;
+  box-shadow:
+    0 0 12px #dfe8ff,
+    0 0 28px rgba(223,232,255,.8),
+    0 0 52px rgba(223,232,255,.4);
+}
+
+.podium-card.second::after{
+  border:2px solid #ffffff;
+  box-shadow:
+    inset 0 0 18px rgba(223,232,255,.75),
+    0 0 20px rgba(223,232,255,.8);
+}
+
+/* JUARA 3 - BRONZE */
+.podium-card.third{
+  border:2px solid #ff9b4a;
+  box-shadow:
+    0 0 12px #ff9b4a,
+    0 0 28px rgba(255,155,74,.85),
+    0 0 52px rgba(255,155,74,.4);
+}
+
+.podium-card.third::after{
+  border:2px solid #ffc08a;
+  box-shadow:
+    inset 0 0 18px rgba(255,155,74,.75),
+    0 0 20px rgba(255,155,74,.8);
+}
+
+
+/* MOBILE BIAR TETAP RAPI */
+@media(max-width:700px){
+  .vs{
+    font-size:24px;
+  }
+
+  .vs::before{
+    width:48px;
+    height:3px;
+  }
+
+  .member-card::before{
+    animation:battleCardShine 4s infinite;
+  }
+
+  .podium-card{
+    border-radius:18px;
+  }
+
+  .podium-card::after{
+    border-radius:20px;
   }
 }
 </style>
