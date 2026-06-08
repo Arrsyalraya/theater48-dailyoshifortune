@@ -52,6 +52,23 @@ h1{
   font-weight:bold;
 }
 
+.progress-wrap{
+  width:100%;
+  max-width:600px;
+  height:14px;
+  margin:15px auto;
+  background:#222;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.progress-bar{
+  width:0%;
+  height:100%;
+  background:linear-gradient(90deg,#ff2b2b,#ffd77a);
+  transition:.3s;
+}
+
 .battle{
   display:flex;
   gap:26px;
@@ -72,6 +89,9 @@ h1{
   box-shadow:0 0 22px rgba(255,43,43,.18);
   position:relative;
   overflow:hidden;
+  background:
+radial-gradient(circle at top,rgba(255,255,255,.12),transparent 30%),
+linear-gradient(180deg,#201010,#090909);
 }
 
 .member-card::before{
@@ -182,6 +202,34 @@ button:hover{
   color:#8b1d2c;
 }
 
+.podium{
+  display:flex;
+  justify-content:center;
+  align-items:flex-end;
+  gap:15px;
+  margin-bottom:30px;
+  flex-wrap:wrap;
+}
+
+.podium-card{
+  background:#111;
+  border:1px solid #ff2b2b;
+  border-radius:18px;
+  padding:12px;
+  width:160px;
+}
+
+.podium-card img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  border-radius:12px;
+}
+
+.first{
+  transform:scale(1.08);
+}
+
 @media(max-width:700px){
   body{
     padding:10px;
@@ -200,13 +248,13 @@ button:hover{
   }
 
   .member-card{
-    width:46%;
+    width:48%;
     padding:8px;
     border-radius:18px;
   }
 
   .member-card img{
-    height:210px;
+    height:230px;
     border-radius:13px;
   }
 
@@ -248,6 +296,12 @@ button:hover{
 
     <div id="game">
       <p class="progress" id="progress"></p>
+      
+      <div class="progress-wrap">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
+
+<p class="progress" id="progress"></p>
 
       <div class="battle">
         <div class="member-card" id="leftCard" onclick="choose('left')">
@@ -355,7 +409,8 @@ for(let i=0;i<members.length;i++){
     }
 }
 
-pairs = pairs.sort(() => Math.random() - 0.5).slice(0,180)
+pairs = pairs.sort(() => Math.random() - 0.5)const sorted = [...members]
+.sort((a,b)=>scores[b.name]-scores[a.name]);
 
 function fallback(img,name){
     img.onerror=null;
@@ -368,6 +423,11 @@ function showPair(){
         showResult();
         return;
     }
+
+  const percent = ((current+1)/pairs.length)*100;
+
+document.getElementById("progressBar").style.width =
+percent + "%";
 
     const left = pairs[current][0];
     const right = pairs[current][1];
@@ -400,6 +460,10 @@ function choose(side){
 
     current++;
     showPair();
+  window.scrollTo({
+  top:0,
+  behavior:"smooth"
+});
 }
 
 function skip(){
@@ -420,10 +484,31 @@ function showResult(){
     `;
 
     sorted.forEach((item,index)=>{
+      
+html += `
+<div class="podium">
 
-        const member = members.find(
-            m => m.name === item[0]
-        );
+  <div class="podium-card second">
+    <img src="${top2.img}">
+    <h3>🥈 ${top2.name}</h3>
+  </div>
+
+  <div class="podium-card first">
+    <img src="${top1.img}">
+    <h3>🥇 ${top1.name}</h3>
+  </div>
+
+  <div class="podium-card third">
+    <img src="${top3.img}">
+    <h3>🥉 ${top3.name}</h3>
+  </div>
+
+</div>
+`;
+      
+        const top1 = sorted[0];
+const top2 = sorted[1];
+const top3 = sorted[2];
 
         html += `
         <div class="rank">
