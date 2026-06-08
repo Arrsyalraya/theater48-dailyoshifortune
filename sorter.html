@@ -295,7 +295,6 @@ button:hover{
     <p class="sub">Pilih member yang lebih kamu suka sampai ranking oshimu terbentuk.</p>
 
     <div id="game">
-      <p class="progress" id="progress"></p>
       
       <div class="progress-wrap">
   <div class="progress-bar" id="progressBar"></div>
@@ -409,8 +408,7 @@ for(let i=0;i<members.length;i++){
     }
 }
 
-pairs = pairs.sort(() => Math.random() - 0.5)const sorted = [...members]
-.sort((a,b)=>scores[b.name]-scores[a.name]);
+pairs = pairs.sort(() => Math.random() - 0.5).slice(0,180);
 
 function fallback(img,name){
     img.onerror=null;
@@ -475,46 +473,38 @@ function showResult(){
 
     document.getElementById("game").style.display = "none";
 
-    const sorted = Object.entries(scores)
-    .sort((a,b)=>b[1]-a[1]);
+    const sorted = [...members].sort((a,b)=>scores[b.name]-scores[a.name]);
+
+    const top1 = sorted[0];
+    const top2 = sorted[1];
+    const top3 = sorted[2];
 
     let html = `
     <div class="result">
         <h2>🏆 Ranking Oshi Kamu</h2>
+
+        <div class="podium">
+            <div class="podium-card second">
+                <img src="${top2.img}">
+                <h3>🥈 ${top2.name}</h3>
+            </div>
+
+            <div class="podium-card first">
+                <img src="${top1.img}">
+                <h3>🥇 ${top1.name}</h3>
+            </div>
+
+            <div class="podium-card third">
+                <img src="${top3.img}">
+                <h3>🥉 ${top3.name}</h3>
+            </div>
+        </div>
     `;
 
-    sorted.forEach((item,index)=>{
-      
-html += `
-<div class="podium">
-
-  <div class="podium-card second">
-    <img src="${top2.img}">
-    <h3>🥈 ${top2.name}</h3>
-  </div>
-
-  <div class="podium-card first">
-    <img src="${top1.img}">
-    <h3>🥇 ${top1.name}</h3>
-  </div>
-
-  <div class="podium-card third">
-    <img src="${top3.img}">
-    <h3>🥉 ${top3.name}</h3>
-  </div>
-
-</div>
-`;
-      
-        const top1 = sorted[0];
-const top2 = sorted[1];
-const top3 = sorted[2];
-
+    sorted.forEach((member,index)=>{
         html += `
         <div class="rank">
-            <img src="${member.img}"
-                 onerror="this.src='https://via.placeholder.com/80'">
-
+            <img src="${member.img}" onerror="this.src='https://via.placeholder.com/80'">
             <div>
                 <b>#${index+1}</b><br>
                 ${member.name}
@@ -525,9 +515,7 @@ const top3 = sorted[2];
 
     html += `
         <div style="text-align:center;margin-top:20px;">
-            <button onclick="location.reload()">
-                🔄 Ulangi Sorter
-            </button>
+            <button onclick="location.reload()">🔄 Ulangi Sorter</button>
         </div>
     </div>
     `;
