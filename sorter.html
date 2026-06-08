@@ -3,165 +3,243 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Theater48Fight Oshi Sorter Premium</title>
+<title>Theater48Fight Oshi Sorter</title>
 
 <style>
 *{box-sizing:border-box}
 :root{--red:#ff2b2b;--deep:#8b1d2c;--gold:#ffd77a}
 
 body{
-  margin:0;min-height:100vh;padding:18px;color:white;font-family:Arial,sans-serif;text-align:center;
+  margin:0;
+  min-height:100vh;
+  padding:16px;
+  color:white;
+  font-family:Arial,sans-serif;
+  text-align:center;
   background:
-    radial-gradient(circle at 12% 10%,rgba(255,43,43,.35),transparent 25%),
-    radial-gradient(circle at 88% 18%,rgba(255,215,122,.22),transparent 22%),
-    radial-gradient(circle at 50% 100%,rgba(255,43,43,.18),transparent 28%),
+    radial-gradient(circle at 15% 10%,rgba(255,43,43,.25),transparent 25%),
+    radial-gradient(circle at 85% 15%,rgba(255,215,122,.16),transparent 22%),
     linear-gradient(135deg,#050505,#17070a 48%,#050505);
-  overflow-x:hidden;position:relative;
+  overflow-x:hidden;
 }
 
-@keyframes bgFloat{from{transform:translateY(0)}to{transform:translateY(-30px)}}
-@keyframes spinBg{to{transform:rotate(360deg)}}
-
-.wrap{width:100%;max-width:1000px;margin:auto;position:relative;z-index:1}
+.wrap{width:100%;max-width:980px;margin:auto}
 
 .box{
-  background:rgba(10,10,10,.9);
+  background:rgba(10,10,10,.92);
   border:1px solid rgba(255,43,43,.45);
-  border-radius:26px;
+  border-radius:24px;
   padding:22px;
-  box-shadow:0 0 42px rgba(255,43,43,.22), inset 0 0 30px rgba(255,215,122,.05);
-  overflow:hidden;position:relative;
+  box-shadow:0 0 35px rgba(255,43,43,.18);
 }
-.box::before{
-  content:"";position:absolute;inset:-2px;
-  background:linear-gradient(120deg,transparent,rgba(255,215,122,.18),transparent);
-  animation:boxShine 5s infinite;pointer-events:none;
-}
-@keyframes boxShine{0%{transform:translateX(-100%)}55%,100%{transform:translateX(100%)}}
 
-h1{margin:0;font-size:38px;color:var(--gold);text-shadow:0 0 20px rgba(255,215,122,.45)}
-.sub{color:#ccc;margin:10px auto 16px;max-width:680px;line-height:1.5;font-size:14px}
+h1{margin:0;font-size:38px;color:var(--gold);text-shadow:0 0 18px rgba(255,215,122,.45)}
+.sub{color:#ccc;margin:10px auto 16px;max-width:680px;font-size:14px;line-height:1.5}
 
 .progress-area{max-width:620px;margin:16px auto 0}
-.progress-text{display:flex;justify-content:space-between;gap:10px;color:var(--gold);font-weight:bold;font-size:13px;margin-bottom:8px}
-.progress-wrap{height:16px;background:#111;border:1px solid #333;border-radius:20px;overflow:hidden;box-shadow:0 0 20px rgba(255,43,43,.25)}
-.progress-bar{width:0%;height:100%;background:linear-gradient(90deg,#ff2b2b,#ff6b6b,#ffd77a,#ff2b2b);background-size:300% 100%;animation:flow 3s linear infinite;transition:.25s}
-@keyframes flow{0%{background-position:0%}100%{background-position:300%}}
+.progress-text{display:flex;justify-content:space-between;color:var(--gold);font-weight:bold;font-size:13px;margin-bottom:8px}
+.progress-wrap{height:16px;background:#111;border:1px solid #333;border-radius:20px;overflow:hidden}
+.progress-bar{width:0%;height:100%;background:linear-gradient(90deg,#ff2b2b,#ffd77a);transition:.25s}
 
-.battle{display:flex;gap:24px;justify-content:center;align-items:center;margin-top:24px;flex-wrap:wrap}
+.battle{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:22px;
+  margin-top:24px;
+}
+
 .member-card{
   width:275px;
-  background:radial-gradient(circle at top,rgba(255,255,255,.12),transparent 32%),linear-gradient(180deg,#251015,#090909);
+  background:linear-gradient(180deg,#211014,#080808);
   border:1px solid rgba(255,43,43,.8);
-  border-radius:24px;
+  border-radius:22px;
   padding:12px;
   cursor:pointer;
-  transition:.22s;
-  box-shadow:0 0 24px rgba(255,43,43,.22);
-  position:relative;overflow:hidden;user-select:none;
+  transition:.2s;
+  box-shadow:0 0 18px rgba(255,43,43,.22);
 }
-.member-card::before{
-  content:"";position:absolute;inset:0;
-  background:radial-gradient(circle at 30% 15%,rgba(255,255,255,.16),transparent 20%),linear-gradient(120deg,transparent 20%,rgba(255,255,255,.10),transparent 62%);
-  opacity:.8;pointer-events:none;
-}
-.member-card::after{
-  content:"";position:absolute;top:-80%;left:-120%;width:70%;height:260%;
-  background:linear-gradient(120deg,transparent,rgba(255,255,255,.22),transparent);
-  transform:rotate(24deg);animation:shine 4.5s infinite;pointer-events:none;
-}
-@keyframes shine{0%{left:-130%}55%,100%{left:140%}}
-.member-card:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 0 32px rgba(255,43,43,.48)}
-.member-card img{width:100%;height:310px;object-fit:cover;border-radius:17px;background:#222;border:2px solid var(--red);position:relative;z-index:1}
-.member-name{position:relative;z-index:1;margin-top:11px;font-size:28px;font-weight:bold;color:#fff}
-.member-tag{position:relative;z-index:1;margin-top:5px;font-size:11px;color:var(--gold);letter-spacing:1px}
-.vs{font-size:34px;color:var(--gold);font-weight:bold;text-shadow:0 0 14px rgba(255,215,122,.65)}
 
-.action-row{margin-top:22px;display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
+.member-card:hover{
+  transform:translateY(-4px) scale(1.02);
+  box-shadow:0 0 26px rgba(255,43,43,.45);
+}
+
+.member-card img{
+  width:100%;
+  height:310px;
+  object-fit:cover;
+  border-radius:16px;
+  background:#222;
+  border:2px solid var(--red);
+}
+
+.member-name{
+  margin-top:11px;
+  font-size:28px;
+  font-weight:bold;
+}
+
+.member-tag{
+  margin-top:5px;
+  font-size:11px;
+  color:var(--gold);
+  letter-spacing:1px;
+}
+
+.vs{
+  font-size:32px;
+  color:var(--gold);
+  font-weight:bold;
+  text-shadow:0 0 14px rgba(255,215,122,.55);
+  background:none;
+  box-shadow:none;
+}
+
+.action-row{
+  margin-top:22px;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
 button{
-  padding:13px 20px;border:none;border-radius:14px;font-weight:bold;cursor:pointer;color:white;
+  padding:13px 22px;
+  border:none;
+  border-radius:14px;
+  font-weight:bold;
+  cursor:pointer;
+  color:white;
   background:linear-gradient(135deg,var(--red),var(--deep));
-  box-shadow:0 0 14px rgba(255,43,43,.28);transition:.15s
+  box-shadow:0 0 14px rgba(255,43,43,.28);
 }
-button:hover{transform:scale(1.04)}
 
-.result{display:none;max-width:850px;margin:24px auto 0;background:#f7f7f7;color:#111;padding:22px;border-radius:24px;text-align:left}
-.result h2{text-align:center;margin-top:0}
+.result{
+  display:none;
+  max-width:850px;
+  margin:24px auto 0;
+  background:#f7f7f7;
+  color:#111;
+  padding:22px;
+  border-radius:24px;
+  text-align:left;
+}
+
+.result h2{text-align:center}
 
 .main-oshi{
   text-align:center;
   background:linear-gradient(135deg,#12070a,#2b0c10);
-  color:white;border:1px solid var(--red);
-  border-radius:22px;padding:18px;margin-bottom:24px;
-  box-shadow:0 0 26px rgba(255,43,43,.38), inset 0 0 20px rgba(255,215,122,.08);
-  position:relative;overflow:hidden;
+  color:white;
+  border:1px solid var(--red);
+  border-radius:22px;
+  padding:18px;
+  margin-bottom:24px;
+  box-shadow:0 0 24px rgba(255,43,43,.35);
 }
-.main-oshi::after{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(120deg,transparent,rgba(255,255,255,.16),transparent);
-  animation:shineWinner 3.5s infinite;
-}
-@keyframes shineWinner{0%{transform:translateX(-100%)}60%,100%{transform:translateX(100%)}}
+
 .main-oshi h1{
-  font-size:42px;margin:4px 0;
+  font-size:42px;
+  margin:4px 0;
   color:var(--gold);
-  text-shadow:0 0 10px #ffd77a,0 0 25px #ff2b2b,0 0 40px #ff2b2b;
-  animation:winnerText 1.6s ease-in-out infinite alternate;
+  text-shadow:0 0 12px #ffd77a,0 0 24px #ff2b2b;
 }
-@keyframes winnerText{from{letter-spacing:0}to{letter-spacing:2px}}
+
 .main-oshi p{color:var(--gold);font-weight:bold}
 
-.podium{display:flex;justify-content:center;align-items:flex-end;gap:16px;margin-bottom:28px;flex-wrap:wrap}
-.podium-card{
-  background:#111;color:white;border:1px solid var(--red);border-radius:18px;padding:12px;width:160px;text-align:center;
-  box-shadow:0 0 20px rgba(255,43,43,.35), inset 0 0 18px rgba(255,215,122,.06);
-  position:relative;overflow:hidden;
+.podium{
+  display:flex;
+  justify-content:center;
+  align-items:flex-end;
+  gap:14px;
+  margin-bottom:28px;
 }
-.podium-card::before{
-  content:"";position:absolute;inset:-2px;border-radius:20px;padding:2px;
-  background:linear-gradient(135deg,#ff2b2b,#ffd77a,#ff2b2b);
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;mask-composite:exclude;
-  animation:borderGlow 2.5s linear infinite;
-}
-@keyframes borderGlow{to{filter:hue-rotate(360deg)}}
-.podium-card img{width:100%;height:170px;object-fit:cover;border-radius:12px;background:#222}
-.first{transform:scale(1.12);order:2}.second{order:1;margin-bottom:34px}.third{order:3;margin-bottom:18px}
 
-.rank-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.rank{display:flex;align-items:center;gap:12px;padding:10px;border:1px solid #e4e4e4;border-radius:14px;background:white}
-.rank img{width:58px;height:58px;border-radius:12px;object-fit:cover;background:#222}
+.podium-card{
+  background:#111;
+  color:white;
+  border:2px solid var(--gold);
+  border-radius:18px;
+  padding:10px;
+  width:160px;
+  text-align:center;
+  box-shadow:0 0 20px rgba(255,215,122,.35);
+}
+
+.podium-card img{
+  width:100%;
+  height:170px;
+  object-fit:cover;
+  border-radius:12px;
+  background:#222;
+}
+
+.first{transform:scale(1.1);order:2}
+.second{order:1;margin-bottom:28px}
+.third{order:3;margin-bottom:15px}
+
+.rank-list{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+}
+
+.rank{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px;
+  border:1px solid #e4e4e4;
+  border-radius:14px;
+  background:white;
+}
+
+.rank img{
+  width:58px;
+  height:58px;
+  border-radius:12px;
+  object-fit:cover;
+  background:#222;
+}
+
 .rank b{color:var(--deep)}
 
-.share-box{text-align:center;margin-top:20px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.share-box{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+
 .tip{color:#aaa;font-size:13px;margin-top:10px}
 
 @media(max-width:700px){
   body{padding:8px}
-  .box{padding:14px 9px;border-radius:20px}
+
+  .box{
+    padding:14px 8px;
+    border-radius:20px;
+  }
+
   h1{font-size:26px}
   .sub{font-size:12px}
-  .progress-area{margin-top:12px}
-  .progress-text{font-size:11px}
 
   .battle{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:7px;
+    gap:6px;
     flex-wrap:nowrap;
     margin-top:15px;
   }
 
   .member-card{
-    width:41%;
-    max-width:155px;
+    width:42%;
     padding:7px;
     border-radius:15px;
   }
 
   .member-card img{
-    height:175px;
+    height:170px;
     border-radius:11px;
   }
 
@@ -172,21 +250,13 @@ button:hover{transform:scale(1.04)}
 
   .member-tag{
     font-size:8px;
-    letter-spacing:.4px;
+    letter-spacing:.3px;
   }
 
   .vs{
-    width:34px;
-    min-width:34px;
+    width:32px;
+    min-width:32px;
     font-size:18px;
-    padding:0;
-    background:none;
-    box-shadow:none;
-  }
-
-  .action-row{
-    margin-top:16px;
-    gap:8px;
   }
 
   .action-row button{
@@ -194,25 +264,46 @@ button:hover{transform:scale(1.04)}
     font-size:12px;
   }
 
-  .result{padding:13px;border-radius:18px}
+  .result{
+    padding:13px;
+    border-radius:18px;
+  }
+
   .main-oshi h1{font-size:30px}
-  .podium{gap:7px}
-  .podium-card{width:31%;padding:6px}
-  .podium-card img{height:105px}
-  .podium-card h3{font-size:11px}
+
+  .podium{
+    gap:6px;
+  }
+
+  .podium-card{
+    width:31%;
+    padding:6px;
+  }
+
+  .podium-card img{
+    height:105px;
+  }
+
+  .podium-card h3{
+    font-size:11px;
+  }
+
   .first{transform:scale(1.03)}
-  .second,.third{margin-bottom:10px}
-  .rank-list{grid-template-columns:1fr}
+  .second,.third{margin-bottom:9px}
+
+  .rank-list{
+    grid-template-columns:1fr;
+  }
 }
-  
 </style>
 </head>
 
 <body>
+
 <div class="wrap">
   <div class="box">
     <h1>🎭 Oshi Sorter</h1>
-    <p class="sub">Pilih member yang lebih kamu suka. Klik untuk memilih. Bisa skip atau ulangi sorter dari awal. Hasil akhir menampilkan rangking lengkap 1–62.</p>
+    <p class="sub">Pilih member yang lebih kamu suka. Klik kartu untuk memilih. Bisa skip atau ulangi dari awal.</p>
 
     <div id="game">
       <div class="progress-area">
@@ -226,16 +317,16 @@ button:hover{transform:scale(1.04)}
       </div>
 
       <div class="battle">
-        <div class="member-card" id="leftCard" onclick="choose('left')">
-          <img id="leftImg" src="" alt="">
+        <div class="member-card" onclick="choose('left')">
+          <img id="leftImg" src="">
           <div class="member-name" id="leftName"></div>
           <div class="member-tag">PILIH OSHI INI</div>
         </div>
 
         <div class="vs">VS</div>
 
-        <div class="member-card" id="rightCard" onclick="choose('right')">
-          <img id="rightImg" src="" alt="">
+        <div class="member-card" onclick="choose('right')">
+          <img id="rightImg" src="">
           <div class="member-name" id="rightName"></div>
           <div class="member-tag">PILIH OSHI INI</div>
         </div>
@@ -245,6 +336,9 @@ button:hover{transform:scale(1.04)}
         <button onclick="skip()">⏭️ Skip</button>
         <button onclick="location.reload()">🔄 Ulangi</button>
       </div>
+
+      <p class="tip">Keyboard desktop: ← pilih kiri, → pilih kanan, S skip.</p>
+    </div>
 
     <div id="result" class="result"></div>
   </div>
@@ -319,183 +413,173 @@ const members = [
 let scores = {};
 let pairs = [];
 let current = 0;
-let totalBattle = 180;
+let totalBattle = 30;
 
 members.forEach(m => scores[m.name] = 0);
 
-for(let i=0; i<members.length; i++){
-  for(let j=i+1; j<members.length; j++){
-    pairs.push([members[i], members[j]]);
+for(let i=0;i<members.length;i++){
+  for(let j=i+1;j<members.length;j++){
+    pairs.push([members[i],members[j]]);
   }
 }
 
 pairs = pairs.sort(() => Math.random() - 0.5).slice(0,totalBattle);
 
-function fallback(img, name){
-  img.onerror=null;
-  img.src="https://via.placeholder.com/400x500/111111/ffffff?text="+encodeURIComponent(name);
+function fallback(img,name){
+  img.onerror = null;
+  img.src = "https://via.placeholder.com/400x500/111111/ffffff?text=" + encodeURIComponent(name);
 }
 
 function updateProgress(){
-  const percent=Math.round((current/pairs.length)*100);
-  document.getElementById("progressBar").style.width=percent+"%";
-  document.getElementById("progress").innerText="Battle "+Math.min(current+1,pairs.length)+" / "+pairs.length;
-  document.getElementById("percent").innerText=percent+"%";
+  let percent = Math.round((current / pairs.length) * 100);
+  document.getElementById("progressBar").style.width = percent + "%";
+  document.getElementById("progress").innerText = "Battle " + Math.min(current + 1,pairs.length) + " / " + pairs.length;
+  document.getElementById("percent").innerText = percent + "%";
 }
 
 function showPair(){
-  if(current>=pairs.length){
+  if(current >= pairs.length){
     showResult();
     return;
   }
 
-  const left=pairs[current][0];
-  const right=pairs[current][1];
+  let left = pairs[current][0];
+  let right = pairs[current][1];
 
-  document.getElementById("leftName").innerText=left.name;
-  document.getElementById("leftImg").src=left.img;
-  document.getElementById("leftImg").onerror=function(){fallback(this,left.name);};
+  document.getElementById("leftName").innerText = left.name;
+  document.getElementById("leftImg").src = left.img;
+  document.getElementById("leftImg").onerror = function(){fallback(this,left.name)};
 
-  document.getElementById("rightName").innerText=right.name;
-  document.getElementById("rightImg").src=right.img;
-  document.getElementById("rightImg").onerror=function(){fallback(this,right.name);};
+  document.getElementById("rightName").innerText = right.name;
+  document.getElementById("rightImg").src = right.img;
+  document.getElementById("rightImg").onerror = function(){fallback(this,right.name)};
 
   updateProgress();
 }
 
-function nextBattle(){
-  current++;
-  showPair();
-  if(window.innerWidth<=700){
-    window.scrollTo({top:0,behavior:"smooth"});
-  }
-}
-
 function choose(side){
-  if(current>=pairs.length)return;
-  const pair=pairs[current];
-
-  if(side==="left"){
-    scores[pair[0].name]+=1;
-  }else{
-    scores[pair[1].name]+=1;
+  if(current >= pairs.length){
+    showResult();
+    return;
   }
 
-  nextBattle();
+  let pair = pairs[current];
+
+  if(side === "left"){
+    scores[pair[0].name]++;
+  }else{
+    scores[pair[1].name]++;
+  }
+
+  current++;
+
+  if(current >= pairs.length){
+    showResult();
+  }else{
+    showPair();
+  }
 }
 
 function skip(){
-  if(current>=pairs.length)return;
-  nextBattle();
+  current++;
+
+  if(current >= pairs.length){
+    showResult();
+  }else{
+    showPair();
+  }
 }
 
 function getTier(score){
-  if(score>=20)return"OSHI KANDUNG 😈";
-  if(score>=15)return"OSHI KESAYANGAN 🥶";
-  if(score>=10)return"INFINITY OSHI 👑";
-  if(score>=5)return"ULTRA OSHI 🔥";
-  return"LUCKY MEMBER 🍀";
+  if(score>=20)return "INFINITY RARE ✨";
+  if(score>=15)return "ULTRA RARE 🔥";
+  if(score>=10)return "SSR MEMBER 👑";
+  if(score>=5)return "RARE MEMBER 🌟";
+  return "LUCKY MEMBER 🍀";
 }
 
 function showResult(){
-  const game = document.getElementById("game");
-  const result = document.getElementById("result");
+  document.getElementById("game").style.display = "none";
 
-  if(!game || !result) return;
-
-  game.style.display = "none";
-
-  const sorted = [...members].sort((a,b)=>{
-    return (scores[b.name] || 0) - (scores[a.name] || 0);
+  let sorted = [...members].sort((a,b)=>{
+    return scores[b.name] - scores[a.name];
   });
 
-  const top1 = sorted[0];
-  const top2 = sorted[1];
-  const top3 = sorted[2];
-
-  const tier = getTier(scores[top1.name] || 0);
+  let top1 = sorted[0];
+  let top2 = sorted[1];
+  let top3 = sorted[2];
 
   let shareText = "🏆 Hasil Oshi Sorter Theater48Fight\n\n";
-  shareText += "Oshi Utama: " + top1.name + "\n";
-  shareText += "Tier: " + tier + "\n\n";
+  shareText += "Oshi Utama: " + top1.name + "\n\n";
   shareText += "Top 10:\n";
 
   sorted.slice(0,10).forEach((m,i)=>{
-    shareText += (i+1) + ". " + m.name + " - " + (scores[m.name] || 0) + " poin\n";
+    shareText += (i+1) + ". " + m.name + "\n";
   });
 
   window.__shareText = shareText;
 
-  let html = `
-    <div class="main-oshi">
-      <h2>🏆 Oshi Utama Kamu</h2>
-      <h1>${top1.name}</h1>
-      <p>${tier}</p>
-      <small>Total Battle: ${pairs.length} • Member: ${members.length}</small>
-    </div>
+  let html = "";
 
-    <h2>🥇 Podium Top 3</h2>
+  html += '<div class="main-oshi">';
+  html += '<h2>🏆 Oshi Utama Kamu</h2>';
+  html += '<h1>' + top1.name + '</h1>';
+  html += '<p>' + getTier(scores[top1.name]) + '</p>';
+  html += '<small>Total Battle: ' + pairs.length + ' • Member: ' + members.length + '</small>';
+  html += '</div>';
 
-    <div class="podium">
-      <div class="podium-card second">
-        <img src="${top2.img}" onerror="fallback(this,'${top2.name}')">
-        <h3>🥈 ${top2.name}</h3>
-      </div>
+  html += '<h2>🥇 Podium Top 3</h2>';
+  html += '<div class="podium">';
 
-      <div class="podium-card first">
-        <img src="${top1.img}" onerror="fallback(this,'${top1.name}')">
-        <h3>🥇 ${top1.name}</h3>
-      </div>
+  html += '<div class="podium-card second">';
+  html += '<img src="' + top2.img + '" onerror="fallback(this,\'' + top2.name + '\')">';
+  html += '<h3>🥈 ' + top2.name + '</h3>';
+  html += '</div>';
 
-      <div class="podium-card third">
-        <img src="${top3.img}" onerror="fallback(this,'${top3.name}')">
-        <h3>🥉 ${top3.name}</h3>
-      </div>
-    </div>
+  html += '<div class="podium-card first">';
+  html += '<img src="' + top1.img + '" onerror="fallback(this,\'' + top1.name + '\')">';
+  html += '<h3>🥇 ' + top1.name + '</h3>';
+  html += '</div>';
 
-    <h2>📋 Ranking Lengkap</h2>
-    <div class="rank-list">
-  `;
+  html += '<div class="podium-card third">';
+  html += '<img src="' + top3.img + '" onerror="fallback(this,\'' + top3.name + '\')">';
+  html += '<h3>🥉 ' + top3.name + '</h3>';
+  html += '</div>';
+
+  html += '</div>';
+
+  html += '<h2>📋 Rangking Lengkap</h2>';
+  html += '<div class="rank-list">';
 
   sorted.forEach((member,index)=>{
-    html += `
-      <div class="rank">
-        <img src="${member.img}" onerror="fallback(this,'${member.name}')">
-        <div>
-          <b>#${index+1}</b> ${member.name}<br>
-          <small>${scores[member.name] || 0} poin</small>
-        </div>
-      </div>
-    `;
+    html += '<div class="rank">';
+    html += '<img src="' + member.img + '" onerror="fallback(this,\'' + member.name + '\')">';
+    html += '<div><b>#' + (index+1) + '</b> ' + member.name + '<br><small>' + scores[member.name] + ' poin</small></div>';
+    html += '</div>';
   });
 
-  html += `
-    </div>
+  html += '</div>';
 
-    <div class="share-box">
-      <button onclick="shareNative()">📤 Share</button>
-      <button onclick="shareWhatsApp()">🟢 WhatsApp</button>
-      <button onclick="shareX()">⚫ X</button>
-      <button onclick="copyResult()">📋 Copy</button>
-      <button onclick="location.reload()">🔄 Ulangi</button>
-    </div>
-  `;
+  html += '<div class="share-box">';
+  html += '<button onclick="shareNative()">📤 Share</button>';
+  html += '<button onclick="shareWhatsApp()">🟢 WhatsApp</button>';
+  html += '<button onclick="shareX()">⚫ X</button>';
+  html += '<button onclick="copyResult()">📋 Copy</button>';
+  html += '<button onclick="location.reload()">🔄 Ulangi</button>';
+  html += '</div>';
 
+  let result = document.getElementById("result");
   result.innerHTML = html;
   result.style.display = "block";
 
-  window.scrollTo({
-    top: result.offsetTop - 15,
-    behavior: "smooth"
-  });
+  window.scrollTo({top:result.offsetTop - 10,behavior:"smooth"});
 }
-  
+
 function shareNative(){
-  const text=window.__shareText||"Hasil Oshi Sorter Theater48Fight";
   if(navigator.share){
     navigator.share({
       title:"Hasil Oshi Sorter Theater48Fight",
-      text:text,
+      text:window.__shareText,
       url:location.href
     });
   }else{
@@ -504,29 +588,29 @@ function shareNative(){
 }
 
 function shareWhatsApp(){
-  const text=encodeURIComponent((window.__shareText||"Hasil Oshi Sorter Theater48Fight")+"\\n"+location.href);
-  window.open("https://wa.me/?text="+text,"_blank");
+  window.open("https://wa.me/?text=" + encodeURIComponent(window.__shareText + "\n" + location.href),"_blank");
 }
 
 function shareX(){
-  const text=encodeURIComponent(window.__shareText||"Hasil Oshi Sorter Theater48Fight");
-  window.open("https://twitter.com/intent/tweet?text="+text+"&url="+encodeURIComponent(location.href),"_blank");
+  window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(window.__shareText) + "&url=" + encodeURIComponent(location.href),"_blank");
 }
 
 function copyResult(){
-  navigator.clipboard.writeText(window.__shareText||"Hasil Oshi Sorter Theater48Fight")
+  navigator.clipboard.writeText(window.__shareText || "Hasil Oshi Sorter Theater48Fight")
   .then(()=>alert("Hasil sudah dicopy!"))
-  .catch(()=>alert(window.__shareText||"Hasil Oshi Sorter Theater48Fight"));
+  .catch(()=>alert(window.__shareText));
 }
 
 document.addEventListener("keydown",function(e){
-  if(document.getElementById("game").style.display==="none")return;
-  if(e.key==="ArrowLeft")choose("left");
-  if(e.key==="ArrowRight")choose("right");
-  if(e.key.toLowerCase()==="s")skip();
+  if(document.getElementById("game").style.display === "none")return;
+
+  if(e.key === "ArrowLeft")choose("left");
+  if(e.key === "ArrowRight")choose("right");
+  if(e.key.toLowerCase() === "s")skip();
 });
 
 showPair();
 </script>
+
 </body>
 </html>
