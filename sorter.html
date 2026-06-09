@@ -405,7 +405,42 @@ button{
    2. VS = efek slice
    3. Podium Top 3 = border efek khusus hasil akhir
    ================================================== */
+/* posisi medali di atas kartu */
+.podium-card.first::before,
+.podium-card.second::before,
+.podium-card.third::before{
+  position:absolute;
+  top:-18px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:999;
+  font-size:34px;
+  line-height:1;
+}
 
+/* podium 1 */
+.podium-card.first::before{
+  content:"🏅";
+  filter:
+    drop-shadow(0 0 8px gold)
+    drop-shadow(0 0 18px gold);
+}
+
+/* podium 2 */
+.podium-card.second::before{
+  content:"🥈";
+  filter:
+    drop-shadow(0 0 8px #59d8ff)
+    drop-shadow(0 0 18px #59d8ff);
+}
+
+/* podium 3 */
+.podium-card.third::before{
+  content:"🥉";
+  filter:
+    drop-shadow(0 0 8px #ff9b4a)
+    drop-shadow(0 0 18px #ff9b4a);
+}
 
 /* BATTLE CARD ATAS — KARTU KIRI & KANAN SAJA */
 .member-card{
