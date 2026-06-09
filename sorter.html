@@ -926,6 +926,69 @@ button{
   content:none !important;
   display:none !important;
 }
+
+  /* FIX FINAL ORB DESKTOP + MOBILE */
+.podium-card .corner-orb{
+  position:absolute !important;
+  top:-20px !important;
+  left:-20px !important;
+  width:64px !important;
+  height:64px !important;
+  border-radius:50% !important;
+  z-index:99999 !important;
+  pointer-events:none !important;
+}
+
+@media(max-width:700px){
+  .podium-card .corner-orb{
+    top:-7px !important;
+    left:-7px !important;
+    width:26px !important;
+    height:26px !important;
+  }
+}
+
+  /* FIX PROGRESS BAR ANIME BATTLE */
+.progress-wrap{
+  position:relative;
+  overflow:hidden;
+  box-shadow:
+    0 0 14px rgba(255,43,43,.55),
+    0 0 28px rgba(255,215,0,.35);
+}
+
+.progress-bar{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(90deg,#ff2b2b,#ff8a00,#ffd700,#ff8a00,#ff2b2b) !important;
+  background-size:300% 100% !important;
+  animation:battleGradient 2s linear infinite;
+  box-shadow:
+    0 0 10px #ff2b2b,
+    0 0 20px #ff8a00,
+    0 0 35px #ffd700;
+}
+
+.progress-bar::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-50%;
+  width:40%;
+  height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.9),transparent);
+  animation:progressSlash 1.4s linear infinite;
+}
+
+@keyframes battleGradient{
+  0%{background-position:0% 50%}
+  100%{background-position:300% 50%}
+}
+
+@keyframes progressSlash{
+  from{left:-50%}
+  to{left:150%}
+}
   
 </style>
 </head>
