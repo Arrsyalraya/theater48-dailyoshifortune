@@ -210,6 +210,21 @@ button{
   overflow:visible;
 }
 
+  .corner-orb{
+  position:absolute;
+  top:-12px;
+  left:-12px;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  z-index:9999;
+  pointer-events:none;
+}
+
+.orb-1{background:linear-gradient(135deg,#ffe88c,#ffb700);box-shadow:0 0 12px #ffd700,0 0 24px rgba(255,215,0,.8)}
+.orb-2{background:linear-gradient(135deg,#f6ffff,#8ddfff);box-shadow:0 0 12px #59d8ff,0 0 24px rgba(89,216,255,.8)}
+.orb-3{background:linear-gradient(135deg,#ffc086,#ff8c2b);box-shadow:0 0 12px #ff9b4a,0 0 24px rgba(255,155,74,.8)}
+
 .podium-card::before{
   content:"";
   position:absolute;
@@ -829,6 +844,19 @@ button{
  ...
 }
 */
+
+  /* FIX: HAPUS SISA LAYER PUTIH DI POJOK PODIUM */
+.podium-card::before,
+.podium-card::after,
+.podium-card.first::before,
+.podium-card.first::after,
+.podium-card.second::before,
+.podium-card.second::after,
+.podium-card.third::before,
+.podium-card.third::after{
+  content:none !important;
+  display:none !important;
+}
   
 </style>
 </head>
