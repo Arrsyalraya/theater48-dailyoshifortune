@@ -41,6 +41,76 @@ h1{margin:0;font-size:38px;color:var(--gold);text-shadow:0 0 18px rgba(255,215,1
 .progress-wrap{height:16px;background:#111;border:1px solid #333;border-radius:20px;overflow:hidden}
 .progress-bar{width:0%;height:100%;background:linear-gradient(90deg,#ff2b2b,#ffd77a);transition:.25s}
 
+.progress-fill{
+  position:relative;
+  overflow:hidden;
+
+  background:
+    linear-gradient(
+      90deg,
+      #ff2b2b,
+      #ff8a00,
+      #ffd700,
+      #ff8a00,
+      #ff2b2b
+    );
+
+  background-size:300% 100%;
+
+  animation:
+    battleGradient 2s linear infinite;
+
+  box-shadow:
+    0 0 10px #ff2b2b,
+    0 0 20px #ff8a00,
+    0 0 35px #ffd700;
+}
+
+@keyframes battleGradient{
+  0%{
+    background-position:0% 50%;
+  }
+  100%{
+    background-position:300% 50%;
+  }
+}
+
+.progress-fill::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-50%;
+
+  width:40%;
+  height:100%;
+
+  background:
+    linear-gradient(
+      120deg,
+      transparent,
+      rgba(255,255,255,.9),
+      transparent
+    );
+
+  animation:
+    progressSlash 1.8s linear infinite;
+}
+
+@keyframes progressSlash{
+  from{
+    left:-50%;
+  }
+  to{
+    left:150%;
+  }
+}
+
+.progress-container{
+  box-shadow:
+    0 0 15px rgba(255,43,43,.5),
+    0 0 30px rgba(255,215,0,.3);
+}
+  
 .battle{
   display:flex;
   justify-content:center;
@@ -665,7 +735,7 @@ button{
 }
 
 /* kilau lewat podium 1 */
-.podium-card.first::before{
+.podium-card.first .gold-shine{
   content:"";
   position:absolute;
   top:-60%;
@@ -675,7 +745,7 @@ button{
   background:linear-gradient(
     120deg,
     transparent,
-    rgba(255,255,255,.65),
+    rgba(255,215,0,.75),
     transparent
   );
   transform:rotate(22deg);
@@ -732,8 +802,7 @@ button{
 }
 
 /* efek kristal biru podium 2 */
-.podium-card.second::before{
-  content:"";
+.podium-card.second .ice-effect{
   position:absolute;
   inset:0;
   background:
@@ -1097,13 +1166,14 @@ function showResult(){
   html += '<div class="podium-card second">';
   html += '<img src="' + top2.img + '" onerror="fallback(this,\'' + top2.name + '\')">';
   html += '<span class="corner-orb orb-2"></span>';
+  html += '<span class="ice-effect"></span>';
   html += '<h3>🥈 ' + top2.name + '</h3>';
   html += '</div>';
 
   html += '<div class="podium-card first">';
   html += '<img src="' + top1.img + '" onerror="fallback(this,\'' + top1.name + '\')">';
-  html += '<span class="gold-shine"></span>';
   html += '<span class="corner-orb orb-1"></span>';
+  html += '<span class="gold-shine"></span>';
   html += '<h3>🥇 ' + top1.name + '</h3>';
   html += '</div>';
 
