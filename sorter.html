@@ -405,56 +405,6 @@ button{
    2. VS = efek slice
    3. Podium Top 3 = border efek khusus hasil akhir
    ================================================== */
-/* BULATAN KIRI ATAS PODIUM */
-.podium-card.first::before,
-.podium-card.second::before,
-.podium-card.third::before{
-  position:absolute;
-  top:-12px;
-  left:-12px;
-  width:42px;
-  height:42px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  border-radius:50%;
-  font-size:18px;
-  font-weight:bold;
-
-  z-index:999;
-}
-
-/* PODIUM 1 */
-.podium-card.first::before{
-  content:"1";
-  background:linear-gradient(135deg,#ffe88c,#ffb700);
-  color:#6b4200;
-  box-shadow:
-    0 0 12px #ffd700,
-    0 0 24px rgba(255,215,0,.8);
-}
-
-/* PODIUM 2 */
-.podium-card.second::before{
-  content:"2";
-  background:linear-gradient(135deg,#f6ffff,#8ddfff);
-  color:#004e69;
-  box-shadow:
-    0 0 12px #59d8ff,
-    0 0 24px rgba(89,216,255,.8);
-}
-
-/* PODIUM 3 */
-.podium-card.third::before{
-  content:"3";
-  background:linear-gradient(135deg,#ffc086,#ff8c2b);
-  color:#6b3200;
-  box-shadow:
-    0 0 12px #ff9b4a,
-    0 0 24px rgba(255,155,74,.8);
-}
 
 /* BATTLE CARD ATAS — KARTU KIRI & KANAN SAJA */
 .member-card{
@@ -790,36 +740,30 @@ button{
     font-size:20px;
   }
 }
-  /* BULATAN POJOK KIRI ATAS PODIUM */
-.podium-card.first::before,
-.podium-card.second::before,
-.podium-card.third::before{
-  content:"";
+
+  .corner-orb{
   position:absolute;
-  top:-14px;
-  left:-14px;
-  width:38px;
-  height:38px;
+  top:-12px;
+  left:-12px;
+  width:42px;
+  height:42px;
   border-radius:50%;
   z-index:50;
   pointer-events:none;
 }
 
-/* bulatan podium 1 */
-.podium-card.first::before{
-  background:radial-gradient(circle at 30% 30%,#fff8c7,#ffd700 45%,#b88700 100%);
+.orb-1{
+  background:linear-gradient(135deg,#ffe88c,#ffb700);
   box-shadow:0 0 12px #ffd700,0 0 24px rgba(255,215,0,.8);
 }
 
-/* bulatan podium 2 */
-.podium-card.second::before{
-  background:radial-gradient(circle at 30% 30%,#ffffff,#59d8ff 45%,#0078a3 100%);
+.orb-2{
+  background:linear-gradient(135deg,#f6ffff,#8ddfff);
   box-shadow:0 0 12px #59d8ff,0 0 24px rgba(89,216,255,.8);
 }
 
-/* bulatan podium 3 */
-.podium-card.third::before{
-  background:radial-gradient(circle at 30% 30%,#ffd1a8,#ff9b4a 45%,#b55b12 100%);
+.orb-3{
+  background:linear-gradient(135deg,#ffc086,#ff8c2b);
   box-shadow:0 0 12px #ff9b4a,0 0 24px rgba(255,155,74,.8);
 }
   
@@ -1061,16 +1005,19 @@ function showResult(){
 
   html += '<div class="podium-card second">';
   html += '<img src="' + top2.img + '" onerror="fallback(this,\'' + top2.name + '\')">';
+  html += '<span class="corner-orb orb-2"></span>';
   html += '<h3>🥈 ' + top2.name + '</h3>';
   html += '</div>';
 
   html += '<div class="podium-card first">';
   html += '<img src="' + top1.img + '" onerror="fallback(this,\'' + top1.name + '\')">';
+  html += '<span class="corner-orb orb-1"></span>';
   html += '<h3>🥇 ' + top1.name + '</h3>';
   html += '</div>';
 
   html += '<div class="podium-card third">';
   html += '<img src="' + top3.img + '" onerror="fallback(this,\'' + top3.name + '\')">';
+  html += '<span class="corner-orb orb-3"></span>';
   html += '<h3>🥉 ' + top3.name + '</h3>';
   html += '</div>';
 
