@@ -766,6 +766,48 @@ button{
   background:linear-gradient(135deg,#ffc086,#ff8c2b);
   box-shadow:0 0 12px #ff9b4a,0 0 24px rgba(255,155,74,.8);
 }
+
+  /* FIX: sembunyikan sisa orb kiri atas lama */
+.podium-card.first::before,
+.podium-card.second::before,
+.podium-card.third::before{
+  background:none !important;
+  box-shadow:none !important;
+}
+
+/* ORB lama jangan kelihatan */
+.podium-card.first::before,
+.podium-card.second::before,
+.podium-card.third::before{
+  opacity:0 !important;
+}
+
+/* KILAU PODIUM 1 WARNA GOLD */
+.podium-card.first .gold-shine{
+  position:absolute;
+  top:-60%;
+  left:-130%;
+  width:65%;
+  height:240%;
+  background:linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,215,0,.75),
+    rgba(255,255,190,.9),
+    rgba(255,215,0,.75),
+    transparent
+  );
+  transform:rotate(22deg);
+  animation:goldPodiumShine 3.2s infinite;
+  pointer-events:none;
+  z-index:4;
+}
+
+@keyframes goldPodiumShine{
+  0%{left:-130%}
+  55%{left:150%}
+  100%{left:150%}
+}
   
 </style>
 </head>
@@ -1011,6 +1053,7 @@ function showResult(){
 
   html += '<div class="podium-card first">';
   html += '<img src="' + top1.img + '" onerror="fallback(this,\'' + top1.name + '\')">';
+  html += '<span class="gold-shine"></span>';
   html += '<span class="corner-orb orb-1"></span>';
   html += '<h3>🥇 ' + top1.name + '</h3>';
   html += '</div>';
