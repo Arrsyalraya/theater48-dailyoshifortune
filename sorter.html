@@ -405,41 +405,55 @@ button{
    2. VS = efek slice
    3. Podium Top 3 = border efek khusus hasil akhir
    ================================================== */
-/* posisi medali di atas kartu */
+/* BULATAN KIRI ATAS PODIUM */
 .podium-card.first::before,
 .podium-card.second::before,
 .podium-card.third::before{
   position:absolute;
-  top:-18px;
-  left:50%;
-  transform:translateX(-50%);
+  top:-12px;
+  left:-12px;
+  width:42px;
+  height:42px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:50%;
+  font-size:18px;
+  font-weight:bold;
+
   z-index:999;
-  font-size:34px;
-  line-height:1;
 }
 
-/* podium 1 */
+/* PODIUM 1 */
 .podium-card.first::before{
-  content:"🏅";
-  filter:
-    drop-shadow(0 0 8px gold)
-    drop-shadow(0 0 18px gold);
+  content:"1";
+  background:linear-gradient(135deg,#ffe88c,#ffb700);
+  color:#6b4200;
+  box-shadow:
+    0 0 12px #ffd700,
+    0 0 24px rgba(255,215,0,.8);
 }
 
-/* podium 2 */
+/* PODIUM 2 */
 .podium-card.second::before{
-  content:"🥈";
-  filter:
-    drop-shadow(0 0 8px #59d8ff)
-    drop-shadow(0 0 18px #59d8ff);
+  content:"2";
+  background:linear-gradient(135deg,#f6ffff,#8ddfff);
+  color:#004e69;
+  box-shadow:
+    0 0 12px #59d8ff,
+    0 0 24px rgba(89,216,255,.8);
 }
 
-/* podium 3 */
+/* PODIUM 3 */
 .podium-card.third::before{
-  content:"🥉";
-  filter:
-    drop-shadow(0 0 8px #ff9b4a)
-    drop-shadow(0 0 18px #ff9b4a);
+  content:"3";
+  background:linear-gradient(135deg,#ffc086,#ff8c2b);
+  color:#6b3200;
+  box-shadow:
+    0 0 12px #ff9b4a,
+    0 0 24px rgba(255,155,74,.8);
 }
 
 /* BATTLE CARD ATAS — KARTU KIRI & KANAN SAJA */
