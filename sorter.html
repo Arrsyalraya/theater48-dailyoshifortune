@@ -750,7 +750,7 @@ button{
 <div class="wrap">
   <div class="box">
     <h1>🎭 Oshi Sorter</h1>
-    <p class="sub">Pilih member yang lebih kamu suka. Klik kartu untuk memilih. Bisa skip atau ulangi dari awal.</p>
+    <p class="sub">Pilih member yang lebih kamu suka. Klik untuk memilih. Bisa skip atau ulangi dari awal.</p>
 
     <div id="game">
       <div class="progress-area">
@@ -784,7 +784,7 @@ button{
         <button onclick="location.reload()">🔄 Ulangi</button>
       </div>
 
-      <p class="tip">Keyboard desktop: ← pilih kiri, → pilih kanan, S skip.</p>
+      <p class="tip">Hasil menampilkan rangking 1-62.</p>
     </div>
 
     <div id="result" class="result"></div>
@@ -860,7 +860,7 @@ const members = [
 let scores = {};
 let pairs = [];
 let current = 0;
-let totalBattle = 30;
+let totalBattle = 180;
 
 members.forEach(m => scores[m.name] = 0);
 
@@ -938,11 +938,11 @@ function skip(){
 }
 
 function getTier(score){
-  if(score>=20)return "INFINITY RARE ✨";
-  if(score>=15)return "ULTRA RARE 🔥";
-  if(score>=10)return "SSR MEMBER 👑";
-  if(score>=5)return "RARE MEMBER 🌟";
-  return "LUCKY MEMBER 🍀";
+  if(score>=20)return "TITLE: OSHI KANDUNG 😈";
+  if(score>=15)return "TITLE: OSHI SATU SATUNYA 🥶";
+  if(score>=10)return "TITLE: OSHI KESAYANGAN 🥰";
+  if(score>=5)return "TITLE: OSHI BARU 🫣";
+  return "TITLE: OSHI SALAH SATUNYA 😹";
 }
 
 function showResult(){
