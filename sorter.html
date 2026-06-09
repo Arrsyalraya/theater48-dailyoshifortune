@@ -790,6 +790,38 @@ button{
     font-size:20px;
   }
 }
+  /* BULATAN POJOK KIRI ATAS PODIUM */
+.podium-card.first::before,
+.podium-card.second::before,
+.podium-card.third::before{
+  content:"";
+  position:absolute;
+  top:-14px;
+  left:-14px;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  z-index:50;
+  pointer-events:none;
+}
+
+/* bulatan podium 1 */
+.podium-card.first::before{
+  background:radial-gradient(circle at 30% 30%,#fff8c7,#ffd700 45%,#b88700 100%);
+  box-shadow:0 0 12px #ffd700,0 0 24px rgba(255,215,0,.8);
+}
+
+/* bulatan podium 2 */
+.podium-card.second::before{
+  background:radial-gradient(circle at 30% 30%,#ffffff,#59d8ff 45%,#0078a3 100%);
+  box-shadow:0 0 12px #59d8ff,0 0 24px rgba(89,216,255,.8);
+}
+
+/* bulatan podium 3 */
+.podium-card.third::before{
+  background:radial-gradient(circle at 30% 30%,#ffd1a8,#ff9b4a 45%,#b55b12 100%);
+  box-shadow:0 0 12px #ff9b4a,0 0 24px rgba(255,155,74,.8);
+}
   
 </style>
 </head>
