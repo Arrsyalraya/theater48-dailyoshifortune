@@ -322,49 +322,45 @@ body{
     }
 }
 
-.fullscreen-holder{
+.player{
     position:relative;
-    background:#000;
 }
 
-.fullscreen-btn{
+.custom-fullscreen-btn{
     position:absolute;
-    right:54px;
-    bottom:16px;
-    z-index:9999;
-    width:42px;
-    height:42px;
-    border-radius:50%;
+    right:18px;
+    bottom:18px;
+    z-index:50;
+    width:46px;
+    height:46px;
     border:none;
+    border-radius:50%;
     background:rgba(0,0,0,.65);
     color:white;
-    font-size:22px;
+    font-size:24px;
     cursor:pointer;
 }
 
-/* FULLSCREEN NORMAL */
-.fullscreen-holder:fullscreen{
+.player.theater-fullscreen{
+    position:fixed;
+    inset:0;
+    z-index:999999;
+    background:#000;
     width:100vw;
     height:100vh;
-    background:#000;
     display:flex;
     align-items:center;
     justify-content:center;
 }
 
-.fullscreen-holder:fullscreen iframe{
-    width:100vw;
-    height:100vh;
-    border:none;
+.player.theater-fullscreen iframe{
+    width:100vw !important;
+    height:100vh !important;
+    aspect-ratio:auto !important;
 }
 
-/* MODE PAKSA LANDSCAPE DI HP POTRAIT */
-.fullscreen-holder.force-landscape:fullscreen iframe{
-    width:100vh !important;
-    height:100vw !important;
-    max-width:none !important;
-    transform:rotate(90deg);
-    transform-origin:center center;
+body.fullscreen-active{
+    overflow:hidden;
 }
     
 </style>
@@ -409,9 +405,7 @@ body{
             mozallowfullscreen>
         </iframe>
 
-        <button class="fullscreen-btn" id="customFullscreenBtn" onclick="toggleHardFullscreen()">
-            ⛶
-        </button>
+        <button class="custom-fullscreen-btn" onclick="toggleTheaterFullscreen()">⛶</button>
     </div>
 </div>
 
@@ -829,54 +823,24 @@ function toggleLineup(){
         btn.innerText = "Tampilkan Line-up";
     }else{
         list.style.display = "grid";
-        btn.innerText = "Tutupkan Line-up";
+        btn.innerText = "Tutup Line-up";
     }
 }
 
-async function toggleHardFullscreen(){
-    const holder = document.getElementById("fullscreenHolder");
-    const btn = document.getElementById("customFullscreenBtn");
+function toggleTheaterFullscreen(){
+    const player = document.querySelector(".player");
+    const btn = document.querySelector(".custom-fullscreen-btn");
 
-    try{
-        if(document.fullscreenElement){
-            await document.exitFullscreen();
-            holder.classList.remove("force-landscape");
-            btn.innerHTML = "⛶";
-            return;
-        }
-
-        await holder.requestFullscreen();
-
-        btn.innerHTML = "×";
-
-        try{
-            if(screen.orientation && screen.orientation.lock){
-                await screen.orientation.lock("landscape");
-            }
-        }catch(e){
-            holder.classList.add("force-landscape");
-        }
-
-    }catch(err){
-        console.log("Fullscreen error:", err);
-    }
-}
-
-document.addEventListener("fullscreenchange", function(){
-    const holder = document.getElementById("fullscreenHolder");
-    const btn = document.getElementById("customFullscreenBtn");
-
-    if(!document.fullscreenElement){
-        holder.classList.remove("force-landscape");
+    if(player.classList.contains("theater-fullscreen")){
+        player.classList.remove("theater-fullscreen");
+        document.body.classList.remove("fullscreen-active");
         btn.innerHTML = "⛶";
-
-        if(screen.orientation && screen.orientation.unlock){
-            try{
-                screen.orientation.unlock();
-            }catch(e){}
-        }
+    }else{
+        player.classList.add("theater-fullscreen");
+        document.body.classList.add("fullscreen-active");
+        btn.innerHTML = "×";
     }
-});
+}
     
 renderReplayList();
 renderLineup(videos[0].id);
