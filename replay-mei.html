@@ -326,28 +326,36 @@ body{
     position:relative;
 }
 
-.custom-fullscreen-btn{
+.yt-fullscreen-cover{
     position:absolute;
-    right:18px;
+    right:17px;
     bottom:18px;
-    z-index:50;
-    width:46px;
-    height:46px;
+    z-index:999999;
+    width:50px;
+    height:50px;
     border:none;
     border-radius:50%;
-    background:rgba(0,0,0,.65);
-    color:white;
-    font-size:24px;
+    background:rgba(0,0,0,.62);
+    display:flex;
+    align-items:center;
+    justify-content:center;
     cursor:pointer;
+    padding:0;
+}
+
+.yt-fullscreen-cover svg{
+    width:24px;
+    height:24px;
+    opacity:.95;
 }
 
 .player.theater-fullscreen{
     position:fixed;
     inset:0;
     z-index:999999;
-    background:#000;
     width:100vw;
     height:100vh;
+    background:#000;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -359,7 +367,12 @@ body{
     aspect-ratio:auto !important;
 }
 
-body.fullscreen-active{
+.player.theater-fullscreen .yt-fullscreen-cover{
+    right:17px;
+    bottom:18px;
+}
+
+body.theater-lock{
     overflow:hidden;
 }
     
@@ -405,7 +418,19 @@ body.fullscreen-active{
             mozallowfullscreen>
         </iframe>
 
-        <button class="custom-fullscreen-btn" onclick="toggleTheaterFullscreen()">⛶</button>
+        <button class="yt-fullscreen-cover" onclick="toggleTheaterFullscreen()" aria-label="Fullscreen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 3H3v5"></path>
+                <path d="M3 3l7 7"></path>
+                <path d="M16 3h5v5"></path>
+                <path d="M21 3l-7 7"></path>
+                <path d="M8 21H3v-5"></path>
+                <path d="M3 21l7-7"></path>
+                <path d="M16 21h5v-5"></path>
+                <path d="M21 21l-7-7"></path>
+            </svg>
+        </button>
+        
     </div>
 </div>
 
@@ -827,18 +852,29 @@ function toggleLineup(){
     }
 }
 
-function toggleTheaterFullscreen(){
+async function toggleTheaterFullscreen(){
     const player = document.querySelector(".player");
-    const btn = document.querySelector(".custom-fullscreen-btn");
 
     if(player.classList.contains("theater-fullscreen")){
         player.classList.remove("theater-fullscreen");
-        document.body.classList.remove("fullscreen-active");
-        btn.innerHTML = "⛶";
-    }else{
-        player.classList.add("theater-fullscreen");
-        document.body.classList.add("fullscreen-active");
-        btn.innerHTML = "×";
+        document.body.classList.remove("theater-lock");
+
+        if(screen.orientation && screen.orientation.unlock){
+            try{ screen.orientation.unlock(); }catch(e){}
+        }
+
+        return;
+    }
+
+    player.classList.add("theater-fullscreen");
+    document.body.classList.add("theater-lock");
+
+    if(screen.orientation && screen.orientation.lock){
+        try{
+            await screen.orientation.lock("landscape");
+        }catch(e){
+            console.log("Landscape lock ditolak browser");
+        }
     }
 }
     
