@@ -322,25 +322,49 @@ body{
     }
 }
 
+.fullscreen-holder{
+    position:relative;
+    background:#000;
+}
+
 .fullscreen-btn{
     position:absolute;
-    right:14px;
-    bottom:14px;
-    z-index:20;
-    width:44px;
-    height:44px;
+    right:54px;
+    bottom:16px;
+    z-index:9999;
+    width:42px;
+    height:42px;
     border-radius:50%;
     border:none;
     background:rgba(0,0,0,.65);
     color:white;
-    font-size:21px;
+    font-size:22px;
     cursor:pointer;
 }
 
-/* saat fullscreen, tombol tetap muncul untuk keluar */
-.fullscreen-holder:fullscreen .fullscreen-btn{
-    right:18px;
-    bottom:18px;
+/* FULLSCREEN NORMAL */
+.fullscreen-holder:fullscreen{
+    width:100vw;
+    height:100vh;
+    background:#000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.fullscreen-holder:fullscreen iframe{
+    width:100vw;
+    height:100vh;
+    border:none;
+}
+
+/* MODE PAKSA LANDSCAPE DI HP POTRAIT */
+.fullscreen-holder.force-landscape:fullscreen iframe{
+    width:100vh !important;
+    height:100vw !important;
+    max-width:none !important;
+    transform:rotate(90deg);
+    transform-origin:center center;
 }
     
 </style>
@@ -375,21 +399,21 @@ body{
 </div>
     
     <div class="player-box">
-        <div class="player fullscreen-holder" id="fullscreenHolder">
-            <iframe
-                id="mainPlayer"
-                src=""
-                allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-                allowfullscreen
-                webkitallowfullscreen
-                mozallowfullscreen>
-            </iframe>
+    <div class="player fullscreen-holder" id="fullscreenHolder">
+        <iframe
+            id="mainPlayer"
+            src=""
+            allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+            allowfullscreen
+            webkitallowfullscreen
+            mozallowfullscreen>
+        </iframe>
 
-            <button class="fullscreen-btn" onclick="openLandscapeFullscreen()">
-                ⛶
-            </button>
-        </div>
+        <button class="fullscreen-btn" id="customFullscreenBtn" onclick="toggleHardFullscreen()">
+            ⛶
+        </button>
     </div>
+</div>
 
     <div class="lineup-box">
         <h2>Line up Member</h2>
@@ -809,51 +833,41 @@ function toggleLineup(){
     }
 }
 
-async function openLandscapeFullscreen(){
+async function toggleHardFullscreen(){
     const holder = document.getElementById("fullscreenHolder");
+    const btn = document.getElementById("customFullscreenBtn");
 
     try{
         if(document.fullscreenElement){
-            if(document.exitFullscreen){
-                await document.exitFullscreen();
-            }
-
-            if(screen.orientation && screen.orientation.unlock){
-                try{
-                    screen.orientation.unlock();
-                }catch(e){}
-            }
-
+            await document.exitFullscreen();
+            holder.classList.remove("force-landscape");
+            btn.innerHTML = "⛶";
             return;
         }
 
-        if(holder.requestFullscreen){
-            await holder.requestFullscreen();
-        }else if(holder.webkitRequestFullscreen){
-            holder.webkitRequestFullscreen();
-        }else if(holder.msRequestFullscreen){
-            holder.msRequestFullscreen();
-        }
+        await holder.requestFullscreen();
 
-        if(screen.orientation && screen.orientation.lock){
-            try{
+        btn.innerHTML = "×";
+
+        try{
+            if(screen.orientation && screen.orientation.lock){
                 await screen.orientation.lock("landscape");
-            }catch(e){
-                console.log("Orientation lock ditolak browser:", e);
             }
+        }catch(e){
+            holder.classList.add("force-landscape");
         }
 
     }catch(err){
-        console.log("Fullscreen gagal:", err);
+        console.log("Fullscreen error:", err);
     }
 }
 
 document.addEventListener("fullscreenchange", function(){
-    const btn = document.querySelector(".fullscreen-btn");
+    const holder = document.getElementById("fullscreenHolder");
+    const btn = document.getElementById("customFullscreenBtn");
 
-    if(document.fullscreenElement){
-        btn.innerHTML = "✕";
-    }else{
+    if(!document.fullscreenElement){
+        holder.classList.remove("force-landscape");
         btn.innerHTML = "⛶";
 
         if(screen.orientation && screen.orientation.unlock){
