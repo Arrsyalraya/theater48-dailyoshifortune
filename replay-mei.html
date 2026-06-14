@@ -334,9 +334,8 @@ body{
     background:transparent;
 }
 
-/* saat tombol muncul, layer tetap full */
 .player.show-custom-control .video-tap-layer{
-    display:block;
+    pointer-events:none;
 }
     
 /* tombol fullscreen custom */
@@ -972,7 +971,7 @@ function showCustomControl(){
 
     hideControlTimer = setTimeout(()=>{
         hideCustomControl();
-    },3000);
+    },5000);
 }
 
 function hideCustomControl(){
