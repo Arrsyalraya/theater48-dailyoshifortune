@@ -328,17 +328,22 @@ body{
 
 /* tombol transparan nutup tombol fullscreen YouTube */
 .yt-fullscreen-cover{
-    position:absolute;
-    right:14px;
-    bottom:14px;
-    z-index:999999;
-    width:44px;
-    height:44px;
-    border:none;
-    border-radius:50%;
-    background:rgba(0,0,0,0);
-    cursor:pointer;
-    padding:0;
+position:absolute;
+right:12px;
+bottom:12px;
+width:48px;
+height:48px;
+background:rgba(28,28,28,.75);
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:999999;
+}
+
+.yt-fullscreen-cover svg{
+width:22px;
+height:22px;
 }
 
 /* mode fullscreen normal */
@@ -421,7 +426,15 @@ body.theater-lock{
             mozallowfullscreen>
         </iframe>
 
-       <button class="yt-fullscreen-cover" onclick="toggleTheaterFullscreen()" aria-label="Fullscreen"></button>
+       <button class="yt-fullscreen-cover"
+onclick="toggleTheaterFullscreen()">
+
+<svg viewBox="0 0 24 24">
+<path fill="white"
+d="M7 14H5v5h5v-2H7v-3zm0-4h2V7h3V5H5v5zm10 7h-3v2h5v-5h-2v3zm0-12v3h2V5h-5v2h3z"/>
+</svg>
+
+</button>
         
     </div>
 </div>
@@ -791,7 +804,7 @@ function getVideoUrl(video){
     if(video.type === "youtube"){
         return "https://www.youtube.com/embed/" +
         video.id +
-        "?autoplay=1&mute=1&rel=0&playsinline=0&fs=1";
+        "?autoplay=1&mute=1&rel=0&playsinline=1&fs=0";
     }
 
     if(video.type === "drive"){
