@@ -328,17 +328,29 @@ body{
 
 /* tombol transparan nutup tombol fullscreen YouTube */
 .yt-fullscreen-cover{
-position:absolute;
-right:12px;
-bottom:12px;
-width:48px;
-height:48px;
-background:rgba(28,28,28,.75);
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:999999;
+    position:absolute;
+    right:18px;
+    bottom:62px; /* naik ke atas garis timestamp */
+    z-index:999999;
+    width:34px;
+    height:34px;
+    border:none;
+    border-radius:0;
+    background:transparent !important;
+    box-shadow:none !important;
+    outline:none !important;
+    appearance:none;
+    -webkit-appearance:none;
+    cursor:pointer;
+    padding:0;
+    opacity:0;
+    transition:opacity .25s ease;
+}
+
+/* muncul saat area video disentuh / hover */
+.player:hover .yt-fullscreen-cover,
+.player.show-custom-control .yt-fullscreen-cover{
+    opacity:1;
 }
 
 .yt-fullscreen-cover svg{
@@ -914,6 +926,23 @@ document.addEventListener("fullscreenchange", function(){
         }
     }
 });
+
+    let controlHideTimer;
+
+function showCustomFullscreenControl(){
+    const player = document.querySelector(".player");
+
+    player.classList.add("show-custom-control");
+
+    clearTimeout(controlHideTimer);
+
+    controlHideTimer = setTimeout(()=>{
+        player.classList.remove("show-custom-control");
+    }, 2500);
+}
+
+document.querySelector(".player").addEventListener("click", showCustomFullscreenControl);
+document.querySelector(".player").addEventListener("touchstart", showCustomFullscreenControl);
     
 renderReplayList();
 renderLineup(videos[0].id);
