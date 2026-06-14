@@ -329,14 +329,16 @@ body{
 /* layer khusus buat nangkap tap/click video */
 .video-tap-layer{
     position:absolute;
-    left:0;
-    top:0;
-    right:0;
-    bottom:72px; /* jangan nutup control bar YouTube */
+    inset:0;
     z-index:20;
     background:transparent;
 }
 
+/* saat tombol muncul, layer tetap full */
+.player.show-custom-control .video-tap-layer{
+    display:block;
+}
+    
 /* tombol fullscreen custom */
 .yt-fullscreen-cover{
     position:absolute;
@@ -369,7 +371,7 @@ body{
 
     .yt-fullscreen-cover{
         right:12px;
-        bottom:34px;
+        bottom:40px;
         width:32px;
         height:32px;
     }
@@ -998,7 +1000,6 @@ tapLayer.addEventListener("touchstart", function(e){
     toggleCustomControl();
 }, {passive:false});
 
-/* muncul sebentar saat awal */
 showCustomControl();
     
 renderReplayList();
