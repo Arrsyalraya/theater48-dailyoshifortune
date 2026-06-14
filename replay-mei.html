@@ -326,6 +326,7 @@ body{
     position:relative;
 }
 
+/* tombol transparan nutup tombol fullscreen YouTube */
 .yt-fullscreen-cover{
     position:absolute;
     right:14px;
@@ -340,18 +341,7 @@ body{
     padding:0;
 }
 
-.yt-fullscreen-cover::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    border-radius:50%;
-    background:rgba(0,0,0,0);
-}
-
-.yt-fullscreen-cover svg{
-    display:none;
-}
-
+/* mode fullscreen normal */
 .player.theater-fullscreen{
     position:fixed;
     inset:0;
@@ -359,12 +349,30 @@ body{
     width:100vw;
     height:100vh;
     background:#000;
+    overflow:hidden;
 }
 
 .player.theater-fullscreen iframe{
     width:100vw !important;
     height:100vh !important;
     aspect-ratio:auto !important;
+    border:none;
+}
+
+/* fallback paksa landscape kalau browser nolak auto rotate */
+.player.theater-fullscreen.force-landscape{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.player.theater-fullscreen.force-landscape iframe{
+    width:100vh !important;
+    height:100vw !important;
+    max-width:none !important;
+    max-height:none !important;
+    transform:rotate(90deg);
+    transform-origin:center center;
 }
 
 body.theater-lock{
@@ -841,6 +849,7 @@ async function toggleTheaterFullscreen(){
 
     if(player.classList.contains("theater-fullscreen")){
         player.classList.remove("theater-fullscreen");
+        player.classList.remove("force-landscape");
         document.body.classList.remove("theater-lock");
 
         if(document.fullscreenElement){
@@ -863,14 +872,35 @@ async function toggleTheaterFullscreen(){
         }
     }catch(e){}
 
+    let locked = false;
+
     if(screen.orientation && screen.orientation.lock){
         try{
             await screen.orientation.lock("landscape");
+            locked = true;
         }catch(e){
-            console.log("Landscape lock ditolak browser");
+            locked = false;
         }
     }
+
+    if(!locked && window.innerHeight > window.innerWidth){
+        player.classList.add("force-landscape");
+    }
 }
+
+document.addEventListener("fullscreenchange", function(){
+    const player = document.querySelector(".player");
+
+    if(!document.fullscreenElement){
+        player.classList.remove("theater-fullscreen");
+        player.classList.remove("force-landscape");
+        document.body.classList.remove("theater-lock");
+
+        if(screen.orientation && screen.orientation.unlock){
+            try{ screen.orientation.unlock(); }catch(e){}
+        }
+    }
+});
     
 renderReplayList();
 renderLineup(videos[0].id);
