@@ -299,26 +299,25 @@ body{
     }
 
     .lineup-list{
-    max-width:420px;
-    gap:14px;
-    display:none;
-    grid-template-columns:repeat(4,1fr);
-    justify-items:center;
-}
+        max-width:390px;
+        gap:10px 6px;
+        display:none;
+        grid-template-columns:repeat(6,1fr);
+        justify-items:center;
+    }
 
     .member{
-        width:72px;
+        width:54px;
     }
 
     .member img{
-        width:64px;
-        height:64px;
-        border-radius:10px;
-        object-fit:cover;
+        width:48px;
+           height:48px;
+        border-radius:8px;
     }
 
     .member div{
-        font-size:11px;
+        font-size:9px;
     }
 }
 
@@ -420,6 +419,11 @@ body{
 
 body.theater-lock{
     overflow:hidden;
+}
+
+.player.theater-fullscreen .yt-fullscreen-cover{
+    opacity:1 !important;
+    pointer-events:auto !important;
 }
     
 </style>
@@ -842,7 +846,7 @@ function getVideoUrl(video){
     if(video.type === "youtube"){
         return "https://www.youtube.com/embed/" +
         video.id +
-        "?autoplay=1&mute=1&rel=0&playsinline=1&fs=0";
+        "?autoplay=1&mute=1&rel=0&playsinline=1&fs=1&enablejsapi=1";
     }
 
     if(video.type === "drive"){
@@ -856,6 +860,7 @@ function getVideoUrl(video){
 function changeVideo(card, videoId){
 
     const video = videos.find(v => v.id === videoId);
+    currentVideoIndex = videos.findIndex(v => v.id === videoId);
 
     const player = document.getElementById("mainPlayer");
 
@@ -984,6 +989,40 @@ if(window.innerWidth <= 650){
 
     showCustomControl();
 }
+
+let ytPlayer;
+let currentVideoIndex = 0;
+
+function onYouTubeIframeAPIReady(){
+    ytPlayer = new YT.Player("mainPlayer", {
+        events:{
+            "onStateChange": onPlayerStateChange
+        }
+    });
+}
+
+function onPlayerStateChange(event){
+    if(event.data === YT.PlayerState.ENDED){
+        playNextVideo();
+    }
+}
+
+function playNextVideo(){
+    currentVideoIndex++;
+
+    if(currentVideoIndex >= videos.length){
+        currentVideoIndex = 0;
+    }
+
+    const nextVideo = videos[currentVideoIndex];
+
+    const cards = document.querySelectorAll(".replay-card");
+    const nextCard = cards[currentVideoIndex];
+
+    if(nextCard){
+        changeVideo(nextCard,nextVideo.id);
+    }
+}
     
 renderReplayList();
 renderLineup(videos[0].id);
@@ -999,6 +1038,7 @@ if(videos[0].type === "drive"){
 }
     
 </script>
-
+<script src="https://www.youtube.com/iframe_api"></script>
+    
 </body>
 </html>
