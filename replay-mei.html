@@ -354,14 +354,6 @@ body{
     transition:opacity .25s ease;
 }
 
-/* desktop */
-.yt-fullscreen-cover{
-    right:14px;
-    bottom:28px;
-    width:34px;
-    height:34px;
-}
-
 /* mobile */
 @media(max-width:650px){
     .video-tap-layer{
@@ -957,21 +949,27 @@ document.addEventListener("fullscreenchange", function(){
     }
 });
 
-let hideControlTimer;
-let customControlVisible = false;
+if(window.innerWidth <= 650){
 
-const playerArea = document.querySelector(".player");
-const tapLayer = document.getElementById("videoTapLayer");
+    let hideControlTimer;
+    const playerArea = document.querySelector(".player");
+    const tapLayer = document.getElementById("videoTapLayer");
 
-function showCustomControl(){
-    customControlVisible = true;
-    playerArea.classList.add("show-custom-control");
+    function showCustomControl(){
 
-    clearTimeout(hideControlTimer);
+        playerArea.classList.add("show-custom-control");
 
-    hideControlTimer = setTimeout(()=>{
-        hideCustomControl();
-    },5000);
+        clearTimeout(hideControlTimer);
+
+        hideControlTimer = setTimeout(()=>{
+            playerArea.classList.remove("show-custom-control");
+        },5000);
+    }
+
+    tapLayer.addEventListener("click",showCustomControl);
+    tapLayer.addEventListener("touchstart",showCustomControl);
+
+    showCustomControl();
 }
 
 function hideCustomControl(){
