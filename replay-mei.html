@@ -483,6 +483,23 @@ body.theater-lock{
         height:26px;
     }
 }
+
+.player:fullscreen .yt-fullscreen-cover{
+    display:flex !important;
+    opacity:1 !important;
+    pointer-events:auto !important;
+    position:absolute !important;
+    right:28px !important;
+    bottom:28px !important;
+    width:44px !important;
+    height:44px !important;
+    z-index:2147483647 !important;
+}
+
+.player:fullscreen iframe{
+    width:100vw !important;
+    height:100vh !important;
+}
     
 </style>
 </head>
@@ -989,11 +1006,10 @@ async function toggleTheaterFullscreen(){
     player.classList.add("show-custom-control");
 
     try{
-        if(document.documentElement.requestFullscreen){
-        await document.documentElement.requestFullscreen();
-        }
-        
-    }catch(e){}
+    if(player.requestFullscreen){
+        await player.requestFullscreen();
+    }
+}catch(e){}
 
     let locked = false;
 
@@ -1014,14 +1030,20 @@ async function toggleTheaterFullscreen(){
 document.addEventListener("fullscreenchange", function(){
     const player = document.querySelector(".player");
 
-    if(!document.fullscreenElement){
-        player.classList.remove("theater-fullscreen");
-        player.classList.remove("force-landscape");
-        document.body.classList.remove("theater-lock");
+    if(document.fullscreenElement){
+        player.classList.add("theater-fullscreen");
+        player.classList.add("show-custom-control");
+        document.body.classList.add("theater-lock");
+        return;
+    }
 
-        if(screen.orientation && screen.orientation.unlock){
-            try{ screen.orientation.unlock(); }catch(e){}
-        }
+    player.classList.remove("theater-fullscreen");
+    player.classList.remove("force-landscape");
+    player.classList.remove("show-custom-control");
+    document.body.classList.remove("theater-lock");
+
+    if(screen.orientation && screen.orientation.unlock){
+        try{ screen.orientation.unlock(); }catch(e){}
     }
 });
 
