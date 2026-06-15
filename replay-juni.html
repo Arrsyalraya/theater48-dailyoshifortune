@@ -29,9 +29,17 @@ body{
     padding:0;
 }
 
-.player iframe{
+.youtube-player{
     width:100%;
     aspect-ratio:16/9;
+    border:none;
+    display:block;
+}
+
+.drive-player{
+    width:100%;
+    height:70vh;
+    min-height:350px;
     border:none;
     display:block;
 }
@@ -249,6 +257,11 @@ body{
 }
     
 @media(max-width:650px){
+
+    .drive-player{
+    height:320px;
+}
+    
     .replay-wrap{
     width:100%;
     max-width:none;
@@ -286,28 +299,213 @@ body{
     }
 
     .lineup-list{
-    max-width:420px;
-    gap:14px;
-    display:none;
-    grid-template-columns:repeat(4,1fr);
-    justify-items:center;
-}
+        max-width:390px;
+        gap:4px 2px;
+        display:none;
+        grid-template-columns:repeat(6,1fr);
+        justify-items:center;
+    }
 
     .member{
-        width:72px;
+        width:54px;
+        line-height:1.1;
     }
 
     .member img{
-        width:64px;
-        height:64px;
-        border-radius:10px;
-        object-fit:cover;
+        width:38px;
+           height:38px;
+        border-radius:8px;
     }
 
     .member div{
-        font-size:11px;
+        margin-top:2px;
+        font-size:9px;
     }
 }
+
+.player{
+    position:relative;
+}
+
+.video-tap-layer{
+    display:none;
+}
+
+.yt-fullscreen-cover{
+    display:none;
+}
+
+/* MOBILE ONLY */
+@media(max-width:650px){
+
+    .video-tap-layer{
+        display:block;
+        position:absolute;
+        inset:0;
+        z-index:20;
+        background:transparent;
+    }
+
+    .player.show-custom-control .video-tap-layer{
+        pointer-events:none;
+    }
+
+    .yt-fullscreen-cover{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+
+        position:absolute;
+        right:12px;
+        bottom:50px;
+
+        width:28px;
+        height:28px;
+
+        z-index:999999;
+        border:none;
+        border-radius:50%;
+        background:rgba(0,0,0,.55) !important;
+        padding:0;
+        cursor:pointer;
+
+        opacity:0;
+        pointer-events:none;
+        transition:opacity .25s ease;
+    }
+
+    .player.show-custom-control .yt-fullscreen-cover{
+        opacity:1;
+        pointer-events:auto;
+    }
+
+    .player.theater-fullscreen .yt-fullscreen-cover{
+    opacity:1 !important;
+    pointer-events:auto !important;
+    z-index:999999999 !important;
+    }
+
+    .yt-fullscreen-cover svg{
+        width:100%;
+        height:100%;
+    }
+}
+    
+/* mode fullscreen normal */
+.player.theater-fullscreen{
+    position:fixed;
+    inset:0;
+    z-index:999999;
+    width:100vw;
+    height:100vh;
+    background:#000;
+    overflow:hidden;
+}
+
+.player.theater-fullscreen iframe{
+    width:100vw !important;
+    height:100vh !important;
+    aspect-ratio:auto !important;
+    border:none;
+}
+
+/* fallback paksa landscape kalau browser nolak auto rotate */
+.player.theater-fullscreen.force-landscape{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.player.theater-fullscreen.force-landscape iframe{
+    width:100vh !important;
+    height:100vw !important;
+    max-width:none !important;
+    max-height:none !important;
+    transform:rotate(90deg);
+    transform-origin:center center;
+}
+
+body.theater-lock{
+    overflow:hidden;
+}
+
+@media(max-width:650px){
+
+    .player.theater-fullscreen .yt-fullscreen-cover{
+        display:flex !important;
+        opacity:1 !important;
+        pointer-events:auto !important;
+
+        position:absolute !important;
+        right:28px !important;
+        bottom:28px !important;
+
+        width:42px !important;
+        height:42px !important;
+
+        z-index:2147483647 !important;
+        background:rgba(0,0,0,.55) !important;
+        border-radius:50% !important;
+    }
+
+    .player.theater-fullscreen .yt-fullscreen-cover svg{
+        width:26px !important;
+        height:26px !important;
+    }
+}
+
+.mobile-fs-exit{
+    display:none;
+}
+
+@media(max-width:650px){
+
+    body.theater-lock .mobile-fs-exit{
+        display:flex !important;
+        align-items:center;
+        justify-content:center;
+
+        position:fixed !important;
+        right:24px !important;
+        bottom:24px !important;
+
+        width:44px !important;
+        height:44px !important;
+
+        z-index:2147483647 !important;
+
+        border:none;
+        border-radius:50%;
+        background:rgba(0,0,0,.6);
+        padding:0;
+    }
+
+    body.theater-lock .mobile-fs-exit svg{
+        width:26px;
+        height:26px;
+    }
+}
+
+.player:fullscreen .yt-fullscreen-cover{
+    display:flex !important;
+    opacity:1 !important;
+    pointer-events:auto !important;
+    position:absolute !important;
+    right:28px !important;
+    bottom:85px !important;
+    width:44px !important;
+    height:44px !important;
+    z-index:2147483647 !important;
+    background:rgba(0,0,0,.55) !important;
+    border:none;
+    border-radius:50% !important;
+}
+
+.player:fullscreen iframe{
+    width:100vw !important;
+    height:100vh !important;
+}
+    
 </style>
 </head>
 
@@ -340,17 +538,28 @@ body{
 </div>
     
     <div class="player-box">
-        <div class="player">
-            <iframe
-                id="mainPlayer"
-                src="https://www.youtube.com/embed/UQWmT882amc?autoplay=1&mute=1&rel=0&playsinline=0&fs=1"
-                allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-                allowfullscreen
-                webkitallowfullscreen
-                mozallowfullscreen>
-            </iframe>
-        </div>
+    <div class="player fullscreen-holder" id="fullscreenHolder">
+        <iframe
+            id="mainPlayer"
+            src=""
+            allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+            allowfullscreen
+            webkitallowfullscreen
+            mozallowfullscreen>
+        </iframe>
+        
+        <div class="video-tap-layer" id="videoTapLayer"></div>
+        
+       <button class="yt-fullscreen-cover" onclick="toggleTheaterFullscreen()">
+<svg viewBox="0 0 24 24">
+<path fill="white"
+d="M7 14H5v5h5v-2H7v-3zm0-4h2V7h3V5H5v5zm10 7h-3v2h5v-5h-2v3zm0-12v3h2V5h-5v2h3z"/>
+</svg>
+
+</button>
+        
     </div>
+</div>
 
     <div class="lineup-box">
         <h2>Line up Member</h2>
@@ -383,8 +592,9 @@ const memberData = {
     greesel:{name:"Greesel",img:"images/greesel.jpg"},
     ella:{name:"Ella",img:"images/ella.jpg"},
     alya:{name:"Alya",img:"images/alya.jpg"},
+    chelsea:{name:"Chelsea",img:"images/chelsea.jpg"},
 
-    anin:{name:"Anin",img:"images/anin.jpg"},
+    anindya:{name:"Anindya",img:"images/anindya.jpg"},
     cathy:{name:"Cathy",img:"images/cathy.jpg"},
     lana:{name:"Lana",img:"images/lana.jpg"},
     oniel:{name:"Oniel",img:"images/oniel.jpg"},
@@ -430,6 +640,7 @@ const memberData = {
     bella:{name:"Bella",img:"images/bella.jpg"},
     fahira:{name:"Fahira",img:"images/fahira.jpg"},
     rara:{name:"Rara",img:"images/rara.jpg"},
+    amanda:{name:"Amanda",img:"images/amanda.jpg"},
 
     heidi:{name:"Heidi",img:"images/heidi.jpg"},
     maxine:{name:"Maxine",img:"images/maxine.jpg"},
@@ -477,7 +688,7 @@ const videos = [
         lineup:["carissa","ekin","fahira","heidi","intan","jemima","maira","ralyne","rara","rilly","sona","virgi"]
     }
 ];
-
+    
 function renderReplayList(){
     const list = document.getElementById("replayList");
     list.innerHTML = "";
@@ -485,7 +696,13 @@ function renderReplayList(){
     videos.forEach((video,index)=>{
         list.innerHTML += `
             <div class="replay-card ${index === 0 ? "active" : ""}" onclick="changeVideo(this,'${video.id}')">
-                <img src="https://img.youtube.com/vi/${video.id}/maxresdefault.jpg">
+                <img src="${
+                video.type === 'youtube'
+                ?
+                'https://img.youtube.com/vi/' + video.id + '/maxresdefault.jpg'
+                :
+                video.thumbnail
+                }">
                 <div class="replay-info">
                     <div class="replay-title">${video.title}</div>
                     <div class="replay-date">${video.date}</div>
@@ -520,9 +737,41 @@ function renderLineup(videoId){
     });
 }
 
+function getVideoUrl(video){
+
+    if(video.type === "youtube"){
+
+    const isMobile = window.innerWidth <= 650;
+
+    const fsValue = isMobile ? "0" : "1";
+
+    return "https://www.youtube.com/embed/" +
+    video.id +
+    "?autoplay=1&mute=1&rel=0&playsinline=1&fs=" + fsValue + "&enablejsapi=1";
+}
+
+    if(video.type === "drive"){
+        return "https://drive.google.com/file/d/" +
+        video.id +
+        "/preview?usp=drivesdk";
+    }
+
+}
+    
 function changeVideo(card, videoId){
-    document.getElementById("mainPlayer").src =
-    "https://www.youtube.com/embed/" + videoId + "?autoplay=1&mute=1&rel=0&playsinline=0&fs=1";
+
+    const video = videos.find(v => v.id === videoId);
+    currentVideoIndex = videos.findIndex(v => v.id === videoId);
+
+    const player = document.getElementById("mainPlayer");
+
+player.src = getVideoUrl(video);
+
+if(video.type === "drive"){
+    player.className = "drive-player";
+}else{
+    player.className = "youtube-player";
+}
 
     document.querySelectorAll(".replay-card").forEach(el=>{
         el.classList.remove("active");
@@ -536,8 +785,9 @@ function changeVideo(card, videoId){
         top:0,
         behavior:"smooth"
     });
-}
 
+}
+    
 function toggleLineup(){
     const list = document.getElementById("lineupList");
     const btn = document.querySelector(".lineup-box button");
@@ -547,13 +797,164 @@ function toggleLineup(){
         btn.innerText = "Tampilkan Line-up";
     }else{
         list.style.display = "grid";
-        btn.innerText = "Tutupkan Line-up";
+        btn.innerText = "Tutup Line-up";
+    }
+}
+
+
+async function toggleTheaterFullscreen(){
+    const player = document.querySelector(".player");
+
+    if(player.classList.contains("theater-fullscreen")){
+        player.classList.remove("theater-fullscreen");
+        player.classList.remove("force-landscape");
+        player.classList.remove("show-custom-control");
+        document.body.classList.remove("theater-lock");
+
+        if(document.fullscreenElement){
+            try{ await document.exitFullscreen(); }catch(e){}
+        }
+
+        if(screen.orientation && screen.orientation.unlock){
+            try{ screen.orientation.unlock(); }catch(e){}
+        }
+
+        return;
+    }
+
+    player.classList.add("theater-fullscreen");
+    document.body.classList.add("theater-lock");
+    player.classList.add("show-custom-control");
+
+    try{
+    if(player.requestFullscreen){
+        await player.requestFullscreen();
+    }
+}catch(e){}
+
+    let locked = false;
+
+    if(screen.orientation && screen.orientation.lock){
+        try{
+            await screen.orientation.lock("landscape");
+            locked = true;
+        }catch(e){
+            locked = false;
+        }
+    }
+
+    if(!locked && window.innerHeight > window.innerWidth){
+        player.classList.add("force-landscape");
+    }
+}
+
+document.addEventListener("fullscreenchange", function(){
+    const player = document.querySelector(".player");
+
+    if(document.fullscreenElement){
+        player.classList.add("theater-fullscreen");
+        player.classList.add("show-custom-control");
+        document.body.classList.add("theater-lock");
+        return;
+    }
+
+    player.classList.remove("theater-fullscreen");
+    player.classList.remove("force-landscape");
+    player.classList.remove("show-custom-control");
+    document.body.classList.remove("theater-lock");
+
+    if(screen.orientation && screen.orientation.unlock){
+        try{ screen.orientation.unlock(); }catch(e){}
+    }
+});
+
+if(window.innerWidth <= 650){
+
+    let hideControlTimer;
+    const playerArea = document.querySelector(".player");
+    const tapLayer = document.getElementById("videoTapLayer");
+
+    function showCustomControl(){
+        playerArea.classList.add("show-custom-control");
+
+        clearTimeout(hideControlTimer);
+
+        hideControlTimer = setTimeout(()=>{
+            playerArea.classList.remove("show-custom-control");
+        },5000);
+    }
+
+    tapLayer.addEventListener("click", function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        showCustomControl();
+    });
+
+    tapLayer.addEventListener("touchstart", function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        showCustomControl();
+    }, {passive:false});
+
+    showCustomControl();
+}
+
+let ytPlayer;
+let currentVideoIndex = 0;
+
+function onYouTubeIframeAPIReady(){
+    ytPlayer = new YT.Player("mainPlayer", {
+        events:{
+            "onStateChange": onPlayerStateChange
+        }
+    });
+}
+
+function onPlayerStateChange(event){
+    if(event.data === YT.PlayerState.ENDED){
+        playNextVideo();
+    }
+}
+
+function playNextVideo(){
+    currentVideoIndex++;
+
+    if(currentVideoIndex >= videos.length){
+        currentVideoIndex = 0;
+    }
+
+    const nextVideo = videos[currentVideoIndex];
+
+    const cards = document.querySelectorAll(".replay-card");
+    const nextCard = cards[currentVideoIndex];
+
+    if(nextCard){
+        changeVideo(nextCard,nextVideo.id);
     }
 }
     
 renderReplayList();
 renderLineup(videos[0].id);
-</script>
 
+const player = document.getElementById("mainPlayer");
+
+player.src = getVideoUrl(videos[0]);
+
+if(videos[0].type === "drive"){
+    player.className = "drive-player";
+}else{
+    player.className = "youtube-player";
+}
+    
+</script>
+<script src="https://www.youtube.com/iframe_api"></script>
+    
+<button class="mobile-fs-exit" onclick="toggleTheaterFullscreen()">
+    <svg viewBox="0 0 24 24">
+        <path fill="white"
+        d="M7 14H5v5h5v-2H7v-3zm0-4h2V7h3V5H5v5zm10 7h-3v2h5v-5h-2v3zm0-12v3h2V5h-5v2h3z"/>
+    </svg>
+</button>
+    
 </body>
 </html>
