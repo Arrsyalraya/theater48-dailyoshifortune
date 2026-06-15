@@ -380,6 +380,7 @@ body{
     .player.theater-fullscreen .yt-fullscreen-cover{
     opacity:1 !important;
     pointer-events:auto !important;
+    z-index:999999999 !important;
     }
 
     .yt-fullscreen-cover svg{
@@ -844,10 +845,15 @@ function renderLineup(videoId){
 function getVideoUrl(video){
 
     if(video.type === "youtube"){
-        return "https://www.youtube.com/embed/" +
-        video.id +
-        "?autoplay=1&mute=1&rel=0&playsinline=1&fs=0&enablejsapi=1";
-    }
+
+    const isMobile = window.innerWidth <= 650;
+
+    const fsValue = isMobile ? "0" : "1";
+
+    return "https://www.youtube.com/embed/" +
+    video.id +
+    "?autoplay=1&mute=1&rel=0&playsinline=1&fs=" + fsValue + "&enablejsapi=1";
+}
 
     if(video.type === "drive"){
         return "https://drive.google.com/file/d/" +
@@ -907,6 +913,7 @@ async function toggleTheaterFullscreen(){
     if(player.classList.contains("theater-fullscreen")){
         player.classList.remove("theater-fullscreen");
         player.classList.remove("force-landscape");
+        player.classList.remove("show-custom-control");
         document.body.classList.remove("theater-lock");
 
         if(document.fullscreenElement){
@@ -922,6 +929,7 @@ async function toggleTheaterFullscreen(){
 
     player.classList.add("theater-fullscreen");
     document.body.classList.add("theater-lock");
+    player.classList.add("show-custom-control");
 
     try{
         if(player.requestFullscreen){
