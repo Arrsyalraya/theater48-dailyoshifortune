@@ -426,6 +426,31 @@ body{
 body.theater-lock{
     overflow:hidden;
 }
+
+@media(max-width:650px){
+
+    .player.theater-fullscreen .yt-fullscreen-cover{
+        display:flex !important;
+        opacity:1 !important;
+        pointer-events:auto !important;
+
+        position:absolute !important;
+        right:28px !important;
+        bottom:28px !important;
+
+        width:42px !important;
+        height:42px !important;
+
+        z-index:2147483647 !important;
+        background:rgba(0,0,0,.55) !important;
+        border-radius:50% !important;
+    }
+
+    .player.theater-fullscreen .yt-fullscreen-cover svg{
+        width:26px !important;
+        height:26px !important;
+    }
+}
     
 </style>
 </head>
