@@ -764,23 +764,22 @@ function renderReplayList(){
     list.innerHTML = "";
 
     videos.forEach((video,index)=>{
+        const thumb = `https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg`;
+        const fallback = `https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`;
+
         list.innerHTML += `
-            <div class="replay-card ${index === 0 ? "active" : ""}" onclick="changeVideo(this,'${video.id}')">
-                <img
-                src="${
-                video.type === 'youtube'
-                ? `https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg`
-                : video.thumbnail
-                }"
-                onerror="
-                this.onerror=null;
-                this.src='https://i.ytimg.com/vi/${video.id}/hqdefault.jpg';
-                ">
-                <div class="replay-info">
-                    <div class="replay-title">${video.title}</div>
-                    <div class="replay-date">${video.date}</div>
-                </div>
-            </div>
+        <div class="replay-card ${index === 0 ? "active" : ""}" onclick="changeVideo(this,'${video.id}')">
+
+        <img
+        src="${thumb}"
+        onerror="this.onerror=null;this.src='${fallback}'">
+
+        <div class="replay-info">
+        <div class="replay-title">${video.title}</div>
+        <div class="replay-date">${video.date}</div>
+        </div>
+
+        </div>
         `;
     });
 }
