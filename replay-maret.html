@@ -772,7 +772,8 @@ function renderReplayList(){
                 'https://img.youtube.com/vi/' + video.id + '/maxresdefault.jpg'
                 :
                 video.thumbnail
-                }">
+                }"
+                onerror="this.src='https://img.youtube.com/vi/${video.id}/hqdefault.jpg'">
                 <div class="replay-info">
                     <div class="replay-title">${video.title}</div>
                     <div class="replay-date">${video.date}</div>
