@@ -668,6 +668,14 @@ const memberData = {
 const videos = [
      {
         type:"youtube",
+        id:"vArb9otUsGY",
+        title:"Sambil Menggandeng Erat Tanganku - Team Passion",
+        date:"19/06/2026",
+        lineup:["aralie","christy","erine","danella","daisy","jessi","lulu","auwia","muthe","raisha","ribka","kimmy"]
+    },
+    
+     {
+        type:"youtube",
         id:"UQWmT882amc",
         title:"Request Hour 2026 Setlist Best 40 (Show 2)",
         date:"13/06/2026",
@@ -981,22 +989,6 @@ if(videos[0].type === "drive"){
         d="M7 14H5v5h5v-2H7v-3zm0-4h2V7h3V5H5v5zm10 7h-3v2h5v-5h-2v3zm0-12v3h2V5h-5v2h3z"/>
     </svg>
 </button>
-
-<script>
-function sendHeightToParent(){
-    const height = document.documentElement.scrollHeight;
-
-    window.parent.postMessage({
-        type: "T48_IFRAME_HEIGHT",
-        height: height
-    }, "*");
-}
-
-window.addEventListener("load", sendHeightToParent);
-window.addEventListener("resize", sendHeightToParent);
-
-setInterval(sendHeightToParent, 1000);
-</script>
     
 </body>
 </html>
