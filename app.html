@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Theater48Fight Member</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+body{
+  margin:0;
+  background:#0b0b0b;
+  color:white;
+  font-family:Arial,sans-serif;
+}
+.box{
+  max-width:430px;
+  margin:30px auto;
+  background:#151515;
+  padding:24px;
+  border-radius:18px;
+}
+input,select,button{
+  width:100%;
+  padding:13px;
+  margin:8px 0;
+  border-radius:10px;
+  border:none;
+  box-sizing:border-box;
+}
+input,select{
+  background:#0b0b0b;
+  color:white;
+  border:1px solid #333;
+}
+button{
+  background:#ff2b2b;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+.hidden{display:none;}
+.status{
+  background:#222;
+  padding:12px;
+  border-radius:10px;
+  margin:12px 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box" id="authBox">
+  <h2>Theater48Fight Login</h2>
+  <input id="email" type="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
+  <button onclick="register()">Daftar</button>
+  <button onclick="login()">Login</button>
+</div>
+
+<div class="box hidden" id="dashboardBox">
+  <h2>Dashboard Member</h2>
+
+  <div class="status">
+    <p><b>Email:</b> <span id="userEmail"></span></p>
+    <p><b>Status Membership:</b> <span id="memberStatus">inactive</span></p>
+    <p><b>Expired:</b> <span id="memberExpired">-</span></p>
+  </div>
+
+  <input id="name" placeholder="Nama kamu">
+
+  <select id="oshi">
+    <option value="">Pilih Oshi Favorit</option>
+    <option>Freya</option>
+    <option>Christy</option>
+    <option>Gracie</option>
+    <option>Feni</option>
+    <option>Gita</option>
+    <option>Eli</option>
+    <option>Muthe</option>
+    <option>Lulu</option>
+    <option>Marsha</option>
+    <option>Kathrina</option>
+    <option>Jessi</option>
+    <option>Lyn</option>
+    <option>Greesel</option>
+    <option>Raisha</option>
+    <option>Trisha</option>
+    <option>Michie</option>
+  </select>
+
+  <button onclick="saveProfile()">Simpan Profil</button>
+  <button onclick="logout()">Logout</button>
+</div>
+
+<script>
+const SUPABASE_URL = "https://cwxmnmwvlarjnxotfove.supabase.co";
+const SUPABASE_KEY = "sb_publishable_svSvzN6AhV2zTfoHIte9ng_GUm7DUyB";
+
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+async function register(){
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const { data, error } = await db.auth.signUp({ email, password });
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  alert("Akun berhasil dibuat. Cek email kalau diminta verifikasi.");
+}
+
+async function login(){
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const { data, error } = await db.auth.signInWithPassword({ email, password });
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  loadDashboard();
+}
+
+async function loadDashboard(){
+  const { data:{ user } } = await db.auth.getUser();
+
+  if(!user) return;
+
+  document.getElementById("authBox").classList.add("hidden");
+  document.getElementById("dashboardBox").classList.remove("hidden");
+  document.getElementById("userEmail").innerText = user.email;
+
+  let { data: profile } = await db
+    .from("profiles")
+    .select("*")
+    .eq("id", user.id)
+    .single();
+
+  if(!profile){
+    await db.from("profiles").insert({
+      id:user.id,
+      email:user.email,
+      name:"",
+      oshi:"",
+      membership_status:"inactive"
+    });
+
+    profile = {
+      name:"",
+      oshi:"",
+      membership_status:"inactive",
+      membership_expired:null
+    };
+  }
+
+  document.getElementById("name").value = profile.name || "";
+  document.getElementById("oshi").value = profile.oshi || "";
+  document.getElementById("memberStatus").innerText = profile.membership_status || "inactive";
+  document.getElementById("memberExpired").innerText = profile.membership_expired || "-";
+}
+
+async function saveProfile(){
+  const { data:{ user } } = await db.auth.getUser();
+
+  if(!user) return;
+
+  const name = document.getElementById("name").value;
+  const oshi = document.getElementById("oshi").value;
+
+  const { error } = await db
+    .from("profiles")
+    .update({ name, oshi })
+    .eq("id", user.id);
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  alert("Profil berhasil disimpan.");
+}
+
+async function logout(){
+  await db.auth.signOut();
+  location.reload();
+}
+
+db.auth.getSession().then(({data})=>{
+  if(data.session){
+    loadDashboard();
+  }
+});
+</script>
+
+</body>
+</html>
