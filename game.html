@@ -1,0 +1,211 @@
+<div id="t48-empire"></div>
+
+<style>
+#t48-empire{font-family:Inter,Arial,sans-serif;color:white;background:linear-gradient(135deg,#120018,#33003d,#111);padding:20px;border-radius:22px;max-width:1100px;margin:auto}
+.t48-head{text-align:center}
+.t48-title{font-size:32px;font-weight:900;color:#ff4fd8}
+.t48-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:18px 0}
+.t48-card{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:14px;box-shadow:0 10px 25px rgba(0,0,0,.25)}
+.t48-num{font-size:24px;font-weight:900;color:#ffd54f}
+.t48-main{display:grid;grid-template-columns:1fr 1.4fr;gap:18px}
+.t48-stage{text-align:center}
+.t48-stage button{width:220px;height:220px;border-radius:50%;border:0;background:radial-gradient(circle,#ff4fd8,#6a00ff);color:white;font-size:24px;font-weight:900;box-shadow:0 0 35px #ff4fd8;cursor:pointer}
+.t48-stage button:active{transform:scale(.95)}
+.t48-upgrades{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.t48-up h3{margin:0 0 6px;color:#ffb3ef}
+.t48-btn{width:100%;padding:10px;border:0;border-radius:12px;background:#ff4fd8;color:white;font-weight:800;cursor:pointer}
+.t48-btn:disabled{background:#555;cursor:not-allowed}
+.t48-mission{margin-top:18px}
+.t48-progress{height:12px;background:#333;border-radius:99px;overflow:hidden}
+.t48-bar{height:100%;background:linear-gradient(90deg,#ff4fd8,#ffd54f);width:0%}
+@media(max-width:800px){.t48-main{grid-template-columns:1fr}.t48-stage button{width:180px;height:180px}}
+</style>
+
+<script>
+(() => {
+  const root = document.getElementById("t48-empire");
+
+  const baseUpgrades = [
+    { id:"stage", name:"Main Stage", desc:"Tambah income dari penampilan theater.", base:50, cps:1 },
+    { id:"merch", name:"Merch Store", desc:"Jual lightstick, photocard, dan merch.", base:120, cps:3 },
+    { id:"cafe", name:"Idol Cafe", desc:"Fans nongkrong sambil nunggu show.", base:300, cps:8 },
+    { id:"photo", name:"Photo Booth", desc:"Tempat fans foto dan kumpulin kenangan.", base:700, cps:18 },
+    { id:"vip", name:"VIP Lounge", desc:"Area premium untuk member aktif.", base:1500, cps:40 },
+    { id:"concert", name:"Mini Concert Hall", desc:"Unlock pemasukan besar dari show spesial.", base:4000, cps:120 }
+  ];
+
+  let game = JSON.parse(localStorage.getItem("theater48_empire_v1")) || {
+    coins: 100,
+    fans: 0,
+    exp: 0,
+    level: 1,
+    totalClicks: 0,
+    lastSave: Date.now(),
+    lastDaily: "",
+    upgrades: {}
+  };
+
+  baseUpgrades.forEach(u => {
+    if (!game.upgrades[u.id]) game.upgrades[u.id] = 0;
+  });
+
+  function save(){
+    localStorage.setItem("theater48_empire_v1", JSON.stringify(game));
+  }
+
+  function fmt(n){
+    if(n >= 1e9) return (n/1e9).toFixed(1)+"B";
+    if(n >= 1e6) return (n/1e6).toFixed(1)+"M";
+    if(n >= 1e3) return (n/1e3).toFixed(1)+"K";
+    return Math.floor(n);
+  }
+
+  function cps(){
+    return baseUpgrades.reduce((sum,u)=>sum + game.upgrades[u.id] * u.cps, 0);
+  }
+
+  function clickPower(){
+    return 1 + Math.floor(game.level / 3);
+  }
+
+  function needExp(){
+    return game.level * 120;
+  }
+
+  function levelCheck(){
+    while(game.exp >= needExp()){
+      game.exp -= needExp();
+      game.level++;
+      game.coins += game.level * 30;
+    }
+  }
+
+  function upgradeCost(u){
+    const lvl = game.upgrades[u.id];
+    return Math.floor(u.base * Math.pow(1.45, lvl));
+  }
+
+  function buy(id){
+    const u = baseUpgrades.find(x => x.id === id);
+    const cost = upgradeCost(u);
+    if(game.coins < cost) return;
+    game.coins -= cost;
+    game.upgrades[id]++;
+    game.exp += 25;
+    game.fans += 10;
+    levelCheck();
+    render();
+    save();
+  }
+
+  function perform(){
+    const gain = clickPower();
+    game.coins += gain;
+    game.fans += 1;
+    game.exp += 2;
+    game.totalClicks++;
+    levelCheck();
+    render();
+    save();
+  }
+
+  function daily(){
+    const today = new Date().toDateString();
+    if(game.lastDaily === today) return;
+    game.lastDaily = today;
+    game.coins += 500;
+    game.fans += 100;
+    game.exp += 80;
+    levelCheck();
+    render();
+    save();
+  }
+
+  function resetGame(){
+    if(!confirm("Reset Theater48 Empire dari awal?")) return;
+    localStorage.removeItem("theater48_empire_v1");
+    location.reload();
+  }
+
+  window.t48Buy = buy;
+  window.t48Perform = perform;
+  window.t48Daily = daily;
+  window.t48Reset = resetGame;
+
+  function render(){
+    const income = cps();
+    const expPercent = Math.min(100, (game.exp / needExp()) * 100);
+    const today = new Date().toDateString();
+    const dailyClaimed = game.lastDaily === today;
+
+    root.innerHTML = `
+      <div class="t48-head">
+        <div class="t48-title">THEATER48 EMPIRE</div>
+        <p>Bangun theater, kumpulkan fans, upgrade fasilitas, dan jadi Producer48 terbaik.</p>
+      </div>
+
+      <div class="t48-stats">
+        <div class="t48-card"><div>Coins</div><div class="t48-num">🪙 ${fmt(game.coins)}</div></div>
+        <div class="t48-card"><div>Fans</div><div class="t48-num">👥 ${fmt(game.fans)}</div></div>
+        <div class="t48-card"><div>Income</div><div class="t48-num">+${fmt(income)}/detik</div></div>
+        <div class="t48-card"><div>Level</div><div class="t48-num">Lv ${game.level}</div></div>
+      </div>
+
+      <div class="t48-card">
+        <b>EXP</b>
+        <div class="t48-progress"><div class="t48-bar" style="width:${expPercent}%"></div></div>
+        <small>${fmt(game.exp)} / ${fmt(needExp())}</small>
+      </div>
+
+      <div class="t48-main" style="margin-top:18px">
+        <div class="t48-card t48-stage">
+          <h2>Stage Performance</h2>
+          <button onclick="t48Perform()">SHOW<br>+${clickPower()} 🪙</button>
+          <p>Total show: ${fmt(game.totalClicks)}</p>
+          <button class="t48-btn" onclick="t48Daily()" ${dailyClaimed ? "disabled" : ""}>
+            ${dailyClaimed ? "Daily Reward Sudah Diambil" : "Ambil Daily Reward +500 Coins"}
+          </button>
+        </div>
+
+        <div class="t48-upgrades">
+          ${baseUpgrades.map(u => {
+            const lvl = game.upgrades[u.id];
+            const cost = upgradeCost(u);
+            return `
+              <div class="t48-card t48-up">
+                <h3>${u.name}</h3>
+                <p>${u.desc}</p>
+                <p>Level: <b>${lvl}</b></p>
+                <p>Income: <b>+${fmt(lvl * u.cps)}/detik</b></p>
+                <button class="t48-btn" onclick="t48Buy('${u.id}')" ${game.coins < cost ? "disabled" : ""}>
+                  Upgrade - ${fmt(cost)} Coins
+                </button>
+              </div>
+            `;
+          }).join("")}
+        </div>
+      </div>
+
+      <div class="t48-card t48-mission">
+        <h3>Mission</h3>
+        <p>🎯 Klik stage, kumpulkan coins, upgrade fasilitas, naik level, dan besarkan Theater48 Empire kamu.</p>
+        <button class="t48-btn" style="background:#444" onclick="t48Reset()">Reset Game</button>
+      </div>
+    `;
+  }
+
+  setInterval(() => {
+    const gain = cps();
+    if(gain > 0){
+      game.coins += gain;
+      game.fans += Math.floor(gain / 3);
+      game.exp += Math.max(1, Math.floor(gain / 10));
+      levelCheck();
+      render();
+      save();
+    }
+  }, 1000);
+
+  render();
+})();
+</script>
