@@ -1,296 +1,484 @@
-<div id="t48EmpireApp"></div>
+<div id="t48Game"></div>
 
 <style>
-#t48EmpireApp{
-  font-family:Arial,sans-serif;
-  color:white;
-  background:linear-gradient(180deg,#241035,#11051c);
-  padding:18px;
-  border-radius:24px;
+#t48Game{
+  font-family:Inter,Arial,sans-serif;
   max-width:1200px;
   margin:auto;
+  color:white;
+  background:
+    radial-gradient(circle at top,#ff4fd855,transparent 35%),
+    linear-gradient(180deg,#190724,#08020d);
+  border-radius:28px;
   overflow:hidden;
+  box-shadow:0 30px 80px #0008;
 }
-.t48-top{text-align:center;margin-bottom:15px}
-.t48-title{font-size:34px;font-weight:900;color:#ff5bd7;text-shadow:0 0 18px #ff5bd7}
-.t48-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:15px}
-.t48-stat{background:rgba(255,255,255,.1);padding:12px;border-radius:16px;border:1px solid rgba(255,255,255,.15)}
+.t48-hero{
+  padding:18px;
+  background:linear-gradient(135deg,#ff4fd8,#6a00ff,#111);
+  position:relative;
+}
+.t48-title{font-size:32px;font-weight:1000;text-shadow:0 0 18px #fff7}
+.t48-sub{opacity:.9}
+.t48-stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  padding:14px;
+}
+.t48-stat{
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:18px;
+  padding:12px;
+  backdrop-filter:blur(10px);
+}
 .t48-stat b{font-size:22px;color:#ffe066}
-.t48-layout{display:grid;grid-template-columns:260px 1fr;gap:15px}
-.t48-panel,.t48-mapwrap{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:14px}
-.t48-shop{display:grid;gap:10px}
-.t48-shop button{
-  background:linear-gradient(135deg,#ff4fd8,#7b2cff);
-  border:0;color:white;border-radius:15px;padding:12px;text-align:left;font-weight:800;cursor:pointer;
-  box-shadow:0 8px 18px rgba(0,0,0,.25)
+.t48-body{
+  display:grid;
+  grid-template-columns:270px 1fr;
+  gap:14px;
+  padding:14px;
 }
-.t48-shop button.active{outline:3px solid #ffe066}
-.t48-shop small{display:block;font-weight:400;opacity:.9;margin-top:4px}
+.t48-side,.t48-world{
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:24px;
+  padding:14px;
+}
+.t48-build{
+  display:grid;
+  gap:10px;
+}
+.t48-build button{
+  border:0;
+  color:white;
+  border-radius:18px;
+  padding:12px;
+  text-align:left;
+  font-weight:900;
+  cursor:pointer;
+  background:linear-gradient(135deg,#2b1740,#12051e);
+  border:1px solid rgba(255,255,255,.15);
+}
+.t48-build button.active{
+  outline:3px solid #ffe066;
+  background:linear-gradient(135deg,#ff4fd8,#6a00ff);
+}
+.t48-build small{display:block;font-weight:500;opacity:.85;margin-top:5px}
 .t48-map{
   position:relative;
+  min-height:620px;
+  border-radius:24px;
+  padding:16px;
+  overflow:hidden;
+  background:
+    linear-gradient(45deg,rgba(255,255,255,.06) 25%,transparent 25%),
+    linear-gradient(-45deg,rgba(255,255,255,.06) 25%,transparent 25%),
+    linear-gradient(180deg,#315c75,#182136 58%,#1a3b27);
+  background-size:42px 42px;
+}
+.t48-grid{
   display:grid;
   grid-template-columns:repeat(6,1fr);
-  gap:10px;
-  min-height:560px;
-  background:
-    linear-gradient(45deg,rgba(255,255,255,.04) 25%,transparent 25%),
-    linear-gradient(-45deg,rgba(255,255,255,.04) 25%,transparent 25%),
-    linear-gradient(180deg,#403050,#241c33);
-  background-size:28px 28px;
-  padding:12px;
-  border-radius:20px;
+  gap:12px;
+  position:relative;
+  z-index:2;
 }
 .t48-plot{
-  height:120px;
-  background:linear-gradient(180deg,#2e8b57,#1f5e3b);
-  border:2px dashed rgba(255,255,255,.25);
-  border-radius:18px;
+  height:116px;
   position:relative;
+  border-radius:20px;
+  background:linear-gradient(180deg,#46b36b,#267041);
+  border:2px solid rgba(255,255,255,.18);
   cursor:pointer;
   overflow:hidden;
-}
-.t48-plot:before{
-  content:"";
-  position:absolute;inset:auto 8px 8px 8px;height:14px;
-  background:rgba(0,0,0,.18);border-radius:50%;
+  box-shadow:inset 0 -18px 30px #0003,0 12px 25px #0004;
 }
 .t48-empty{
-  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  color:rgba(255,255,255,.55);font-size:30px;
-}
-.t48-building{
-  position:absolute;left:8px;right:8px;bottom:10px;height:85px;
-  border-radius:14px 14px 8px 8px;
-  display:flex;align-items:center;justify-content:center;flex-direction:column;
-  font-size:32px;font-weight:900;
-  animation:pop .35s ease, glow 2s infinite alternate;
-  box-shadow:0 -8px 25px rgba(255,91,215,.25);
-}
-.t48-building span{font-size:11px;margin-top:5px;background:rgba(0,0,0,.35);padding:3px 7px;border-radius:99px}
-.stage{background:linear-gradient(180deg,#ff5bd7,#9125ff)}
-.merch{background:linear-gradient(180deg,#ffb347,#ff4f70)}
-.cafe{background:linear-gradient(180deg,#67e8f9,#246bfe)}
-.photo{background:linear-gradient(180deg,#baff7b,#2bb673)}
-.vip{background:linear-gradient(180deg,#ffe066,#b88900)}
-.hall{background:linear-gradient(180deg,#ff7b7b,#7b1b1b)}
-.t48-lv{
-  position:absolute;top:7px;right:7px;background:#111;padding:4px 7px;border-radius:99px;font-size:11px;
-}
-.t48-upbtn{
-  position:absolute;left:8px;right:8px;bottom:8px;
-  border:0;border-radius:10px;padding:6px;background:#ffe066;color:#1c1028;font-weight:900;cursor:pointer;
-  display:none;
-}
-.t48-plot:hover .t48-upbtn{display:block}
-.float{
   position:absolute;
-  color:#ffe066;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:34px;
+  opacity:.55;
+}
+.bld{
+  position:absolute;
+  left:10px;
+  right:10px;
+  bottom:14px;
+  height:82px;
+  border-radius:18px 18px 8px 8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  font-size:34px;
+  font-weight:1000;
+  animation:pop .35s ease, idle 2.2s infinite ease-in-out;
+  box-shadow:0 0 25px #ff4fd855, inset 0 15px 20px #fff4;
+}
+.bld:after{
+  content:"";
+  position:absolute;
+  top:8px;
+  left:14px;
+  right:14px;
+  height:12px;
+  background:rgba(255,255,255,.35);
+  border-radius:99px;
+}
+.bld span{
+  font-size:10px;
+  background:#0008;
+  padding:3px 7px;
+  border-radius:99px;
+  margin-top:4px;
+}
+.stage{background:linear-gradient(180deg,#ff73dd,#7b2cff)}
+.merch{background:linear-gradient(180deg,#ffd166,#ff4f70)}
+.cafe{background:linear-gradient(180deg,#7ee7ff,#246bfe)}
+.photo{background:linear-gradient(180deg,#b6ff7c,#1e9c56)}
+.vip{background:linear-gradient(180deg,#fff06a,#b88900)}
+.hall{background:linear-gradient(180deg,#ff8b8b,#7b1b1b)}
+.t48-lv{
+  position:absolute;
+  top:7px;
+  right:7px;
+  background:#05010a;
+  border:1px solid #fff3;
+  border-radius:99px;
+  padding:4px 8px;
+  font-size:11px;
   font-weight:900;
+}
+.t48-float{
+  position:absolute;
+  z-index:20;
+  color:#ffe066;
+  font-weight:1000;
   pointer-events:none;
   animation:floatUp 1s ease forwards;
-  text-shadow:0 0 8px #000;
+  text-shadow:0 0 10px #000;
 }
-@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
-@keyframes glow{from{filter:brightness(1)}to{filter:brightness(1.25)}}
-@keyframes floatUp{from{transform:translateY(0);opacity:1}to{transform:translateY(-55px);opacity:0}}
+.t48-fan{
+  position:absolute;
+  z-index:1;
+  font-size:22px;
+  animation:walk 8s linear forwards;
+}
+.t48-quest{
+  background:linear-gradient(135deg,#ffe06622,#ff4fd822);
+  border:1px solid #ffe06655;
+  border-radius:18px;
+  padding:12px;
+  margin-top:12px;
+}
+.t48-bottom{
+  display:none;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  padding:12px;
+  background:#0b0311;
+  position:sticky;
+  bottom:0;
+  z-index:50;
+}
+.t48-bottom button{
+  border:0;
+  border-radius:16px;
+  padding:12px;
+  background:#20102d;
+  color:white;
+  font-weight:900;
+}
+.t48-modal{
+  position:fixed;
+  inset:0;
+  background:#000a;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
+}
+.t48-box{
+  width:min(420px,90vw);
+  background:linear-gradient(180deg,#2a123a,#0f0618);
+  border:1px solid #fff2;
+  border-radius:28px;
+  padding:20px;
+  box-shadow:0 30px 80px #000;
+}
+.t48-primary{
+  width:100%;
+  border:0;
+  border-radius:16px;
+  padding:13px;
+  font-weight:1000;
+  color:#16081f;
+  background:linear-gradient(135deg,#ffe066,#ff9f1c);
+  cursor:pointer;
+}
+.t48-close{
+  width:100%;
+  margin-top:8px;
+  border:0;
+  border-radius:16px;
+  padding:12px;
+  color:white;
+  background:#ffffff18;
+}
+@keyframes pop{from{transform:scale(.35) translateY(35px);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes idle{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes floatUp{from{transform:translateY(0);opacity:1}to{transform:translateY(-70px);opacity:0}}
+@keyframes walk{from{left:-40px;top:75%}to{left:105%;top:35%}}
 @media(max-width:850px){
-  .t48-layout{grid-template-columns:1fr}
-  .t48-map{grid-template-columns:repeat(3,1fr);min-height:auto}
-  .t48-plot{height:105px}
+  #t48Game{border-radius:0}
+  .t48-body{grid-template-columns:1fr}
+  .t48-side{display:none}
+  .t48-stats{grid-template-columns:repeat(2,1fr)}
+  .t48-grid{grid-template-columns:repeat(3,1fr)}
+  .t48-map{min-height:auto}
+  .t48-bottom{display:grid}
 }
 </style>
 
 <script>
 (() => {
-const root = document.getElementById("t48EmpireApp");
+const root = document.getElementById("t48Game");
 
 const buildings = {
-  stage:{name:"Main Stage", icon:"🎤", class:"stage", cost:100, income:2},
-  merch:{name:"Merch Store", icon:"🛍️", class:"merch", cost:250, income:6},
-  cafe:{name:"Idol Cafe", icon:"☕", class:"cafe", cost:500, income:14},
-  photo:{name:"Photo Booth", icon:"📸", class:"photo", cost:900, income:30},
-  vip:{name:"VIP Lounge", icon:"👑", class:"vip", cost:1800, income:70},
-  hall:{name:"Concert Hall", icon:"🏟️", class:"hall", cost:4000, income:180}
+  stage:{name:"Main Stage",icon:"🎤",class:"stage",cost:100,income:2,desc:"Tempat show utama Theater48."},
+  merch:{name:"Merch Store",icon:"🛍️",class:"merch",cost:280,income:7,desc:"Jual lightstick, photocard, dan merch."},
+  cafe:{name:"Idol Cafe",icon:"☕",class:"cafe",cost:650,income:18,desc:"Fans nongkrong sebelum theater."},
+  photo:{name:"Photo Booth",icon:"📸",class:"photo",cost:1200,income:38,desc:"Area foto dan memory fans."},
+  vip:{name:"VIP Lounge",icon:"👑",class:"vip",cost:2500,income:90,desc:"Area premium khusus member loyal."},
+  hall:{name:"Concert Hall",icon:"🏟️",class:"hall",cost:6500,income:230,desc:"Bangunan besar untuk special show."}
 };
 
-let game = JSON.parse(localStorage.getItem("t48_empire_visual_v1")) || {
-  coins:500,
+let game = JSON.parse(localStorage.getItem("t48_empire_luxury_v1")) || {
+  coins:800,
   fans:0,
-  level:1,
   exp:0,
+  level:1,
   selected:"stage",
-  plots:Array(24).fill(null)
+  activePlot:null,
+  plots:Array(24).fill(null),
+  questClaimed:false
 };
 
-function save(){
-  localStorage.setItem("t48_empire_visual_v1",JSON.stringify(game));
-}
-
-function fmt(n){
-  if(n>=1000000)return(n/1000000).toFixed(1)+"M";
-  if(n>=1000)return(n/1000).toFixed(1)+"K";
-  return Math.floor(n);
-}
-
-function income(){
-  return game.plots.reduce((sum,p)=>{
-    if(!p)return sum;
-    return sum + buildings[p.id].income * p.lv;
-  },0);
-}
-
-function addFloat(text){
-  const map = document.querySelector(".t48-map");
-  if(!map)return;
-  const f=document.createElement("div");
-  f.className="float";
-  f.textContent=text;
-  f.style.left=(40+Math.random()*70)+"%";
-  f.style.top=(40+Math.random()*30)+"%";
-  map.appendChild(f);
-  setTimeout(()=>f.remove(),1000);
-}
-
-function needExp(){return game.level*150}
+function save(){localStorage.setItem("t48_empire_luxury_v1",JSON.stringify(game))}
+function fmt(n){return n>=1e6?(n/1e6).toFixed(1)+"M":n>=1e3?(n/1e3).toFixed(1)+"K":Math.floor(n)}
+function needExp(){return game.level*180}
+function income(){return game.plots.reduce((s,p)=>p?s+buildings[p.id].income*p.lv:s,0)}
+function buildingCount(){return game.plots.filter(Boolean).length}
 
 function addExp(x){
   game.exp+=x;
   while(game.exp>=needExp()){
     game.exp-=needExp();
     game.level++;
-    game.coins+=game.level*100;
-    addFloat("LEVEL UP!");
+    game.coins+=game.level*150;
+    floatText("LEVEL UP!");
   }
 }
 
-function selectBuilding(id){
-  game.selected=id;
-  render();
-  save();
+function costUpgrade(p){
+  return Math.floor(buildings[p.id].cost*Math.pow(1.62,p.lv));
 }
-window.t48SelectBuilding=selectBuilding;
 
-function clickPlot(i){
-  const plot=game.plots[i];
+function floatText(text){
+  const map=document.querySelector(".t48-map");
+  if(!map)return;
+  const f=document.createElement("div");
+  f.className="t48-float";
+  f.textContent=text;
+  f.style.left=(35+Math.random()*45)+"%";
+  f.style.top=(35+Math.random()*35)+"%";
+  map.appendChild(f);
+  setTimeout(()=>f.remove(),1000);
+}
 
-  if(!plot){
+function spawnFan(){
+  const map=document.querySelector(".t48-map");
+  if(!map)return;
+  const f=document.createElement("div");
+  f.className="t48-fan";
+  f.textContent=["🧍","🧍‍♀️","🏃","💃","🕺"][Math.floor(Math.random()*5)];
+  map.appendChild(f);
+  setTimeout(()=>f.remove(),8000);
+}
+
+window.t48Select=id=>{game.selected=id;render();save()};
+
+window.t48Plot=i=>{
+  const p=game.plots[i];
+  if(!p){
     const b=buildings[game.selected];
-    if(game.coins<b.cost){
-      addFloat("Coin kurang");
-      return;
-    }
+    if(game.coins<b.cost){floatText("Coin kurang");return}
     game.coins-=b.cost;
     game.plots[i]={id:game.selected,lv:1};
-    game.fans+=20;
-    addExp(40);
-    addFloat("+ Bangunan!");
-  }else{
-    const gain=plot.lv*3;
-    game.coins+=gain;
-    game.fans+=1;
-    addExp(2);
-    addFloat("+"+gain+" coin");
-  }
-
-  render();
-  save();
-}
-window.t48ClickPlot=clickPlot;
-
-function upgradePlot(e,i){
-  e.stopPropagation();
-  const plot=game.plots[i];
-  if(!plot)return;
-  const cost=Math.floor(buildings[plot.id].cost*Math.pow(1.55,plot.lv));
-  if(game.coins<cost){
-    addFloat("Coin kurang");
+    game.fans+=35;
+    addExp(60);
+    floatText("+BUILD");
+    render();save();
     return;
   }
-  game.coins-=cost;
-  plot.lv++;
-  game.fans+=50;
-  addExp(70);
-  addFloat("UPGRADE!");
-  render();
-  save();
-}
-window.t48UpgradePlot=upgradePlot;
+  game.activePlot=i;
+  openModal();
+};
 
-function resetGame(){
-  if(confirm("Reset game dari awal?")){
-    localStorage.removeItem("t48_empire_visual_v1");
+window.t48Tap=i=>{
+  const p=game.plots[i];
+  if(!p)return;
+  const gain=p.lv*5;
+  game.coins+=gain;
+  game.fans+=2;
+  addExp(4);
+  floatText("+"+gain+" 🪙");
+  render();save();
+};
+
+window.t48Upgrade=()=>{
+  const p=game.plots[game.activePlot];
+  if(!p)return;
+  const cost=costUpgrade(p);
+  if(game.coins<cost){floatText("Coin kurang");return}
+  game.coins-=cost;
+  p.lv++;
+  game.fans+=100;
+  addExp(100);
+  floatText("UPGRADE!");
+  closeModal();
+  render();save();
+};
+
+window.t48ClaimQuest=()=>{
+  if(game.questClaimed)return;
+  if(buildingCount()>=5){
+    game.questClaimed=true;
+    game.coins+=1200;
+    game.fans+=500;
+    addExp(200);
+    floatText("QUEST DONE!");
+    render();save();
+  }
+};
+
+window.t48Reset=()=>{
+  if(confirm("Reset Theater48 Empire?")){
+    localStorage.removeItem("t48_empire_luxury_v1");
     location.reload();
   }
+};
+
+window.t48Close=closeModal;
+
+function openModal(){
+  renderModal();
+  document.querySelector(".t48-modal").style.display="flex";
 }
-window.t48ResetVisual=resetGame;
+function closeModal(){
+  const m=document.querySelector(".t48-modal");
+  if(m)m.style.display="none";
+}
+function renderModal(){
+  const p=game.plots[game.activePlot];
+  if(!p)return;
+  const b=buildings[p.id];
+  const cost=costUpgrade(p);
+  document.querySelector(".t48-modal").innerHTML=`
+    <div class="t48-box">
+      <h2>${b.icon} ${b.name}</h2>
+      <p>${b.desc}</p>
+      <p>Level: <b>${p.lv}</b></p>
+      <p>Income: <b>+${fmt(b.income*p.lv)}/detik</b></p>
+      <p>Upgrade Cost: <b>${fmt(cost)} coins</b></p>
+      <button class="t48-primary" onclick="t48Upgrade()">Upgrade Building</button>
+      <button class="t48-close" onclick="t48Close()">Tutup</button>
+    </div>
+  `;
+}
 
 function render(){
-  const inc=income();
   const expPct=Math.min(100,(game.exp/needExp())*100);
-
   root.innerHTML=`
-    <div class="t48-top">
+    <div class="t48-hero">
       <div class="t48-title">THEATER48 EMPIRE</div>
-      <p>Bangun theater impianmu. Pasang stage, cafe, merch store, VIP lounge, dan concert hall.</p>
+      <div class="t48-sub">Build your idol entertainment empire.</div>
     </div>
 
     <div class="t48-stats">
       <div class="t48-stat">Coins<br><b>🪙 ${fmt(game.coins)}</b></div>
       <div class="t48-stat">Fans<br><b>👥 ${fmt(game.fans)}</b></div>
-      <div class="t48-stat">Income<br><b>+${fmt(inc)}/detik</b></div>
-      <div class="t48-stat">Producer Lv<br><b>${game.level}</b></div>
+      <div class="t48-stat">Income<br><b>+${fmt(income())}/s</b></div>
+      <div class="t48-stat">Producer<br><b>Lv ${game.level}</b></div>
     </div>
 
-    <div style="background:#342044;border-radius:99px;overflow:hidden;margin-bottom:15px">
-      <div style="width:${expPct}%;height:12px;background:linear-gradient(90deg,#ff5bd7,#ffe066)"></div>
+    <div style="height:12px;background:#ffffff18;margin:0 14px;border-radius:99px;overflow:hidden">
+      <div style="height:100%;width:${expPct}%;background:linear-gradient(90deg,#ff4fd8,#ffe066)"></div>
     </div>
 
-    <div class="t48-layout">
-      <div class="t48-panel">
-        <h3>🏗️ Build Menu</h3>
-        <div class="t48-shop">
+    <div class="t48-body">
+      <div class="t48-side">
+        <h3>🏗 Build Shop</h3>
+        <div class="t48-build">
           ${Object.entries(buildings).map(([id,b])=>`
-            <button onclick="t48SelectBuilding('${id}')" class="${game.selected===id?'active':''}">
+            <button class="${game.selected===id?'active':''}" onclick="t48Select('${id}')">
               ${b.icon} ${b.name}
-              <small>Cost ${fmt(b.cost)} coin · Income +${b.income}/detik</small>
+              <small>${fmt(b.cost)} coins · +${b.income}/s</small>
             </button>
           `).join("")}
         </div>
+
+        <div class="t48-quest">
+          <b>🎯 Quest</b>
+          <p>Bangun 5 building.</p>
+          <p>Progress: ${buildingCount()}/5</p>
+          <button class="t48-primary" onclick="t48ClaimQuest()" ${buildingCount()<5||game.questClaimed?'disabled':''}>
+            ${game.questClaimed?'Claimed':'Claim +1200 Coins'}
+          </button>
+        </div>
+
         <br>
-        <button onclick="t48ResetVisual()" style="width:100%;padding:10px;border:0;border-radius:12px;background:#444;color:white;font-weight:800">
-          Reset Game
-        </button>
+        <button class="t48-close" onclick="t48Reset()">Reset</button>
       </div>
 
-      <div class="t48-mapwrap">
-        <h3>🏙️ Theater Area</h3>
+      <div class="t48-world">
+        <h3>🌃 Theater District</h3>
         <div class="t48-map">
-          ${game.plots.map((p,i)=>{
-            if(!p){
-              return `
-                <div class="t48-plot" onclick="t48ClickPlot(${i})">
+          <div class="t48-grid">
+            ${game.plots.map((p,i)=>{
+              if(!p)return`
+                <div class="t48-plot" onclick="t48Plot(${i})">
                   <div class="t48-empty">＋</div>
                 </div>
               `;
-            }
-            const b=buildings[p.id];
-            const cost=Math.floor(b.cost*Math.pow(1.55,p.lv));
-            return `
-              <div class="t48-plot" onclick="t48ClickPlot(${i})">
-                <div class="t48-building ${b.class}">
-                  ${b.icon}
-                  <span>${b.name}</span>
+              const b=buildings[p.id];
+              return`
+                <div class="t48-plot" onclick="t48Plot(${i})" ondblclick="t48Tap(${i})">
+                  <div class="bld ${b.class}">
+                    ${b.icon}
+                    <span>${b.name}</span>
+                  </div>
+                  <div class="t48-lv">Lv ${p.lv}</div>
                 </div>
-                <div class="t48-lv">Lv ${p.lv}</div>
-                <button class="t48-upbtn" onclick="t48UpgradePlot(event,${i})">
-                  Upgrade ${fmt(cost)}
-                </button>
-              </div>
-            `;
-          }).join("")}
+              `;
+            }).join("")}
+          </div>
         </div>
       </div>
     </div>
+
+    <div class="t48-bottom">
+      <button onclick="t48Select('stage')">🎤 Stage</button>
+      <button onclick="t48Select('merch')">🛍 Merch</button>
+      <button onclick="t48Select('cafe')">☕ Cafe</button>
+    </div>
+
+    <div class="t48-modal"></div>
   `;
 }
 
@@ -298,11 +486,11 @@ setInterval(()=>{
   const inc=income();
   if(inc>0){
     game.coins+=inc;
-    game.fans+=Math.floor(inc/5);
-    addExp(Math.max(1,Math.floor(inc/12)));
-    if(Math.random()<.35)addFloat("+"+fmt(inc)+" 🪙");
-    render();
-    save();
+    game.fans+=Math.floor(inc/4);
+    addExp(Math.max(1,Math.floor(inc/15)));
+    if(Math.random()<.35)floatText("+"+fmt(inc)+" 🪙");
+    if(Math.random()<.25)spawnFan();
+    render();save();
   }
 },1000);
 
