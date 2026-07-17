@@ -699,19 +699,26 @@ function renderReplayList(){
 
     videos.forEach((video,index)=>{
         list.innerHTML += `
-            <div class="replay-card ${index === 0 ? "active" : ""}" onclick="changeVideo(this,'${video.id}')">
-                <img src="${
-                video.type === 'youtube'
-                ?
-                'https://img.youtube.com/vi/' + video.id + '/maxresdefault.jpg'
-                :
-                video.thumbnail
-                }">
-                <div class="replay-info">
-                    <div class="replay-title">${video.title}</div>
-                    <div class="replay-date">${video.date}</div>
-                </div>
-            </div>
+        <div class="replay-card ${index === 0 ? "active" : ""}" onclick="changeVideo(this,'${video.id}')">
+
+        <img
+        src="https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg"
+        onload="
+        if(this.naturalWidth <= 120){
+        this.src='https://i.ytimg.com/vi/${video.id}/hqdefault.jpg';
+        }
+        "
+        onerror="
+        this.onerror=null;
+        this.src='https://i.ytimg.com/vi/${video.id}/hqdefault.jpg';
+        ">
+
+        <div class="replay-info">
+        <div class="replay-title">${video.title}</div>
+        <div class="replay-date">${video.date}</div>
+        </div>
+
+        </div>
         `;
     });
 }
