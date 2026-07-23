@@ -46,6 +46,50 @@ button{
   border-radius:10px;
   margin:12px 0;
 }
+.profile-card{
+    background:#1a1a1a;
+    padding:18px;
+    border-radius:16px;
+    margin-bottom:20px;
+}
+
+.profile-header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.profile-header img{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    border:3px solid #ff2b2b;
+}
+
+.profile-header h3{
+    margin:0;
+    font-size:22px;
+}
+
+.profile-header p{
+    margin:5px 0 0;
+    color:#aaa;
+}
+
+.member-badge{
+    margin-top:15px;
+    padding:10px;
+    border-radius:10px;
+    text-align:center;
+    font-weight:bold;
+    background:#2b1a1a;
+}
+
+.member-expiry{
+    margin-top:10px;
+    text-align:center;
+    color:#bbb;
+}
 </style>
 </head>
 
@@ -62,11 +106,31 @@ button{
 <div class="box hidden" id="dashboardBox">
   <h2>Dashboard Member</h2>
 
-  <div class="status">
-    <p><b>Email:</b> <span id="userEmail"></span></p>
-    <p><b>Status Membership:</b> <span id="memberStatus">inactive</span></p>
-    <p><b>Expired:</b> <span id="memberExpired">-</span></p>
-  </div>
+<div class="profile-card">
+
+<div class="profile-header">
+
+<img
+id="profileAvatar"
+src="https://ui-avatars.com/api/?background=ff2b2b&color=fff&name=Member">
+
+<div>
+<h3 id="profileName">Member</h3>
+<p id="userEmail"></p>
+</div>
+
+</div>
+
+<div class="member-badge" id="memberBadge">
+🔴 Inactive Member
+</div>
+
+<div class="member-expiry">
+⏳ Membership Expired:
+<span id="memberExpired">-</span>
+</div>
+
+</div>
 
   <input id="name" placeholder="Nama kamu">
 
@@ -90,6 +154,9 @@ button{
     <option>Michie</option>
   </select>
 
+  <input
+  id="avatar"
+  placeholder="Link foto profil">
   <button onclick="saveProfile()">Simpan Profil</button>
   <button onclick="logout()">Logout</button>
 </div>
@@ -161,6 +228,16 @@ async function loadDashboard(){
   }
 
   document.getElementById("name").value = profile.name || "";
+  document.getElementById("avatar").value =
+  profile.avatar_url || "";
+
+  document.getElementById("profileName").innerText =
+  profile.name || "Member";
+
+  if(profile.avatar_url){
+    document.getElementById("profileAvatar").src =
+    profile.avatar_url;
+}
   document.getElementById("oshi").value = profile.oshi || "";
   document.getElementById("memberStatus").innerText = profile.membership_status || "inactive";
   document.getElementById("memberExpired").innerText = profile.membership_expired || "-";
@@ -173,10 +250,12 @@ async function saveProfile(){
 
   const name = document.getElementById("name").value;
   const oshi = document.getElementById("oshi").value;
+  const avatar_url =
+  document.getElementById("avatar").value;
 
   const { error } = await db
     .from("profiles")
-    .update({ name, oshi })
+    .update({ name, oshi, avatar_url })
     .eq("id", user.id);
 
   if(error){
