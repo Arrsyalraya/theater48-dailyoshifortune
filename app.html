@@ -249,6 +249,158 @@ box-shadow:
     text-align:center;
     color:#bbb;
 }
+
+.dashboard-grid{
+
+display:grid;
+
+grid-template-columns:360px 1fr;
+
+gap:30px;
+
+align-items:start;
+
+margin-top:30px;
+
+}
+
+.left-column{
+
+display:flex;
+
+flex-direction:column;
+
+gap:20px;
+
+}
+
+.right-column{
+
+display:flex;
+
+flex-direction:column;
+
+gap:20px;
+
+}
+
+.member-card{
+
+background:#171717;
+
+padding:25px;
+
+border-radius:18px;
+
+}
+
+.member-info{
+
+display:flex;
+
+justify-content:space-between;
+
+margin-top:20px;
+
+}
+
+.member-info span{
+
+color:#999;
+
+display:block;
+
+font-size:14px;
+
+}
+
+.member-info b{
+
+font-size:20px;
+
+}
+
+.countdown-card{
+
+background:linear-gradient(135deg,#ff2b2b,#6f0018);
+
+padding:30px;
+
+border-radius:18px;
+
+}
+
+.countdown-card h3{
+
+margin-top:0;
+
+}
+
+#countdown{
+
+font-size:36px;
+
+font-weight:700;
+
+margin-top:15px;
+
+}
+
+.quick-menu{
+
+display:grid;
+
+grid-template-columns:repeat(5,1fr);
+
+gap:15px;
+
+}
+
+.menu-box{
+
+background:#181818;
+
+padding:20px;
+
+border-radius:15px;
+
+text-align:center;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.menu-box:hover{
+
+background:#ff2b2b;
+
+transform:translateY(-5px);
+
+}
+
+.menu-box{
+
+font-size:32px;
+
+}
+
+.menu-box p{
+
+margin-top:10px;
+
+font-size:15px;
+
+}
+
+.dash-line{
+
+margin:45px 0;
+
+border:1px solid #222;
+
+}
 </style>
 </head>
 
@@ -314,6 +466,10 @@ src="https://ui-avatars.com/api/?background=ff2b2b&color=fff&name=ME">
 
 <h1>Dashboard</h1>
 
+<div class="dashboard-grid">
+
+<div class="left-column">
+
 <div class="overview">
 
 <div class="profile-card">
@@ -347,6 +503,104 @@ src="https://ui-avatars.com/api/?background=ff2b2b&color=fff&name=Member">
     
 </div>
 
+</div>
+
+<div class="right-column">
+
+<div class="member-card">
+
+<h3>Membership</h3>
+
+<div id="memberBadge" class="badge">
+Inactive Member
+</div>
+
+<div class="member-info">
+
+<div>
+
+<span>Expired</span>
+
+<b id="memberExpired">-</b>
+
+</div>
+
+<div>
+
+<span>Remaining</span>
+
+<b id="memberRemain">-</b>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="countdown-card">
+
+<h3>Next Theater</h3>
+
+<div id="countdown">
+
+2 Days 18 Hours
+
+</div>
+
+</div>
+
+<div class="quick-menu">
+
+<div class="menu-box">
+
+🎥
+
+<p>Replay</p>
+
+</div>
+
+<div class="menu-box">
+
+❤️
+
+<p>My Oshi</p>
+
+</div>
+
+<div class="menu-box">
+
+🏆
+
+<p>Ranking</p>
+
+</div>
+
+<div class="menu-box">
+
+📅
+
+<p>Schedule</p>
+
+</div>
+
+<div class="menu-box">
+
+💳
+
+<p>Payment</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<hr class="dash-line">
+
+<h2>Edit Profile</h2>
+    
   <input id="name" placeholder="Nama kamu">
 
   <select id="oshi">
