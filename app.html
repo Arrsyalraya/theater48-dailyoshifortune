@@ -434,33 +434,45 @@ Replay Theater JKT48 Premium
 
 <div class="user-mini">
 
-<img
-id="topAvatar"
-src="https://ui-avatars.com/api/?background=ff2b2b&color=fff&name=ME">
+<img id="topAvatar"
+src="https://ui-avatars.com/api/?background=ff315c&color=fff&name=ME">
 
-<span id="topName">Member</span>
+<div>
+<div id="topName">Member</div>
+<small id="topEmail"></small>
+</div>
 
 </div>
 
 </header>
 
+
+
 <div class="dashboard">
+
+<!-- SIDEBAR -->
 
 <aside class="sidebar">
 
 <button>🏠 Dashboard</button>
 
-<button>❤️ My Oshi</button>
+<button>🎥 Replay</button>
 
-<button>🎫 Membership</button>
+<button>❤️ My Oshi</button>
 
 <button>📅 Schedule</button>
 
 <button>🏆 Ranking</button>
 
+<button>💳 Membership</button>
+
 <button onclick="logout()">Logout</button>
 
 </aside>
+
+
+
+<!-- CONTENT -->
 
 <main class="content">
 
@@ -468,60 +480,62 @@ src="https://ui-avatars.com/api/?background=ff2b2b&color=fff&name=ME">
 
 <div class="dashboard-grid">
 
-<div class="left-column">
 
-<div class="overview">
+
+<!-- LEFT -->
+
+<div class="left-column">
 
 <div class="profile-card">
 
+<img id="profileAvatar"
+src="https://ui-avatars.com/api/?background=ff315c&color=fff&name=ME">
 
-<img
-id="profileAvatar"
-src="https://ui-avatars.com/api/?background=ff2b2b&color=fff&name=Member">
+<h2 id="profileName">Member</h2>
 
-<div>
-<h3 id="profileName">Member</h3>
 <p id="userEmail"></p>
-</div>
 
 </div>
+
+
 
 <div class="member-badge" id="memberBadge">
+
 🔴 Inactive Member
+
 </div>
 
 <div class="member-expiry">
-⏳ Membership Expired:
-<span id="memberExpired">-</span>
-</div>
 
-</main>
+Membership Expired
 
-</div>
+<br>
 
-</div>
-    
+<b id="memberExpired">-</b>
+
 </div>
 
 </div>
+
+
+
+<!-- RIGHT -->
 
 <div class="right-column">
+
+
 
 <div class="member-card">
 
 <h3>Membership</h3>
 
-<div id="memberBadge" class="badge">
-Inactive Member
-</div>
-
 <div class="member-info">
 
 <div>
 
-<span>Expired</span>
+<span>Status</span>
 
-<b id="memberExpired">-</b>
+<b id="memberStatus">Inactive</b>
 
 </div>
 
@@ -537,17 +551,21 @@ Inactive Member
 
 </div>
 
+
+
 <div class="countdown-card">
 
 <h3>Next Theater</h3>
 
 <div id="countdown">
 
-2 Days 18 Hours
+Loading...
 
 </div>
 
 </div>
+
+
 
 <div class="quick-menu">
 
@@ -593,41 +611,53 @@ Inactive Member
 
 </div>
 
-</div>
 
-</div>
 
 <hr class="dash-line">
 
 <h2>Edit Profile</h2>
-    
-  <input id="name" placeholder="Nama kamu">
 
-  <select id="oshi">
-    <option value="">Pilih Oshi Favorit</option>
-    <option>Freya</option>
-    <option>Christy</option>
-    <option>Gracie</option>
-    <option>Feni</option>
-    <option>Gita</option>
-    <option>Eli</option>
-    <option>Muthe</option>
-    <option>Lulu</option>
-    <option>Marsha</option>
-    <option>Kathrina</option>
-    <option>Jessi</option>
-    <option>Lyn</option>
-    <option>Greesel</option>
-    <option>Raisha</option>
-    <option>Trisha</option>
-    <option>Michie</option>
-  </select>
+<input id="name" placeholder="Nama">
 
-  <input
-  id="avatar"
-  placeholder="Link foto profil">
-  <button onclick="saveProfile()">Simpan Profil</button>
-  <button onclick="logout()">Logout</button>
+<select id="oshi">
+
+<option value="">Pilih Oshi</option>
+
+<option>Freya</option>
+<option>Christy</option>
+<option>Gracie</option>
+<option>Feni</option>
+<option>Gita</option>
+<option>Eli</option>
+<option>Muthe</option>
+<option>Lulu</option>
+<option>Marsha</option>
+<option>Kathrina</option>
+<option>Jessi</option>
+<option>Lyn</option>
+<option>Greesel</option>
+<option>Raisha</option>
+<option>Trisha</option>
+<option>Michie</option>
+
+</select>
+
+<input id="avatar" placeholder="Avatar URL">
+
+<button onclick="saveProfile()">
+
+Simpan Profil
+
+</button>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
 </div>
 
 <script>
