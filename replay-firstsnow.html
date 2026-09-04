@@ -172,6 +172,19 @@ body{
     z-index:9999;
 }
 
+.replay-filters{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    margin:15px auto 20px;
+}
+
+.replay-filters .month-dropdown{
+    width:200px;
+    margin:0;
+}
+
 .month-dropdown details{
     background:#151515;
     border:1px solid #ff2b2b;
@@ -241,19 +254,25 @@ body{
 /* Mobile */
 @media(max-width:650px){
 
-    .month-dropdown{
-        width:220px;
+    .replay-filters{
+        gap:8px;
+        padding:0 12px;
+    }
+
+    .replay-filters .month-dropdown{
+        width:50%;
     }
 
     .month-dropdown summary{
         font-size:13px;
-        padding:10px 14px;
+        padding:10px 12px;
     }
 
     .dropdown-content a{
         font-size:12px;
         padding:10px;
     }
+
 }
     
 @media(max-width:650px){
@@ -511,23 +530,35 @@ body.theater-lock{
 
 <body>
 
-<div class="replay-wrap">
+<div class="replay-filters">
 
+    <!-- DROPDOWN JENIS KONSER -->
     <div class="month-dropdown">
-    <details>
+        <details>
+            <summary>🎬 Replay Konser</summary>
 
-        <summary>
-            📅 Pilih Bulan Replay
-        </summary>
-
-        <div class="dropdown-content">
-
+            <div class="dropdown-content">
             <a href="https://www.theater48fight.my.id/replay-firstsnow-2025"
                onclick="top.location.href=this.href; return false;">
                14th Anniversary JKT48
             </a>
 
-            <a href="https://www.theater48fight.my.id/replay-januari-2026"
+            <a href="https://www.theater48fight.my.id/replay-requesthour-2026"
+               onclick="top.location.href=this.href; return false;">
+               Request Hour 2026
+            </a>
+
+            </div>
+        </details>
+    </div>
+
+    <!-- DROPDOWN TAHUN -->
+    <div class="month-dropdown">
+        <details>
+            <summary>📅 Replay 2026</summary>
+
+            <div class="dropdown-content">
+                <a href="https://www.theater48fight.my.id/replay-januari-2026"
                onclick="top.location.href=this.href; return false;">
                Januari 2026
             </a>
@@ -567,9 +598,15 @@ body.theater-lock{
                Agustus 2026
             </a>
 
-        </div>
+            <a href="https://www.theater48fight.my.id/replay-september-2026"
+               onclick="top.location.href=this.href; return false;">
+               September 2026
+            </a>
 
-    </details>
+            </div>
+        </details>
+    </div>
+
 </div>
     
     <div class="player-box">
