@@ -251,28 +251,44 @@ body{
     color:#ff2b2b;
 }
 
-/* Mobile */
+/* MOBILE DROPDOWN */
 @media(max-width:650px){
 
     .replay-filters{
-        gap:8px;
-        padding:0 12px;
+        display:flex;
+        justify-content:center;
+        align-items:flex-start;
+        gap:6px;
+        width:100%;
+        padding:0 8px;
+        box-sizing:border-box;
     }
 
     .replay-filters .month-dropdown{
-        width:50%;
+        width:calc(50% - 3px);
+        margin:8px 0 15px 0;
     }
 
     .month-dropdown summary{
-        font-size:13px;
-        padding:10px 12px;
+        font-size:12px;
+        padding:9px 8px;
+        white-space:nowrap;
+    }
+
+    .month-dropdown summary::after{
+        font-size:8px;
+        margin-top:3px;
+    }
+
+    .dropdown-content{
+        width:100%;
     }
 
     .dropdown-content a{
-        font-size:12px;
-        padding:10px;
+        font-size:11px;
+        padding:9px 6px;
+        line-height:1.25;
     }
-
 }
     
 @media(max-width:650px){
